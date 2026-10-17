@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "slug": "postmortem-nginx-socket-exhaustion",
+      "title": "Post-Mortem: Diagnóstico de Timeouts 502 en NGINX y Agotamiento de Sockets en Kernel Linux",
+      "date": "2026-10-16",
+      "category": "Reliability & Linux",
+      "excerpt": "Análisis técnico de un incidente real en producción: cómo una ráfaga de tráfico saturó el backlog de sockets TCP en el kernel Linux, generando errores 502 Bad Gateway intermitentes, y cómo lo remediamos.",
+      "coverImage": "/blog-posts/images/shell-builtins.png",
+      "coverAlt": "Auditoría de sockets en kernel Linux y logs de NGINX"
+    },
+    {
       "slug": "shell-builtins",
       "title": "Top 15 de shell builtins clásicos de Linux",
       "date": "2026-08-10",
@@ -33,7 +42,7 @@
       "date": "2026-05-08",
       "category": "Tools",
       "excerpt": "Una colección de 10 herramientas TUI que uso o me parecen interesantes para trabajar desde la terminal. 6 listas, faltan 4 más.",
-      "coverImage": "/blog-posts/blog-posts/images/tui-banner.png",
+      "coverImage": "/blog-posts/images/tui-banner.png",
       "coverAlt": "Herramientas TUI para terminal"
     }
   ]

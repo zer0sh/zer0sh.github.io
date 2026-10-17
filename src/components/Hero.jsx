@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { WorkflowTelemetry } from './WorkflowTelemetry';
 
 export const Hero = () => {
   const { t } = useLanguage();
@@ -35,15 +36,18 @@ export const Hero = () => {
       </p>
 
       {/* SRE Doctrine */}
-      <p className="text-[clamp(1.2rem,2.3vw,1.75rem)] font-normal leading-[1.4] text-white max-w-[44ch] mb-12">
+      <p className="text-[clamp(1.2rem,2.3vw,1.75rem)] font-normal leading-[1.4] text-white max-w-[44ch] mb-8">
         {t('hero.doctrinePrimary')}{' '}
         <span className="text-[#64748b]">
           {t('hero.doctrineSecondary')}
         </span>
       </p>
 
+      {/* Live Pipeline Telemetry Probe */}
+      <WorkflowTelemetry />
+
       {/* Fast Action Indicator */}
-      <div>
+      <div className="mt-8">
         <button
           onClick={scrollToProjects}
           className="font-mono text-xs uppercase tracking-[0.25em] text-[#10b981] hover:text-white transition-colors flex items-center gap-2"

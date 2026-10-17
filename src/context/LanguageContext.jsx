@@ -209,22 +209,22 @@ const translations = {
       subtitle: 'Technical deep dives, vulnerability analysis, and operator tooling reviews',
       readArticle: 'Read Dispatch',
       post1: {
+        title: 'Post-Mortem: NGINX Socket Exhaustion & Kernel Tuning',
+        tag: 'P1 Post-Mortem',
+        description: 'Analyzing a live production P1: how sudden traffic surges saturated TCP listen queues (somaxconn) triggering 502 Bad Gateways, and the kernel remedies applied.',
+        slug: 'postmortem-nginx-socket-exhaustion',
+      },
+      post2: {
         title: 'Shell Builtins Deep Dive',
-        tag: 'Internals',
+        tag: 'POSIX Internals',
         description: 'POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.',
         slug: 'shell-builtins',
       },
-      post2: {
+      post3: {
         title: 'CVE-2026-9860 Analysis',
         tag: 'Security Advisory',
         description: 'Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.',
         slug: 'cve-2026-9860',
-      },
-      post3: {
-        title: 'TUI Tooling Ecosystem',
-        tag: 'Operator Tooling',
-        description: 'Modern keyboard-first terminal utilities transforming system operator workflows and incident response.',
-        slug: 'tui-tools',
       },
     },
     contact: {
@@ -453,22 +453,22 @@ const translations = {
       subtitle: 'Inmersión técnica, análisis de vulnerabilidades y herramientas de operador',
       readArticle: 'Leer Artículo',
       post1: {
+        title: 'Post-Mortem: Agotamiento de Sockets en NGINX y Kernel Linux',
+        tag: 'Post-Mortem P1',
+        description: 'Análisis de un incidente real en producción: cómo una ráfaga de tráfico saturó el backlog de sockets TCP (somaxconn) generando errores 502, y el tuning de kernel aplicado.',
+        slug: 'postmortem-nginx-socket-exhaustion',
+      },
+      post2: {
         title: 'Shell Builtins Deep Dive',
-        tag: 'Internals',
+        tag: 'Internals POSIX',
         description: 'Internals de la shell POSIX, ejecución de procesos en el kernel y gestión de memoria en runtimes de contenedores.',
         slug: 'shell-builtins',
       },
-      post2: {
+      post3: {
         title: 'CVE-2026-9860 Analysis',
         tag: 'Aviso de Seguridad',
         description: 'Análisis de vulnerabilidad, vectores de exposición y mitigación preventiva a escala.',
         slug: 'cve-2026-9860',
-      },
-      post3: {
-        title: 'TUI Tooling Ecosystem',
-        tag: 'Herramientas de Operador',
-        description: 'Utilidades modernas de terminal orientadas a teclado para respuesta a incidentes y administración.',
-        slug: 'tui-tools',
       },
     },
     contact: {
