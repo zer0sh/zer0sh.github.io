@@ -1,20 +1,22 @@
 import React from 'react';
 import { Hero } from '../components/Hero';
-import { About } from '../components/About';
+import { Projects } from '../components/Projects';
 import { Work } from '../components/Work';
 import { TechStack } from '../components/TechStack';
-import { Projects } from '../components/Projects';
+import { About } from '../components/About';
+import { Dispatches } from '../components/Dispatches';
 import { Contact } from '../components/Contact';
 
 export const Home = () => {
   return (
-    <div>
+    <main className="max-w-[1250px] mx-auto px-6 sm:px-8">
       <Hero />
-      <About />
+      <Projects />
       <Work />
       <TechStack />
-      <Projects />
+      <About />
+      <Dispatches />
       <Contact />
-    </div>
+    </main>
   );
 };

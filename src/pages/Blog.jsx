@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FiArrowLeft, FiCalendar, FiTag, FiClock, FiArrowRight } from 'react-icons/fi';
-import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
-import { SiDiscord } from 'react-icons/si';
+import { Link, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { AnimatedNetwork } from '../components/AnimatedNetwork';
+import { Footer } from '../components/Footer';
 
 const calculateReadingTime = (content) => {
   const wordsPerMinute = 200;
@@ -30,9 +27,7 @@ const extractHeadings = (content) => {
 export const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [hoveredPost, setHoveredPost] = useState(null);
-
-  const backLabel = 'Inicio';
+  const location = useLocation();
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -62,6 +57,16 @@ export const Blog = () => {
           }
           
           setPosts(postsWithContent);
+
+          // If query param ?post=slug exists, open it directly
+          const params = new URLSearchParams(location.search);
+          const postSlug = params.get('post');
+          if (postSlug) {
+            const matched = postsWithContent.find((p) => p.slug === postSlug);
+            if (matched) {
+              setSelectedPost(matched);
+            }
+          }
         }
       } catch (error) {
         console.error('Error loading posts:', error);
@@ -69,7 +74,7 @@ export const Blog = () => {
     };
 
     loadPosts();
-  }, []);
+  }, [location.search]);
 
   const handlePostClick = (post) => {
     setSelectedPost(post);
@@ -81,278 +86,187 @@ export const Blog = () => {
     window.scrollTo(0, 0);
   };
 
-  const categoryColors = {
-    'DevOps': { bg: 'from-orange-500 to-red-500', text: 'bg-orange-500' },
-    'Ciberseguridad': { bg: 'from-red-500 to-pink-500', text: 'bg-red-500' },
-    'Desarrollo': { bg: 'from-blue-500 to-cyan-500', text: 'bg-blue-500' },
-    'General': { bg: 'from-purple-500 to-indigo-500', text: 'bg-purple-500' },
-  };
-
-  const getCategoryStyle = (category) => {
-    return categoryColors[category] || categoryColors['General'];
-  };
-
   if (selectedPost) {
     const readingTime = calculateReadingTime(selectedPost.content);
-    
+    const headings = extractHeadings(selectedPost.content);
+
     return (
-      <div className="min-h-screen bg-[#05000a] py-8 px-4">
-        <AnimatedNetwork primaryColor="255, 45, 173" secondaryColor="0, 229, 255" />
-        <div className="max-w-5xl mx-auto relative z-10">
+      <div className="min-h-screen bg-[#07080b] text-white pt-10 pb-20">
+        <div className="max-w-[1000px] mx-auto px-6 sm:px-8">
+          {/* Back Navigation */}
           <button
             onClick={handleBackClick}
-            className="inline-flex items-center gap-2 text-[#9080b0] hover:text-[#ff2dad] transition-all duration-300 mb-10 group"
+            className="font-mono text-xs uppercase tracking-[0.2em] text-[#10b981] hover:text-white transition-colors mb-12 flex items-center gap-2"
           >
-            <div className="p-2 rounded-full bg-[#12002e] group-hover:bg-[#ff2dad] group-hover:text-white transition-colors border border-[#2a1050]">
-              <FiArrowLeft className="w-5 h-5" />
-            </div>
-            <span className="text-sm font-medium">Volver al blog</span>
+            <span>&larr;</span>
+            <span>Volver a las notas de campo</span>
           </button>
-          
-          <article className="relative">
-            <div className="absolute -top-4 -left-4 -right-4 h-32 bg-gradient-to-r from-[#ff2dad] to-[#00e5ff] opacity-5 rounded-3xl -z-10"></div>
-            
-            <div className="bg-[#0b0020]/90 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl border border-[#2a1050] shadow-[#ff2dad]/10">
-              <header className="mb-10 pb-8 border-b border-[#2a1050]">
-                <div className="flex flex-wrap items-center gap-3 mb-6">
-                  <span className={`inline-flex items-center gap-1.5 px-4 py-1.5 text-white text-xs font-semibold rounded-full shadow-lg ${getCategoryStyle(selectedPost.category).text}`}>
-                    <FiTag className="w-3 h-3" />
-                    {selectedPost.category}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-sm text-[#9080b0]">
-                    <FiCalendar className="w-4 h-4" />
-                    {selectedPost.date}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-sm text-[#9080b0]">
-                    <FiClock className="w-4 h-4" />
-                    {readingTime} min de lectura
-                  </span>
-                </div>
-                
-                <h1 className="text-4xl md:text-5xl font-black text-[#e0d0ff] mb-4 leading-tight">
-                  {selectedPost.title}
-                </h1>
-                
-                
-              </header>
-              
-              {selectedPost.coverImage && (
-                <div className="mb-10 rounded-2xl overflow-hidden shadow-xl border border-[#2a1050]">
-                  <img
-                    src={selectedPost.coverImage}
-                    alt={selectedPost.coverAlt || selectedPost.title}
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              )}
-              
-              {(() => {
-                const headings = extractHeadings(selectedPost.content);
-                if (headings.length < 2) return null;
-                return (
-                  <div className="mb-10 p-6 bg-[#12002e] rounded-2xl border border-[#2a1050]">
-                    <h3 className="text-sm font-bold text-[#ff2dad] uppercase tracking-wider mb-4">
-                      Tabla de contenido
-                    </h3>
-                    <nav className="space-y-2">
-                      {headings.map((h) => (
-                        <button
-                          key={h.id}
-                          onClick={() => document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth' })}
-                          className={`block text-left text-sm transition-colors hover:text-[#00e5ff] ${
-                            h.level === 3 ? 'ml-4 text-[#9080b0]' : 'font-medium text-[#e0d0ff]'
-                          }`}
-                        >
-                          {h.text}
-                        </button>
-                      ))}
-                    </nav>
-                  </div>
-                );
-              })()}
 
-              <div className="prose prose-lg max-w-none text-[#c0b0d0]
-                prose-headings:font-black prose-headings:text-[#e0d0ff]
-                prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
-                prose-p:text-[#c0b0d0] prose-p:leading-loose prose-p:text-lg
-                prose-a:text-[#ff2dad] prose-a:no-underline hover:prose-a:underline hover:prose-a:text-[#00e5ff] prose-a:font-medium
-                prose-strong:text-[#e0d0ff] prose-strong:font-bold
-                prose-ul:prose-li:text-[#c0b0d0] prose-li:text-lg
-                prose-ol:prose-li:text-[#c0b0d0] prose-li:text-lg
-                prose-code:text-[#ff2dad] prose-code:bg-[#12002e] prose-code:px-2 prose-code:py-1 prose-code:rounded-lg prose-code:text-sm prose-code:font-bold
-                prose-pre:bg-[#05000a] prose-pre:text-[#c0b0d0] prose-pre:rounded-2xl prose-pre:p-6 prose-pre:shadow-xl prose-pre:border prose-pre:border-[#2a1050]
-                prose-blockquote:border-l-4 prose-blockquote:border-[#ff2dad] prose-blockquote:bg-gradient-to-r prose-blockquote:from-[#12002e] prose-blockquote:to-transparent prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:italic
-                prose-hr:border-[#2a1050] prose-hr:my-12
-                prose-headings:mb-4 prose-p:mb-6">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    img: ({ src, alt, title }) => (
-                      <figure className="my-8">
-                        <img
-                          src={src}
-                          alt={alt}
-                          title={title}
-                          className="rounded-2xl shadow-xl border border-[#2a1050] w-full h-auto"
-                          loading="lazy"
-                        />
-                        {title && (
-                          <figcaption className="text-center text-sm text-[var(--color-text-secondary)] mt-3 italic">
-                            {title}
-                          </figcaption>
-                        )}
-                      </figure>
-                    ),
-                    h2: ({ children, ...props }) => {
-                      const text = children?.toString() || '';
-                      return <h2 id={slugify(text)} {...props}>{children}</h2>;
-                    },
-                    h3: ({ children, ...props }) => {
-                      const text = children?.toString() || '';
-                      return <h3 id={slugify(text)} {...props}>{children}</h3>;
-                    },
-                  }}
-                >
-                  {selectedPost.content}
-                </ReactMarkdown>
+          <article>
+            <header className="mb-12">
+              <div className="flex flex-wrap items-center gap-4 font-mono text-[0.75rem] uppercase tracking-[0.15em] mb-4">
+                <span className="text-[#ef4444]">{selectedPost.category || 'ANALYSIS'}</span>
+                <span className="text-[#64748b]">·</span>
+                <span className="text-[#64748b]">{selectedPost.date}</span>
+                <span className="text-[#64748b]">·</span>
+                <span className="text-[#10b981]">{readingTime} MIN READ</span>
               </div>
-              
-              
+
+              <h1 className="text-[clamp(2.4rem,5vw,4.2rem)] font-extrabold tracking-[-0.04em] leading-[1.0] text-white mb-6">
+                {selectedPost.title}
+              </h1>
+
+              {selectedPost.excerpt && (
+                <p className="text-xl leading-relaxed text-[#8e99a8] max-w-[48ch]">
+                  {selectedPost.excerpt}
+                </p>
+              )}
+            </header>
+
+            {selectedPost.coverImage && (
+              <div className="mb-12 overflow-hidden border border-[#131722]">
+                <img
+                  src={selectedPost.coverImage}
+                  alt={selectedPost.coverAlt || selectedPost.title}
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+              </div>
+            )}
+
+            {headings.length >= 2 && (
+              <div className="mb-12 py-6 border-y border-[#131722]">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#ef4444] mb-3">
+                  Tabla de Contenido
+                </p>
+                <nav className="space-y-1.5 font-mono text-sm">
+                  {headings.map((h) => (
+                    <button
+                      key={h.id}
+                      onClick={() => document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth' })}
+                      className={`block text-left text-[#8e99a8] hover:text-[#10b981] transition-colors ${
+                        h.level === 3 ? 'ml-4 text-xs' : ''
+                      }`}
+                    >
+                      # {h.text}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            )}
+
+            {/* Markdown Body */}
+            <div className="prose prose-invert prose-lg max-w-none text-[#d1d5db]
+              prose-headings:text-white prose-headings:font-extrabold prose-headings:tracking-[-0.03em]
+              prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
+              prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+              prose-p:text-[#d1d5db] prose-p:leading-[1.75] prose-p:mb-6
+              prose-a:text-[#10b981] prose-a:no-underline hover:prose-a:underline
+              prose-code:text-[#10b981] prose-code:bg-[#0e1118] prose-code:px-2 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
+              prose-pre:bg-[#0c0d12] prose-pre:border prose-pre:border-[#131722] prose-pre:text-[#e2e8f0] prose-pre:p-5 prose-pre:font-mono
+              prose-blockquote:border-l-2 prose-blockquote:border-[#10b981] prose-blockquote:text-[#8e99a8] prose-blockquote:italic
+              prose-ul:text-[#d1d5db] prose-li:mb-1">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  img: ({ src, alt, title }) => (
+                    <figure className="my-8">
+                      <img
+                        src={src}
+                        alt={alt}
+                        title={title}
+                        className="w-full h-auto border border-[#131722]"
+                        loading="lazy"
+                      />
+                      {title && (
+                        <figcaption className="text-center font-mono text-xs text-[#64748b] mt-2">
+                          {title}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ),
+                  h2: ({ children, ...props }) => {
+                    const text = children?.toString() || '';
+                    return <h2 id={slugify(text)} {...props}>{children}</h2>;
+                  },
+                  h3: ({ children, ...props }) => {
+                    const text = children?.toString() || '';
+                    return <h3 id={slugify(text)} {...props}>{children}</h3>;
+                  },
+                }}
+              >
+                {selectedPost.content}
+              </ReactMarkdown>
             </div>
           </article>
-
-          <footer className="mt-12 bg-[#05000a] text-[#c0b0d0] py-8 rounded-2xl border border-[#2a1050]">
-            <div className="px-8">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div>
-                  <h4 className="text-xl font-bold text-[#ff2dad]">zer0sh</h4>
-                  <p className="text-[#9080b0] text-sm mt-1">DevOps & Backend Engineer</p>
-                </div>
-                <div className="flex gap-6">
-                  <a href="https://github.com/zer0sh" target="_blank" rel="noopener noreferrer" className="text-[#9080b0] hover:text-[#00e5ff] transition-colors" title="GitHub">
-                    <FaGithub className="w-6 h-6" />
-                  </a>
-                  <a href="https://www.linkedin.com/in/steven-munozl" target="_blank" rel="noopener noreferrer" className="text-[#9080b0] hover:text-[#00e5ff] transition-colors" title="LinkedIn">
-                    <FaLinkedin className="w-6 h-6" />
-                  </a>
-                  <a href="https://discord.com/users/stephem.dev" target="_blank" rel="noopener noreferrer" className="text-[#9080b0] hover:text-[#00e5ff] transition-colors" title="Discord">
-                    <SiDiscord className="w-6 h-6" />
-                  </a>
-                  <a href="https://www.instagram.com/zer0sh.dev" target="_blank" rel="noopener noreferrer" className="text-[#9080b0] hover:text-[#00e5ff] transition-colors" title="Instagram">
-                    <FaInstagram className="w-6 h-6" />
-                  </a>
-                </div>
-              </div>
-              <div className="border-t border-[#2a1050] mt-6 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p className="text-[#9080b0] text-sm">&copy; {new Date().getFullYear()} Steven Munoz &mdash; Copyleft</p>
-                <p className="text-[#9080b0] text-sm">Hecho con React y Tailwind</p>
-              </div>
-            </div>
-          </footer>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--color-background)] via-white to-[var(--color-background)] dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 py-16 px-4">
-      <AnimatedNetwork />
-      <div className="max-w-5xl mx-auto relative z-10">
+    <div className="min-h-screen bg-[#07080b] text-white pt-12 pb-24">
+      <div className="max-w-[1250px] mx-auto px-6 sm:px-8">
+        {/* Navigation back */}
         <Link
-          to="/es"
-          className="inline-flex items-center gap-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-all duration-300 mb-12 group"
+          to="/"
+          className="font-mono text-xs uppercase tracking-[0.2em] text-[#10b981] hover:text-white transition-colors mb-16 inline-flex items-center gap-2"
         >
-          <div className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
-            <FiArrowLeft className="w-5 h-5" />
-          </div>
-          <span className="text-sm font-medium">{backLabel}</span>
+          <span>&larr;</span>
+          <span>Volver al inicio</span>
         </Link>
 
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-black text-[var(--color-text-primary)] mb-6 tracking-tight">
-            Blog
+        {/* Section Header */}
+        <div className="mb-20">
+          <p className="font-mono text-[0.75rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
+            INCIDENT_ANALYSES // SRE_FIELD_NOTES
+          </p>
+          <h1 className="text-[clamp(2.8rem,6vw,4.8rem)] font-extrabold tracking-[-0.04em] leading-[0.95] text-white uppercase mb-4">
+            Field Dispatches
           </h1>
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-full border border-gray-200/50 dark:border-gray-700/50">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            <p className="text-[var(--color-text-secondary)] font-medium">
-              DevOps, Ciberseguridad y Desarrollo
-            </p>
-          </div>
+          <p className="text-xl text-[#64748b] max-w-[48ch]">
+            Artículos técnicos, investigación de incidentes en producción e ingeniería de sistemas.
+          </p>
         </div>
 
-        <div className="grid gap-8">
+        {/* Posts List */}
+        <div className="grid row-gap-14 sm:row-gap-20">
           {posts.length === 0 ? (
-            <div className="flex items-center justify-center py-20">
-              <div className="relative">
-                <div className="w-16 h-16 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div>
-              </div>
+            <div className="py-20 font-mono text-sm text-[#64748b]">
+              CARGANDO REGISTRO DE DISPATCHES...
             </div>
           ) : (
-            posts.map((post, index) => {
+            posts.map((post) => {
               const readingTime = calculateReadingTime(post.content);
-              const isHovered = hoveredPost === post.slug;
-              const categoryStyle = getCategoryStyle(post.category);
-              
+
               return (
                 <article
                   key={post.slug}
                   onClick={() => handlePostClick(post)}
-                  onMouseEnter={() => setHoveredPost(post.slug)}
-                  onMouseLeave={() => setHoveredPost(null)}
-                  className={`relative group cursor-pointer transition-all duration-500 ${isHovered ? 'transform -translate-y-2' : ''}`}
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="group cursor-pointer grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-6"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] opacity-0 group-hover:opacity-10 rounded-3xl transition-opacity duration-500 -z-10"></div>
-                  
-                  <div className={`relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl p-8 md:p-10 border border-white/50 dark:border-gray-700/50 shadow-xl transition-all duration-500 ${isHovered ? 'shadow-2xl border-[var(--color-primary)]/30' : ''}`}>
-                    <div className="flex flex-col md:flex-row md:items-start gap-6">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-3 mb-4">
-                          <span className={`inline-flex items-center gap-1.5 px-4 py-1.5 text-white text-xs font-bold rounded-full shadow-md ${categoryStyle.text}`}>
-                            <FiTag className="w-3 h-3" />
-                            {post.category}
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 text-sm text-[var(--color-text-secondary)] bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full">
-                            <FiCalendar className="w-3.5 h-3.5" />
-                            {post.date}
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 text-sm text-[var(--color-text-secondary)] bg-gray-100 dark:bg-gray-700/50 px-3 py-1 rounded-full">
-                            <FiClock className="w-3.5 h-3.5" />
-                            {readingTime} min
-                          </span>
-                        </div>
-                        
-                        <h2 className={`text-2xl md:text-3xl font-bold mb-4 transition-colors duration-300 ${isHovered ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-primary)]'}`}>
-                          {post.title}
-                        </h2>
-                        
-                        <p className="text-[var(--color-text-secondary)] text-lg leading-relaxed mb-6">
-                          {post.excerpt}
-                        </p>
-                        
-                        <div className={`flex items-center gap-3 font-bold transition-all duration-500 ${isHovered ? 'text-[var(--color-primary)] translate-x-2' : 'text-[var(--color-text-secondary)]'}`}>
-                          <span>Leer artículo</span>
-                          <FiArrowRight className={`w-5 h-5 transform transition-transform duration-300 ${isHovered ? 'translate-x-2' : ''}`} />
-                        </div>
-                      </div>
-                    </div>
+                  <div className="font-mono text-xs text-[#64748b] uppercase tracking-wider">
+                    <p className="text-[#ef4444] mb-1">{post.category || 'DISPATCH'}</p>
+                    <p>{post.date}</p>
+                    <p className="text-[#10b981] mt-1">{readingTime} MIN READ</p>
+                  </div>
+
+                  <div>
+                    <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white group-hover:text-[#10b981] transition-colors mb-2.5">
+                      {post.title} &rarr;
+                    </h2>
+                    <p className="text-base sm:text-lg text-[#8e99a8] leading-relaxed max-w-[54ch]">
+                      {post.excerpt}
+                    </p>
                   </div>
                 </article>
               );
             })
           )}
         </div>
-
-        <div className="mt-20 text-center">
-          <div className="inline-flex items-center gap-2 px-6 py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-full border border-gray-200/50 dark:border-gray-700/50">
-            <span className="text-2xl">📝</span>
-            <p className="text-[var(--color-text-secondary)]">
-              {posts.length} {posts.length === 1 ? 'articulo publicado' : 'articulos publicados'}
-            </p>
-          </div>
-        </div>
       </div>
+      <Footer />
     </div>
   );
 };

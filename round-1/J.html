@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Direction J — Whispered Monolith Dispatch</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #090a0d;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 6rem 8vw 12rem 8vw;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .ghost-kicker {
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+      text-transform: uppercase;
+      color: #1a1e28;
+      margin-bottom: -1rem;
+    }
+    header {
+      margin-bottom: 8rem;
+    }
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 1rem;
+    }
+    .handle-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #10b981;
+      margin-bottom: 2.5rem;
+    }
+    .doctrine {
+      font-size: clamp(1.2rem, 2.3vw, 1.65rem);
+      font-weight: 400;
+      line-height: 1.4;
+      color: #f8fafc;
+      max-width: 40ch;
+    }
+    .doctrine .dim {
+      color: #64748b;
+    }
+    .section-kicker {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #ef4444;
+      margin-bottom: 4rem;
+    }
+    .project-stream {
+      display: grid;
+      row-gap: 5.5rem;
+      margin-bottom: 10rem;
+    }
+    .project-unit {
+      display: grid;
+      grid-template-columns: 18rem 1fr;
+      column-gap: 4rem;
+    }
+    @media (max-width: 800px) {
+      .project-unit { grid-template-columns: 1fr; row-gap: 1rem; }
+    }
+    .unit-meta h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 0.25rem;
+    }
+    .unit-meta .role {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      color: #10b981;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .unit-body p {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: #f8fafc;
+      max-width: 48ch;
+      margin-bottom: 0.75rem;
+    }
+    .unit-body .tech {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      color: #64748b;
+    }
+    .dispatches {
+      margin-bottom: 8rem;
+    }
+    .dispatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+      gap: 3rem;
+    }
+    .dispatch-card .tag {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      color: #ef4444;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+    .dispatch-card h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+    .dispatch-card p {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+    footer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+      gap: 2.5rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+    footer span {
+      display: block;
+      color: #f8fafc;
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="ghost-kicker">INFRASTRUCTURE</div>
+    <h1>Steven Muñoz</h1>
+    <div class="handle-row">
+      <div>zer0sh</div>
+      <div>Site Reliability Engineer</div>
+      <div>Availability 99.99%</div>
+    </div>
+    <p class="doctrine">
+      Resilience is engineered, not hoped for. <span class="dim">Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.</span>
+    </p>
+  </header>
+
+  <main>
+    <p class="section-kicker">Operational Systems</p>
+
+    <div class="project-stream">
+
+      <article class="project-unit">
+        <div class="unit-meta">
+          <h3>k3s-lab</h3>
+          <p class="role">Cloud-Native Platform</p>
+        </div>
+        <div class="unit-body">
+          <p>Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+          <p class="tech">Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+        </div>
+      </article>
+
+      <article class="project-unit">
+        <div class="unit-meta">
+          <h3>sunim-tui</h3>
+          <p class="role">Infrastructure Tooling</p>
+        </div>
+        <div class="unit-body">
+          <p>Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+          <p class="tech">Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+        </div>
+      </article>
+
+      <article class="project-unit">
+        <div class="unit-meta">
+          <h3>zer0sh-site-health-monitor</h3>
+          <p class="role">Reliability Engine</p>
+        </div>
+        <div class="unit-body">
+          <p>Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+          <p class="tech">PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+        </div>
+      </article>
+
+      <article class="project-unit">
+        <div class="unit-meta">
+          <h3>gh-runner-selfhosted-docker</h3>
+          <p class="role">Runner Cluster</p>
+        </div>
+        <div class="unit-body">
+          <p>Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+          <p class="tech">Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+        </div>
+      </article>
+
+      <article class="project-unit">
+        <div class="unit-meta">
+          <h3>dotfiles</h3>
+          <p class="role">Unix Workstation</p>
+        </div>
+        <div class="unit-body">
+          <p>Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+          <p class="tech">Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+        </div>
+      </article>
+
+    </div>
+
+    <section class="dispatches">
+      <p class="section-kicker">Field Analyses</p>
+      <div class="dispatch-grid">
+        <article class="dispatch-card">
+          <p class="tag">Analysis</p>
+          <h4>Shell Builtins Deep Dive</h4>
+          <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+        </article>
+        <article class="dispatch-card">
+          <p class="tag">Advisory</p>
+          <h4>CVE-2026-9860 Analysis</h4>
+          <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+        </article>
+        <article class="dispatch-card">
+          <p class="tag">Operations</p>
+          <h4>TUI Tooling Ecosystem</h4>
+          <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>OPERATOR <span>Steven Muñoz</span></div>
+    <div>REPOSITORY <span>github.com/zer0sh</span></div>
+    <div>LINKEDIN <span>steven-munozl</span></div>
+    <div>REGION <span>LATAM / Remote</span></div>
+  </footer>
+
+</body>
+</html>

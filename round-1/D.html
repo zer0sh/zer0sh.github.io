@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Direction D — Brutalist Scale Shock</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #08080a;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Arial Black", sans-serif;
+      font-size: 16px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 5rem 5vw 10rem 5vw;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .badge {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #9eff00;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: clamp(3.5rem, 11vw, 9.5rem);
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      line-height: 0.85;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .subtitle {
+      font-size: clamp(1.2rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: #9eff00;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      text-transform: uppercase;
+      margin-bottom: 3.5rem;
+    }
+    .doctrine {
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+      color: #ffffff;
+      max-width: 36ch;
+      margin-bottom: 8rem;
+    }
+    .doctrine span {
+      color: #7f8490;
+    }
+    .catalog-title {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #9eff00;
+      margin-bottom: 5rem;
+    }
+    .projects-block {
+      display: grid;
+      row-gap: 6rem;
+      margin-bottom: 10rem;
+    }
+    .project-card {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      column-gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .project-card { grid-template-columns: 1fr; row-gap: 1rem; }
+    }
+    .project-num {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffb800;
+      letter-spacing: -0.05em;
+      line-height: 1;
+    }
+    .project-main h3 {
+      font-size: clamp(1.8rem, 4vw, 3.4rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .project-main .role {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      color: #9eff00;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .project-main .desc {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #7f8490;
+      max-width: 50ch;
+      margin-bottom: 1rem;
+    }
+    .project-main .stack {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: #ffb800;
+    }
+    .writing-section {
+      margin-bottom: 8rem;
+    }
+    .writing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+      gap: 3rem;
+    }
+    .writing-card h3 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .writing-card p {
+      color: #7f8490;
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+    footer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: 2rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7f8490;
+    }
+    footer a {
+      color: #9eff00;
+      text-decoration: none;
+    }
+    footer span {
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="badge">[ SRE_NODE // LATAM // 2026 ]</p>
+
+  <header>
+    <h1>STEVEN MUÑOZ</h1>
+    <p class="subtitle">ZER0SH / SITE RELIABILITY ENGINEER</p>
+    <p class="doctrine">
+      Resilience is engineered, not hoped for. <span>Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.</span>
+    </p>
+  </header>
+
+  <main>
+    <p class="catalog-title">PRIMARY OPERATIONAL ARTIFACTS</p>
+
+    <div class="projects-block">
+
+      <article class="project-card">
+        <div class="project-num">01</div>
+        <div class="project-main">
+          <h3>k3s-lab</h3>
+          <p class="role">Cloud-Native Platform Simulation</p>
+          <p class="desc">Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+          <p class="stack">Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-num">02</div>
+        <div class="project-main">
+          <h3>sunim-tui</h3>
+          <p class="role">Infrastructure Operations TUI</p>
+          <p class="desc">Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+          <p class="stack">Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-num">03</div>
+        <div class="project-main">
+          <h3>zer0sh-site-health-monitor</h3>
+          <p class="role">Runtime Reliability Engine</p>
+          <p class="desc">Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+          <p class="stack">PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-num">04</div>
+        <div class="project-main">
+          <h3>gh-runner-selfhosted-docker</h3>
+          <p class="role">Containerized Runner Infrastructure</p>
+          <p class="desc">Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+          <p class="stack">Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-num">05</div>
+        <div class="project-main">
+          <h3>dotfiles</h3>
+          <p class="role">Declarative Workstation Configuration</p>
+          <p class="desc">Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+          <p class="stack">Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+        </div>
+      </article>
+
+    </div>
+
+    <section class="writing-section">
+      <p class="catalog-title">TECHNICAL DISPATCHES</p>
+      <div class="writing-grid">
+        <article class="writing-card">
+          <h3>Shell Builtins Deep Dive</h3>
+          <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+        </article>
+        <article class="writing-card">
+          <h3>CVE-2026-9860 Analysis</h3>
+          <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+        </article>
+        <article class="writing-card">
+          <h3>TUI Tooling Ecosystem</h3>
+          <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>OPERATOR: <span>STEVEN MUÑOZ</span></div>
+    <div>SOURCE: <a href="https://github.com/zer0sh">GITHUB.COM/ZER0SH</a></div>
+    <div>NETWORK: <a href="https://linkedin.com/in/steven-munozl">LINKEDIN</a></div>
+    <div>COMM: <span>DISCORD (stephem.dev)</span></div>
+  </footer>
+
+</body>
+</html>

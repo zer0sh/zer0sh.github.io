@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Direction C — Industrial Telemetry</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #0b1220;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 6rem 6vw 10rem 6vw;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .status-ribbon {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #f97316;
+      margin-bottom: 2.5rem;
+    }
+    header {
+      margin-bottom: 7rem;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: end;
+    }
+    @media (max-width: 900px) {
+      header { grid-template-columns: 1fr; }
+    }
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+    h1 .handle {
+      display: block;
+      color: #94a3b8;
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-top: 0.5rem;
+    }
+    .doctrine {
+      font-size: 1.25rem;
+      line-height: 1.45;
+      color: #f8fafc;
+      max-width: 44ch;
+    }
+    .subdoctrine {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-top: 1rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+    }
+    .section-header {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #f97316;
+      margin-bottom: 3.5rem;
+    }
+    .systems-table {
+      display: grid;
+      row-gap: 4.5rem;
+      margin-bottom: 8rem;
+    }
+    .system-row {
+      display: grid;
+      grid-template-columns: 14rem 20rem 1fr;
+      column-gap: 3.5rem;
+      row-gap: 1rem;
+    }
+    @media (max-width: 1024px) {
+      .system-row { grid-template-columns: 12rem 1fr; }
+    }
+    @media (max-width: 720px) {
+      .system-row { grid-template-columns: 1fr; }
+    }
+    .spec-id {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      color: #f97316;
+      letter-spacing: 0.1em;
+    }
+    .spec-title h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+    .spec-title .role {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-top: 0.25rem;
+    }
+    .spec-detail p {
+      color: #f8fafc;
+      font-size: 0.98rem;
+      line-height: 1.55;
+      max-width: 54ch;
+    }
+    .spec-detail .stack {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      margin-top: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+    .telemetry-log {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+      gap: 3.5rem;
+      margin-bottom: 8rem;
+    }
+    .log-entry .log-tag {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      color: #f97316;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    .log-entry h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .log-entry p {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+    footer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+      gap: 2.5rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      letter-spacing: 0.06em;
+    }
+    footer .val {
+      color: #f8fafc;
+      display: block;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="status-ribbon">Site Reliability Engineering // Node Cluster Active</p>
+
+  <header>
+    <div>
+      <h1>Steven Muñoz <span class="handle">zer0sh // SRE</span></h1>
+    </div>
+    <div>
+      <p class="doctrine">
+        Resilience is engineered, not hoped for. Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.
+      </p>
+      <p class="subdoctrine">POSIX Environments · Distributed Observability · GitOps Architecture</p>
+    </div>
+  </header>
+
+  <main>
+    <p class="section-header">Primary Infrastructure Work</p>
+    <div class="systems-table">
+
+      <article class="system-row">
+        <div class="spec-id">SYS.01 // K8S</div>
+        <div class="spec-title">
+          <h3>k3s-lab</h3>
+          <p class="role">Cloud-Native Platform Simulation</p>
+        </div>
+        <div class="spec-detail">
+          <p>Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+          <p class="stack">Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+        </div>
+      </article>
+
+      <article class="system-row">
+        <div class="spec-id">SYS.02 // RUST</div>
+        <div class="spec-title">
+          <h3>sunim-tui</h3>
+          <p class="role">Infrastructure Operations TUI</p>
+        </div>
+        <div class="spec-detail">
+          <p>Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+          <p class="stack">Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+        </div>
+      </article>
+
+      <article class="system-row">
+        <div class="spec-id">SYS.03 // TELEMETRY</div>
+        <div class="spec-title">
+          <h3>zer0sh-site-health-monitor</h3>
+          <p class="role">Runtime Reliability Engine</p>
+        </div>
+        <div class="spec-detail">
+          <p>Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+          <p class="stack">PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+        </div>
+      </article>
+
+      <article class="system-row">
+        <div class="spec-id">SYS.04 // CI-CD</div>
+        <div class="spec-title">
+          <h3>gh-runner-selfhosted-docker</h3>
+          <p class="role">Containerized Runner Infrastructure</p>
+        </div>
+        <div class="spec-detail">
+          <p>Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+          <p class="stack">Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+        </div>
+      </article>
+
+      <article class="system-row">
+        <div class="spec-id">SYS.05 // UNIX</div>
+        <div class="spec-title">
+          <h3>dotfiles</h3>
+          <p class="role">Declarative Workstation Configuration</p>
+        </div>
+        <div class="spec-detail">
+          <p>Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+          <p class="stack">Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="section-header">Technical Analysis & Articles</p>
+    <div class="telemetry-log">
+      <article class="log-entry">
+        <p class="log-tag">Core Internals</p>
+        <h3>Shell Builtins Deep Dive</h3>
+        <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+      </article>
+      <article class="log-entry">
+        <p class="log-tag">Security Advisory</p>
+        <h3>CVE-2026-9860 Analysis</h3>
+        <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+      </article>
+      <article class="log-entry">
+        <p class="log-tag">Operator Tooling</p>
+        <h3>TUI Tooling Ecosystem</h3>
+        <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div>
+      Operator
+      <span class="val">Steven Muñoz</span>
+    </div>
+    <div>
+      Repository
+      <span class="val">github.com/zer0sh</span>
+    </div>
+    <div>
+      Professional
+      <span class="val">linkedin.com/in/steven-munozl</span>
+    </div>
+    <div>
+      Station
+      <span class="val">LATAM / Remote</span>
+    </div>
+  </footer>
+
+</body>
+</html>

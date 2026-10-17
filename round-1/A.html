@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Direction A — Telemetry Dispatch</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #09090b;
+      color: #ff9e3b;
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 6rem 8vw 10rem 8vw;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 7rem;
+    }
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .doctrine {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      max-width: 48ch;
+      letter-spacing: -0.01em;
+    }
+    section {
+      margin-bottom: 6rem;
+    }
+    .section-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 3.5rem;
+    }
+    .project-entry {
+      margin-bottom: 4rem;
+      display: grid;
+      grid-template-columns: 16rem 1fr;
+      column-gap: 4rem;
+      row-gap: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .project-entry { grid-template-columns: 1fr; }
+    }
+    .project-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .project-role {
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+    .project-body {
+      max-width: 58ch;
+    }
+    .project-stack {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      margin-top: 0.75rem;
+    }
+    .writing-list {
+      display: grid;
+      row-gap: 2rem;
+      max-width: 65ch;
+    }
+    .writing-item h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .writing-item p {
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+    footer {
+      margin-top: 8rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    footer a {
+      color: inherit;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="eyebrow">Zero Tolerance · System Availability</p>
+    <h1>Steven Muñoz<br>zer0sh</h1>
+    <p class="doctrine">
+      Resilience is engineered, not hoped for. Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.
+    </p>
+  </header>
+
+  <main>
+    <section>
+      <h2 class="section-title">Production Systems & Tooling</h2>
+
+      <article class="project-entry">
+        <div>
+          <h3 class="project-name">k3s-lab</h3>
+          <p class="project-role">Cloud-Native Platform</p>
+        </div>
+        <div class="project-body">
+          <p>Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+          <p class="project-stack">Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+        </div>
+      </article>
+
+      <article class="project-entry">
+        <div>
+          <h3 class="project-name">sunim-tui</h3>
+          <p class="project-role">Infrastructure Operator</p>
+        </div>
+        <div class="project-body">
+          <p>Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+          <p class="project-stack">Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+        </div>
+      </article>
+
+      <article class="project-entry">
+        <div>
+          <h3 class="project-name">zer0sh-site-health-monitor</h3>
+          <p class="project-role">Reliability & Telemetry</p>
+        </div>
+        <div class="project-body">
+          <p>Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+          <p class="project-stack">PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+        </div>
+      </article>
+
+      <article class="project-entry">
+        <div>
+          <h3 class="project-name">gh-runner-selfhosted-docker</h3>
+          <p class="project-role">Isolated Runner Cluster</p>
+        </div>
+        <div class="project-body">
+          <p>Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+          <p class="project-stack">Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+        </div>
+      </article>
+
+      <article class="project-entry">
+        <div>
+          <h3 class="project-name">dotfiles</h3>
+          <p class="project-role">Declarative Workstation</p>
+        </div>
+        <div class="project-body">
+          <p>Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+          <p class="project-stack">Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">Dispatches & Incident Analyses</h2>
+      <div class="writing-list">
+        <article class="writing-item">
+          <h3>Shell Builtins Deep Dive</h3>
+          <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+        </article>
+        <article class="writing-item">
+          <h3>CVE-2026-9860 Analysis</h3>
+          <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+        </article>
+        <article class="writing-item">
+          <h3>TUI Tooling Ecosystem</h3>
+          <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>github.com/zer0sh</div>
+    <div>linkedin.com/in/steven-munozl</div>
+    <div>stephem.dev</div>
+    <div>LATAM · Remote</div>
+  </footer>
+
+</body>
+</html>

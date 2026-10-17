@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Round 2 — Direction H</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #030404;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 7rem 8vw 14rem 8vw;
+      max-width: 950px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .ghost-monolith {
+      font-size: clamp(3.5rem, 12vw, 10rem);
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      line-height: 0.85;
+      text-transform: uppercase;
+      color: #0f1613;
+      margin-bottom: 2rem;
+    }
+    header {
+      margin-bottom: 8rem;
+    }
+    .eyebrow {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #059669;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 0.5rem;
+    }
+    .handle {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #059669;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 3.5rem;
+    }
+    .doctrine {
+      font-size: clamp(1.2rem, 2.3vw, 1.65rem);
+      font-weight: 400;
+      line-height: 1.45;
+      max-width: 36ch;
+      margin: 0 auto;
+    }
+    .section-kicker {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #059669;
+      margin-bottom: 6rem;
+    }
+    .project-lineup {
+      display: grid;
+      row-gap: 6.5rem;
+      margin-bottom: 11rem;
+    }
+    .project-item h3 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+    }
+    .project-item .role {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      color: #059669;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .project-item p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 46ch;
+      margin: 0 auto 0.75rem auto;
+    }
+    .project-item .stack {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      color: #059669;
+      letter-spacing: 0.05em;
+    }
+    .dispatch-section {
+      margin-bottom: 10rem;
+    }
+    .dispatch-list {
+      display: grid;
+      row-gap: 4rem;
+      max-width: 50ch;
+      margin: 0 auto;
+    }
+    .dispatch-entry h4 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+    .dispatch-entry p {
+      font-size: 0.95rem;
+      opacity: 0.75;
+      line-height: 1.5;
+    }
+    footer {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #059669;
+    }
+    footer span {
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ghost-monolith">OPERATIONS</div>
+
+  <header>
+    <p class="eyebrow">Availability // Predictability</p>
+    <h1>Steven Muñoz</h1>
+    <p class="handle">zer0sh — Site Reliability Engineer</p>
+    <p class="doctrine">
+      Resilience is engineered, not hoped for. Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.
+    </p>
+  </header>
+
+  <main>
+    <p class="section-kicker">Engineered Platforms</p>
+
+    <div class="project-lineup">
+
+      <article class="project-item">
+        <h3>k3s-lab</h3>
+        <p class="role">Cloud-Native Platform Simulation</p>
+        <p>Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+        <p class="stack">Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+      </article>
+
+      <article class="project-item">
+        <h3>sunim-tui</h3>
+        <p class="role">Infrastructure Operations TUI (Rust)</p>
+        <p>Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+        <p class="stack">Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+      </article>
+
+      <article class="project-item">
+        <h3>zer0sh-site-health-monitor</h3>
+        <p class="role">Runtime Reliability Engine</p>
+        <p>Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+        <p class="stack">PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+      </article>
+
+      <article class="project-item">
+        <h3>gh-runner-selfhosted-docker</h3>
+        <p class="role">Containerized Runner Architecture</p>
+        <p>Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+        <p class="stack">Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+      </article>
+
+      <article class="project-item">
+        <h3>dotfiles</h3>
+        <p class="role">Declarative Workstation Configuration</p>
+        <p>Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+        <p class="stack">Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+      </article>
+
+    </div>
+
+    <section class="dispatch-section">
+      <p class="section-kicker">Technical Field Dispatches</p>
+      <div class="dispatch-list">
+        <article class="dispatch-entry">
+          <h4>Shell Builtins Deep Dive</h4>
+          <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+        </article>
+        <article class="dispatch-entry">
+          <h4>CVE-2026-9860 Analysis</h4>
+          <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+        </article>
+        <article class="dispatch-entry">
+          <h4>TUI Tooling Ecosystem</h4>
+          <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>OPERATOR <span>Steven Muñoz</span></div>
+    <div>REPOSITORY <span>github.com/zer0sh</span></div>
+    <div>NETWORK <span>linkedin.com/in/steven-munozl</span></div>
+    <div>DISPATCH <span>stephem.dev</span></div>
+  </footer>
+
+</body>
+</html>

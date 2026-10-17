@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Round 2 — Direction G</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #0b0e14;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 6rem 7vw 12rem 7vw;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .status-band {
+      display: flex;
+      justify-content: space-between;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #2dd4bf;
+      margin-bottom: 3.5rem;
+    }
+    header {
+      margin-bottom: 8rem;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      column-gap: 5rem;
+      align-items: end;
+    }
+    @media (max-width: 900px) {
+      header { grid-template-columns: 1fr; row-gap: 2.5rem; }
+    }
+    h1 {
+      font-size: clamp(3rem, 6.5vw, 5.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+    .handle {
+      font-size: 1.25rem;
+      color: #a855f7;
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+    .doctrine {
+      font-size: 1.25rem;
+      line-height: 1.45;
+      color: #f8fafc;
+      max-width: 44ch;
+    }
+    .section-kicker {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #a855f7;
+      margin-bottom: 4.5rem;
+    }
+    .systems-stream {
+      display: grid;
+      row-gap: 5.5rem;
+      margin-bottom: 10rem;
+    }
+    .system-unit {
+      display: grid;
+      grid-template-columns: 18rem 1fr;
+      column-gap: 5rem;
+    }
+    @media (max-width: 820px) {
+      .system-unit { grid-template-columns: 1fr; row-gap: 0.75rem; }
+    }
+    .unit-meta .tag {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #2dd4bf;
+      margin-bottom: 0.35rem;
+    }
+    .unit-meta h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .unit-meta .domain {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 0.25rem;
+    }
+    .unit-body p {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: #f8fafc;
+      max-width: 52ch;
+      margin-bottom: 0.75rem;
+    }
+    .unit-body .stack {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      color: #a855f7;
+      letter-spacing: 0.04em;
+    }
+    .writing-section {
+      margin-bottom: 8rem;
+    }
+    .writing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+      gap: 3.5rem;
+    }
+    .writing-entry .cat {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      color: #2dd4bf;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .writing-entry h4 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .writing-entry p {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+    footer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+      gap: 2rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+    footer span {
+      display: block;
+      color: #2dd4bf;
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="status-band">
+    <div>SRE_NODE // LATAM // 2026</div>
+    <div>AVAILABILITY: 99.99%</div>
+  </div>
+
+  <header>
+    <div>
+      <h1>Steven Muñoz</h1>
+      <p class="handle">zer0sh // SRE</p>
+    </div>
+    <div>
+      <p class="doctrine">
+        Resilience is engineered, not hoped for. Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <p class="section-kicker">Systems Telemetry Stream</p>
+
+    <div class="systems-stream">
+
+      <article class="system-unit">
+        <div class="unit-meta">
+          <p class="tag">REGISTRY_01</p>
+          <h3>k3s-lab</h3>
+          <p class="domain">Cloud-Native Platform</p>
+        </div>
+        <div class="unit-body">
+          <p>Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+          <p class="stack">Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+        </div>
+      </article>
+
+      <article class="system-unit">
+        <div class="unit-meta">
+          <p class="tag">REGISTRY_02</p>
+          <h3>sunim-tui</h3>
+          <p class="domain">Operator Tooling (Rust)</p>
+        </div>
+        <div class="unit-body">
+          <p>Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+          <p class="stack">Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+        </div>
+      </article>
+
+      <article class="system-unit">
+        <div class="unit-meta">
+          <p class="tag">REGISTRY_03</p>
+          <h3>zer0sh-site-health-monitor</h3>
+          <p class="domain">Reliability Engine</p>
+        </div>
+        <div class="unit-body">
+          <p>Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+          <p class="stack">PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+        </div>
+      </article>
+
+      <article class="system-unit">
+        <div class="unit-meta">
+          <p class="tag">REGISTRY_04</p>
+          <h3>gh-runner-selfhosted-docker</h3>
+          <p class="domain">Runner Cluster</p>
+        </div>
+        <div class="unit-body">
+          <p>Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+          <p class="stack">Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+        </div>
+      </article>
+
+      <article class="system-unit">
+        <div class="unit-meta">
+          <p class="tag">REGISTRY_05</p>
+          <h3>dotfiles</h3>
+          <p class="domain">Unix Workstation</p>
+        </div>
+        <div class="unit-body">
+          <p>Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+          <p class="stack">Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+        </div>
+      </article>
+
+    </div>
+
+    <section class="writing-section">
+      <p class="section-kicker">Field Reports & Dispatches</p>
+      <div class="writing-grid">
+        <article class="writing-entry">
+          <p class="cat">Kernel & POSIX</p>
+          <h4>Shell Builtins Deep Dive</h4>
+          <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+        </article>
+        <article class="writing-entry">
+          <p class="cat">Security Advisory</p>
+          <h4>CVE-2026-9860 Analysis</h4>
+          <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+        </article>
+        <article class="writing-entry">
+          <p class="cat">Operator Tooling</p>
+          <h4>TUI Tooling Ecosystem</h4>
+          <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>OPERATOR <span>Steven Muñoz</span></div>
+    <div>REPOSITORY <span>github.com/zer0sh</span></div>
+    <div>NETWORK <span>linkedin.com/in/steven-munozl</span></div>
+    <div>COMMS <span>stephem.dev</span></div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Round 2 — Direction F</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #08080a;
+      color: #e4e4e7;
+      font-family: Garamond, 'EB Garamond', Georgia, serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 6rem 7vw 12rem 14vw;
+      max-width: 1100px;
+    }
+    .man-header {
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #71717a;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5rem;
+    }
+    .man-section {
+      margin-bottom: 5.5rem;
+    }
+    .man-section-title {
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: #f43f5e;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .man-body {
+      padding-left: 3rem;
+    }
+    @media (max-width: 680px) {
+      .man-body { padding-left: 0; }
+    }
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+    .man-lead {
+      font-size: 1.25rem;
+      font-style: italic;
+      color: #71717a;
+      margin-bottom: 1.5rem;
+    }
+    .man-doctrine {
+      font-size: 1.2rem;
+      line-height: 1.5;
+      max-width: 48ch;
+    }
+    .project-entry {
+      margin-bottom: 4rem;
+    }
+    .project-title {
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .project-title span {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: #f43f5e;
+      margin-left: 0.75rem;
+      text-transform: uppercase;
+    }
+    .project-desc {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      max-width: 52ch;
+      margin-bottom: 0.5rem;
+    }
+    .project-meta {
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.78rem;
+      color: #71717a;
+      letter-spacing: 0.04em;
+    }
+    .dispatch-item {
+      margin-bottom: 2.5rem;
+    }
+    .dispatch-item h4 {
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .dispatch-item p {
+      font-size: 1rem;
+      color: #71717a;
+      max-width: 50ch;
+    }
+    footer {
+      padding-left: 3rem;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.8rem;
+      color: #71717a;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+      gap: 2rem;
+      margin-top: 6rem;
+    }
+    @media (max-width: 680px) {
+      footer { padding-left: 0; }
+    }
+    footer span {
+      color: #e4e4e7;
+      display: block;
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="man-header">
+    <div>ZER0SH(8)</div>
+    <div>Site Reliability Systems Architecture</div>
+    <div>ZER0SH(8)</div>
+  </div>
+
+  <section class="man-section">
+    <div class="man-section-title">NAME</div>
+    <div class="man-body">
+      <h1>Steven Muñoz</h1>
+      <p class="man-lead">zer0sh — Site Reliability Engineer</p>
+    </div>
+  </section>
+
+  <section class="man-section">
+    <div class="man-section-title">DOCTRINE</div>
+    <div class="man-body">
+      <p class="man-doctrine">
+        Resilience is engineered, not hoped for. Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.
+      </p>
+    </div>
+  </section>
+
+  <section class="man-section">
+    <div class="man-section-title">SYSTEMS(7)</div>
+    <div class="man-body">
+
+      <article class="project-entry">
+        <h3 class="project-title">k3s-lab <span>[Cloud-Native]</span></h3>
+        <p class="project-desc">Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+        <p class="project-meta">STACK: Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+      </article>
+
+      <article class="project-entry">
+        <h3 class="project-title">sunim-tui <span>[Rust / Operator]</span></h3>
+        <p class="project-desc">Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+        <p class="project-meta">STACK: Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+      </article>
+
+      <article class="project-entry">
+        <h3 class="project-title">zer0sh-site-health-monitor <span>[Reliability]</span></h3>
+        <p class="project-desc">Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+        <p class="project-meta">STACK: PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+      </article>
+
+      <article class="project-entry">
+        <h3 class="project-title">gh-runner-selfhosted-docker <span>[Runner Cluster]</span></h3>
+        <p class="project-desc">Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+        <p class="project-meta">STACK: Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+      </article>
+
+      <article class="project-entry">
+        <h3 class="project-title">dotfiles <span>[Declarative Unix]</span></h3>
+        <p class="project-desc">Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+        <p class="project-meta">STACK: Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="man-section">
+    <div class="man-section-title">ANALYSES & ADVISORIES</div>
+    <div class="man-body">
+      <article class="dispatch-item">
+        <h4>SHELL-BUILTINS(7)</h4>
+        <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+      </article>
+      <article class="dispatch-item">
+        <h4>CVE-2026-9860(8)</h4>
+        <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+      </article>
+      <article class="dispatch-item">
+        <h4>TUI-ECOSYSTEM(1)</h4>
+        <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="man-section">
+    <div class="man-section-title">SEE ALSO</div>
+    <footer>
+      <div>
+        SOURCE CODE
+        <span>github.com/zer0sh</span>
+      </div>
+      <div>
+        PROFESSIONAL RECORD
+        <span>linkedin.com/in/steven-munozl</span>
+      </div>
+      <div>
+        COMMS FREQUENCY
+        <span>stephem.dev (Discord)</span>
+      </div>
+      <div>
+        BASE
+        <span>LATAM / Remote</span>
+      </div>
+    </footer>
+  </section>
+
+</body>
+</html>

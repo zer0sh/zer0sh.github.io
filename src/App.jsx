@@ -39,7 +39,7 @@ const LanguageContent = ({ currentLang }) => {
   }, [currentLang, changeLang]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+    <div className="min-h-screen bg-[#07080b] text-white">
       <Navbar currentLang={currentLang} />
       <Home />
       <Footer />

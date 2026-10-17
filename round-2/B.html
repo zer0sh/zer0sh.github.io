@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Round 2 — Direction B</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #0b0d11;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 6rem 8vw 12rem 8vw;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .kicker {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: clamp(3.5rem, 8.5vw, 7.5rem);
+      font-weight: 900;
+      letter-spacing: -0.055em;
+      line-height: 0.88;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    h1 span {
+      display: block;
+      color: #64748b;
+    }
+    .doctrine {
+      font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      line-height: 1.35;
+      max-width: 38ch;
+      margin-bottom: 9rem;
+    }
+    .section-title {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 5rem;
+    }
+    .systems-list {
+      display: grid;
+      row-gap: 6rem;
+      margin-bottom: 11rem;
+    }
+    .system-entry {
+      display: grid;
+      grid-template-columns: 8rem 22rem 1fr;
+      column-gap: 4rem;
+      align-items: baseline;
+    }
+    @media (max-width: 960px) {
+      .system-entry { grid-template-columns: 1fr; row-gap: 1rem; }
+    }
+    .system-code {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.85rem;
+      color: #64748b;
+      letter-spacing: 0.1em;
+    }
+    .system-identity h3 {
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.0;
+      margin-bottom: 0.4rem;
+    }
+    .system-identity .role {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      color: #64748b;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .system-details p {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      max-width: 48ch;
+      margin-bottom: 0.75rem;
+    }
+    .system-details .stack {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      color: #64748b;
+      letter-spacing: 0.03em;
+    }
+    .writing-section {
+      margin-bottom: 9rem;
+    }
+    .writing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+      gap: 3.5rem;
+    }
+    .writing-unit h4 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.5rem;
+    }
+    .writing-unit p {
+      color: #64748b;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    footer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+      gap: 2rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    footer span {
+      display: block;
+      color: #f8fafc;
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="kicker">Architecture // Reliability Engineering</p>
+    <h1>Steven Muñoz <span>zer0sh // SRE</span></h1>
+    <p class="doctrine">
+      Resilience is engineered, not hoped for. Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.
+    </p>
+  </header>
+
+  <main>
+    <p class="section-title">Production Systems & Infrastructure</p>
+
+    <div class="systems-list">
+
+      <article class="system-entry">
+        <div class="system-code">[SYS_01]</div>
+        <div class="system-identity">
+          <h3>k3s-lab</h3>
+          <p class="role">Cloud-Native Platform Simulation</p>
+        </div>
+        <div class="system-details">
+          <p>Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+          <p class="stack">Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+        </div>
+      </article>
+
+      <article class="system-entry">
+        <div class="system-code">[SYS_02]</div>
+        <div class="system-identity">
+          <h3>sunim-tui</h3>
+          <p class="role">Infrastructure Operator (Rust)</p>
+        </div>
+        <div class="system-details">
+          <p>Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+          <p class="stack">Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+        </div>
+      </article>
+
+      <article class="system-entry">
+        <div class="system-code">[SYS_03]</div>
+        <div class="system-identity">
+          <h3>zer0sh-site-health-monitor</h3>
+          <p class="role">Runtime Reliability Engine</p>
+        </div>
+        <div class="system-details">
+          <p>Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+          <p class="stack">PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+        </div>
+      </article>
+
+      <article class="system-entry">
+        <div class="system-code">[SYS_04]</div>
+        <div class="system-identity">
+          <h3>gh-runner-selfhosted-docker</h3>
+          <p class="role">Containerized Runner Infrastructure</p>
+        </div>
+        <div class="system-details">
+          <p>Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+          <p class="stack">Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+        </div>
+      </article>
+
+      <article class="system-entry">
+        <div class="system-code">[SYS_05]</div>
+        <div class="system-identity">
+          <h3>dotfiles</h3>
+          <p class="role">Declarative Workstation Configuration</p>
+        </div>
+        <div class="system-details">
+          <p>Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+          <p class="stack">Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+        </div>
+      </article>
+
+    </div>
+
+    <section class="writing-section">
+      <p class="section-title">Incident Reports & Field Notes</p>
+      <div class="writing-grid">
+        <article class="writing-unit">
+          <h4>Shell Builtins Deep Dive</h4>
+          <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+        </article>
+        <article class="writing-unit">
+          <h4>CVE-2026-9860 Analysis</h4>
+          <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+        </article>
+        <article class="writing-unit">
+          <h4>TUI Tooling Ecosystem</h4>
+          <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>OPERATOR <span>Steven Muñoz</span></div>
+    <div>REPOSITORY <span>github.com/zer0sh</span></div>
+    <div>LINKEDIN <span>linkedin.com/in/steven-munozl</span></div>
+    <div>REGION <span>LATAM / Remote</span></div>
+  </footer>
+
+</body>
+</html>

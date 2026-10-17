@@ -1,68 +1,61 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { FiSettings, FiTool, FiTrendingUp, FiCode } from 'react-icons/fi';
 
 export const TechStack = () => {
   const { t } = useLanguage();
-
-  const categoryIconMap = {
-    infrastructure: <FiSettings className="w-8 h-8" />,
-    backend: <FiTool className="w-8 h-8" />,
-    devops: <FiTrendingUp className="w-8 h-8" />,
-    languages: <FiCode className="w-8 h-8" />,
-  };
 
   const categories = [
     {
       key: 'infrastructure',
       name: t('skills.infrastructure.name'),
-      items: t('skills.infrastructure.items'),
+      items: ['Kubernetes', 'K3s', 'Docker', 'Docker Compose', 'ArgoCD', 'Helm', 'Self-Hosted'],
     },
     {
-      key: 'backend',
-      name: t('skills.backend.name'),
-      items: t('skills.backend.items'),
+      key: 'observability',
+      name: t('skills.observability.name'),
+      items: ['Prometheus', 'Grafana', 'Loki', 'Sentry', 'Log Aggregation', 'Metric Alerts'],
     },
     {
-      key: 'devops',
-      name: t('skills.devops.name'),
-      items: t('skills.devops.items'),
+      key: 'systems',
+      name: t('skills.systems.name'),
+      items: ['Linux Administration', 'POSIX Shell', 'Bash', 'Rust', 'Wayland', 'Hardware Telemetry'],
     },
     {
-      key: 'languages',
-      name: t('skills.languages.name'),
-      items: t('skills.languages.items'),
+      key: 'reliability',
+      name: t('skills.reliability.name'),
+      items: ['GitHub Actions', 'Trivy Scanning', 'NGINX', 'PostgreSQL', 'MySQL', 'SSL/TLS'],
     },
   ];
 
   return (
-    <section id="skills" className="py-20 bg-[var(--color-background)] text-[var(--color-text-primary)]">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-4xl font-bold mb-16 text-center">
-          <span className="text-[var(--color-primary)]">{t('skills.title')}</span>
-        </h2>
+    <section id="stack" className="py-24 sm:py-32">
+      {/* Kicker */}
+      <p className="font-mono text-[0.75rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
+        {t('skills.kicker')}
+      </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {categories.map((category) => (
-            <div
-              key={category.key}
-              className="bg-white dark:bg-gray-800 rounded-lg p-8 border border-gray-200 dark:border-gray-700 hover:border-[var(--color-primary)] transition-colors hover:shadow-lg"
-            >
-              <div className="text-gray-400 dark:text-gray-500 hover:text-[var(--color-primary)] transition-colors mb-4">{categoryIconMap[category.key]}</div>
-              <h3 className="text-2xl font-bold mb-6 text-[var(--color-primary)]">{category.name}</h3>
-              <div className="flex flex-wrap gap-3">
-                {category.items.map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="px-4 py-2 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white rounded-full text-sm font-medium hover:shadow-lg transition-shadow"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+      <h2 className="text-[clamp(2rem,4vw,3.2rem)] font-extrabold tracking-[-0.03em] leading-tight text-white uppercase mb-16 sm:mb-20">
+        {t('skills.title')}
+      </h2>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12">
+        {categories.map((cat) => (
+          <div key={cat.key}>
+            <h3 className="font-mono text-[0.8rem] uppercase tracking-[0.15em] text-[#10b981] mb-5">
+              {cat.name}
+            </h3>
+            <ul className="space-y-2.5">
+              {cat.items.map((item) => (
+                <li
+                  key={item}
+                  className="text-[0.95rem] text-white/90 hover:text-[#10b981] transition-colors"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </section>
   );

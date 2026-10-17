@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Direction B — The SRE Manifesto</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #f6f5f0;
+      color: #161614;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 7rem 9vw 12rem 14vw;
+      max-width: 1200px;
+    }
+    .meta-tag {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #72706a;
+      margin-bottom: 3.5rem;
+    }
+    h1 {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 400;
+      letter-spacing: -0.035em;
+      line-height: 0.98;
+      margin-bottom: 2.5rem;
+    }
+    h1 span {
+      font-style: italic;
+      color: #72706a;
+    }
+    .doctrine {
+      font-size: clamp(1.4rem, 2.5vw, 1.95rem);
+      line-height: 1.35;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      max-width: 32ch;
+      margin-bottom: 8rem;
+    }
+    .section-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #72706a;
+      margin-bottom: 4rem;
+    }
+    .project-grid {
+      display: grid;
+      row-gap: 5.5rem;
+      max-width: 52ch;
+      margin-bottom: 9rem;
+    }
+    .project h3 {
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.4rem;
+    }
+    .project .descriptor {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.8rem;
+      color: #72706a;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+    }
+    .project p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+    .project .stack {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.78rem;
+      color: #72706a;
+      letter-spacing: 0.05em;
+    }
+    .writing-section {
+      max-width: 52ch;
+      margin-bottom: 9rem;
+    }
+    .writing-entry {
+      margin-bottom: 3.5rem;
+    }
+    .writing-entry h3 {
+      font-size: 1.35rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 0.35rem;
+    }
+    .writing-entry p {
+      color: #72706a;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    footer {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #72706a;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+    }
+    footer span {
+      color: #161614;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="meta-tag">Site Reliability & Infrastructure Systems · zer0sh</p>
+    <h1>Steven Muñoz <span>/ Systems</span></h1>
+    <p class="doctrine">
+      Resilience is engineered, not hoped for. Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.
+    </p>
+  </header>
+
+  <main>
+    <section>
+      <p class="section-label">Selected Works & Operations</p>
+      <div class="project-grid">
+
+        <article class="project">
+          <h3>k3s-lab</h3>
+          <p class="descriptor">Cloud-Native Platform & GitOps Simulation</p>
+          <p>Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+          <p class="stack">Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+        </article>
+
+        <article class="project">
+          <h3>sunim-tui</h3>
+          <p class="descriptor">Infrastructure Operator for Cloud Platforms</p>
+          <p>Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+          <p class="stack">Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+        </article>
+
+        <article class="project">
+          <h3>zer0sh-site-health-monitor</h3>
+          <p class="descriptor">Read-Only Diagnostic Telemetry Engine</p>
+          <p>Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+          <p class="stack">PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+        </article>
+
+        <article class="project">
+          <h3>gh-runner-selfhosted-docker</h3>
+          <p class="descriptor">Reproducible Execution Architecture</p>
+          <p>Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+          <p class="stack">Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+        </article>
+
+        <article class="project">
+          <h3>dotfiles</h3>
+          <p class="descriptor">Engineered Unix Workstation</p>
+          <p>Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+          <p class="stack">Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="writing-section">
+      <p class="section-label">Field Notes</p>
+      <article class="writing-entry">
+        <h3>Shell Builtins Deep Dive</h3>
+        <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+      </article>
+      <article class="writing-entry">
+        <h3>CVE-2026-9860 Analysis</h3>
+        <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+      </article>
+      <article class="writing-entry">
+        <h3>TUI Tooling Ecosystem</h3>
+        <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div>Identity <span>Steven Muñoz (zer0sh)</span></div>
+    <div>Code <span>github.com/zer0sh</span></div>
+    <div>Career <span>linkedin.com/in/steven-munozl</span></div>
+    <div>Base <span>LATAM / Remote</span></div>
+  </footer>
+
+</body>
+</html>

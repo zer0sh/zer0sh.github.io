@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Direction E — Swiss International Sans</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      background-color: #ffffff;
+      color: #0a0a0a;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      padding: 8rem 8vw 14rem 8vw;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .header-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 6rem;
+      margin-bottom: 12rem;
+    }
+    @media (max-width: 860px) {
+      .header-layout { grid-template-columns: 1fr; row-gap: 3rem; margin-bottom: 8rem; }
+    }
+    .hero-name {
+      font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+    }
+    .hero-handle {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #666666;
+      margin-top: 1.5rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .hero-doctrine {
+      font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      line-height: 1.35;
+      max-width: 32ch;
+    }
+    .section-num {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #666666;
+      margin-bottom: 4rem;
+    }
+    .projects-container {
+      display: grid;
+      row-gap: 6rem;
+      margin-bottom: 12rem;
+    }
+    .project-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 6rem;
+    }
+    @media (max-width: 860px) {
+      .project-row { grid-template-columns: 1fr; row-gap: 1rem; }
+    }
+    .project-header h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+    }
+    .project-header p {
+      font-size: 0.88rem;
+      color: #666666;
+      margin-top: 0.5rem;
+    }
+    .project-content p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 44ch;
+    }
+    .project-content .stack {
+      font-size: 0.82rem;
+      color: #666666;
+      margin-top: 1rem;
+      letter-spacing: 0.02em;
+    }
+    .writing-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 6rem;
+      margin-bottom: 12rem;
+    }
+    @media (max-width: 860px) {
+      .writing-layout { grid-template-columns: 1fr; row-gap: 3rem; }
+    }
+    .writing-items {
+      display: grid;
+      row-gap: 3.5rem;
+    }
+    .writing-item h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.4rem;
+    }
+    .writing-item p {
+      color: #666666;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 42ch;
+    }
+    footer {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      font-size: 0.82rem;
+      color: #666666;
+    }
+    @media (max-width: 768px) {
+      footer { grid-template-columns: 1fr 1fr; }
+    }
+    footer strong {
+      display: block;
+      color: #0a0a0a;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header-layout">
+    <div>
+      <h1 class="hero-name">Steven Muñoz</h1>
+      <p class="hero-handle">zer0sh — Site Reliability Engineer</p>
+    </div>
+    <div>
+      <p class="hero-doctrine">
+        Resilience is engineered, not hoped for. Operating systems, cloud-native platforms, and developer tooling built for predictability, telemetry, and automated recovery.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <p class="section-num">01 / Systems & Infrastructure</p>
+
+    <div class="projects-container">
+
+      <article class="project-row">
+        <div class="project-header">
+          <h3>k3s-lab</h3>
+          <p>Cloud-Native Platform Simulation</p>
+        </div>
+        <div class="project-content">
+          <p>Automated development platform simulating production cloud-native operations with GitOps reconciliation, centralized logging, and end-to-end metrics observability.</p>
+          <p class="stack">Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell</p>
+        </div>
+      </article>
+
+      <article class="project-row">
+        <div class="project-header">
+          <h3>sunim-tui</h3>
+          <p>Infrastructure Operations TUI</p>
+        </div>
+        <div class="project-content">
+          <p>Keyboard-driven terminal interface written in Rust for remote platform environment lifecycle, featuring non-blocking background executions, cache-first hydration, and graceful signal recovery.</p>
+          <p class="stack">Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI</p>
+        </div>
+      </article>
+
+      <article class="project-row">
+        <div class="project-header">
+          <h3>zer0sh-site-health-monitor</h3>
+          <p>Runtime Reliability Engine</p>
+        </div>
+        <div class="project-content">
+          <p>Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.</p>
+          <p class="stack">PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics</p>
+        </div>
+      </article>
+
+      <article class="project-row">
+        <div class="project-header">
+          <h3>gh-runner-selfhosted-docker</h3>
+          <p>Containerized Runner Infrastructure</p>
+        </div>
+        <div class="project-content">
+          <p>Containerized, self-hosted CI/CD execution cluster providing reproducible build environments, reduced attack surfaces, and local workflow verification.</p>
+          <p class="stack">Docker · GitHub Actions · CI/CD Automation · Linux Isolation</p>
+        </div>
+      </article>
+
+      <article class="project-row">
+        <div class="project-header">
+          <h3>dotfiles</h3>
+          <p>Declarative Workstation Configuration</p>
+        </div>
+        <div class="project-content">
+          <p>Engineered personal computing environment emphasizing modal workflows, custom telemetry, and low-latency system interactions.</p>
+          <p class="stack">Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="writing-layout">
+      <div>
+        <p class="section-num">02 / Technical Writing</p>
+      </div>
+      <div class="writing-items">
+        <article class="writing-item">
+          <h3>Shell Builtins Deep Dive</h3>
+          <p>POSIX shell internals, kernel process execution, and memory management constraints in container runtimes.</p>
+        </article>
+        <article class="writing-item">
+          <h3>CVE-2026-9860 Analysis</h3>
+          <p>Vulnerability analysis, exposure vectors, and preventative infrastructure hardening at scale.</p>
+        </article>
+        <article class="writing-item">
+          <h3>TUI Tooling Ecosystem</h3>
+          <p>Modern keyboard-first terminal utilities transforming system operator workflows and incident response.</p>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div>
+      <strong>Source Code</strong>
+      github.com/zer0sh
+    </div>
+    <div>
+      <strong>Professional Profile</strong>
+      linkedin.com/in/steven-munozl
+    </div>
+    <div>
+      <strong>Direct Chat</strong>
+      stephem.dev
+    </div>
+    <div>
+      <strong>Location</strong>
+      LATAM / Remote Availability
+    </div>
+  </footer>
+
+</body>
+</html>
