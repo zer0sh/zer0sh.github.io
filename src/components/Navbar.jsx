@@ -36,12 +36,24 @@ export const Navbar = ({ currentLang }) => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8 font-mono text-[0.8rem] uppercase tracking-[0.1em] text-[#64748b]">
+        <div className="hidden md:flex items-center gap-5 lg:gap-7 font-mono text-[0.75rem] lg:text-[0.8rem] uppercase tracking-[0.1em] text-[#64748b]">
           <button
             onClick={() => scrollToSection('projects')}
             className="hover:text-white transition-colors"
           >
             {t('nav.projects')}
+          </button>
+          <button
+            onClick={() => scrollToSection('operations')}
+            className="hover:text-white transition-colors"
+          >
+            {t('nav.operations')}
+          </button>
+          <button
+            onClick={() => scrollToSection('routine')}
+            className="hover:text-white transition-colors"
+          >
+            {t('nav.routine')}
           </button>
           <button
             onClick={() => scrollToSection('disciplines')}
@@ -114,6 +126,18 @@ export const Navbar = ({ currentLang }) => {
             className="text-left hover:text-white"
           >
             {t('nav.projects')}
+          </button>
+          <button
+            onClick={() => scrollToSection('operations')}
+            className="text-left hover:text-white"
+          >
+            {t('nav.operations')}
+          </button>
+          <button
+            onClick={() => scrollToSection('routine')}
+            className="text-left hover:text-white"
+          >
+            {t('nav.routine')}
           </button>
           <button
             onClick={() => scrollToSection('disciplines')}
