@@ -46,6 +46,17 @@ export const Footer = () => {
           </a>
         </div>
       </div>
+
+      {/* Style Guide Link */}
+      <div className="max-w-[1250px] mx-auto px-6 sm:px-8 pt-8 mt-8 border-t border-[#131722]/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-[0.72rem] text-[#64748b]">
+        <span>DIRECTION J // SYSTEM SPECIFICATION</span>
+        <a
+          href="/style-guide.html"
+          className="text-[#10b981] hover:text-white transition-colors"
+        >
+          EXPLORE HTML STYLE GUIDE &rarr;
+        </a>
+      </div>
     </footer>
   );
 };
