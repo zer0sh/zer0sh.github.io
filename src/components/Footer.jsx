@@ -8,7 +8,7 @@ export const Footer = () => {
 
   const buildTag = process.env.REACT_APP_BUILD_TAG || 'dev';
   const buildCommit = process.env.REACT_APP_BUILD_COMMIT || 'local';
-  const commitUrl = `https://github.com/zer0-sh/zer0-sh.github.io/commit/${buildCommit}`;
+  const commitUrl = `https://github.com/zer0sh/zer0sh.github.io/commit/${buildCommit}`;
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -22,7 +22,7 @@ export const Footer = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h4 className="text-xl font-bold text-[var(--color-primary)] mb-4">zer0-sh</h4>
+            <h4 className="text-xl font-bold text-[var(--color-primary)] mb-4">zer0sh</h4>
             <p className="text-gray-400">DevOps & Backend Engineer</p>
           </div>
           <div>
@@ -43,7 +43,7 @@ export const Footer = () => {
           <div>
             <h4 className="font-bold mb-4">Social</h4>
             <div className="flex gap-6">
-              <a href="https://github.com/zer0-sh" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[var(--color-primary)] transition-colors" title="GitHub">
+              <a href="https://github.com/zer0sh" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[var(--color-primary)] transition-colors" title="GitHub">
                 <FaGithub className="w-6 h-6" />
               </a>
               <a href="https://www.linkedin.com/in/steven-munozl" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[var(--color-primary)] transition-colors" title="LinkedIn">

@@ -19,8 +19,8 @@ y una experiencia fluida.
 Clona el repositorio e instala dependencias:
 
 ``` bash
-git clone https://github.com/zer0-sh/git.git
-cd git
+git clone https://github.com/zer0sh/zer0sh.github.io.git
+cd zer0sh.github.io
 npm install
 ```
 
@@ -62,7 +62,7 @@ Este proyecto se despliega automáticamente usando GitHub Actions.
 ``` bash
 git add .
 git commit -m "update"
-git push origin deploy
+git push origin main
 ```
 
 3.  GitHub Actions:
@@ -77,7 +77,7 @@ Este proyecto usa `HashRouter` para evitar problemas de rutas.
 
 Ejemplo:
 
-https://zer0-sh.github.io/#/es
+https://zer0sh.github.io/#/es
 
 ------------------------------------------------------------------------
 

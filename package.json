@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "DevOps & Backend Portfolio",
   "private": true,
-  "homepage": "https://zer0-sh.github.io",
+  "homepage": "https://zer0sh.github.io",
   "engines": {
     "node": ">=18.0.0"
   },

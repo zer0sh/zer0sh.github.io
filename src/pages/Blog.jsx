@@ -226,11 +226,11 @@ export const Blog = () => {
             <div className="px-8">
               <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div>
-                  <h4 className="text-xl font-bold text-[#ff2dad]">zer0-sh</h4>
+                  <h4 className="text-xl font-bold text-[#ff2dad]">zer0sh</h4>
                   <p className="text-[#9080b0] text-sm mt-1">DevOps & Backend Engineer</p>
                 </div>
                 <div className="flex gap-6">
-                  <a href="https://github.com/zer0-sh" target="_blank" rel="noopener noreferrer" className="text-[#9080b0] hover:text-[#00e5ff] transition-colors" title="GitHub">
+                  <a href="https://github.com/zer0sh" target="_blank" rel="noopener noreferrer" className="text-[#9080b0] hover:text-[#00e5ff] transition-colors" title="GitHub">
                     <FaGithub className="w-6 h-6" />
                   </a>
                   <a href="https://www.linkedin.com/in/steven-munozl" target="_blank" rel="noopener noreferrer" className="text-[#9080b0] hover:text-[#00e5ff] transition-colors" title="LinkedIn">

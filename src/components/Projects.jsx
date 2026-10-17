@@ -84,7 +84,7 @@ export const Projects = () => {
         </div>
         <div className="mt-12 text-center">
           <a
-            href="https://github.com/zer0-sh?tab=repositories"
+            href="https://github.com/zer0sh?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"

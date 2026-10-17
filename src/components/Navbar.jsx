@@ -45,7 +45,7 @@ export const Navbar = ({ currentLang }) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           <Link to={`/${currentLang}`} className="text-2xl font-bold text-[var(--color-primary)] hover:opacity-80">
-            zer0-sh
+            zer0sh
           </Link>
 
           {/* Desktop Navigation */}

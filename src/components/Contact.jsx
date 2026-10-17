@@ -39,7 +39,7 @@ export const Contact = () => {
     {
       key: 'github',
       label: t('contact.github'),
-      href: 'https://github.com/zer0-sh',
+      href: 'https://github.com/zer0sh',
       description: 'Check out my projects and contributions',
       badge: 'View code',
     },

@@ -103,19 +103,19 @@ const translations = {
         name: 'GitHub Self-Hosted Runner (Docker)',
         description: 'Built and deployed a self-hosted GitHub Actions runner using Docker, enabling custom CI/CD execution environments and local workflow testing',
         tags: ['Docker', 'GitHub Actions', 'CI/CD', 'DevOps', 'Self-Hosted'],
-        link: 'https://github.com/zer0-sh/gh-runner-selfhosted-docker',
+        link: 'https://github.com/zer0sh/gh-runner-selfhosted-docker',
       },
       project2: {
         name: 'RESTful API with Spring Boot',
         description: 'Designed and implemented a RESTful API using Spring Boot, featuring layered architecture, JPA-based persistence, and unit testing to ensure code quality',
         tags: ['Java', 'Spring Boot', 'REST API', 'JPA', 'Development'],
-        link: 'https://github.com/zer0-sh/crud-java'
+        link: 'https://github.com/zer0sh/crud-java'
       },
       project3: {
         name: 'K3s Dev Platform Lab (In progress)',
         description: 'Built a Kubernetes-based development platform using K3s, implementing GitOps with ArgoCD, and integrating observability with Prometheus, Grafana, and Loki to simulate a cloud-native environment for DevOps practices',
         tags: ['Kubernetes', 'K3s', 'ArgoCD', 'GitOps', 'Grafana', 'Prometheus', 'Loki', 'DevOps'],
-        link: 'https://github.com/zer0-sh/k3s-lab'
+        link: 'https://github.com/zer0sh/k3s-lab'
       },
     },
     contact: {
@@ -225,19 +225,19 @@ const translations = {
         name: 'Runner Autohosteado de GitHub (Docker)',
         description: 'Construcción y despliegue de un runner autoalojado de GitHub Actions usando Docker, permitiendo entornos de ejecución personalizados y pruebas locales de flujos de trabajo',
         tags: ['Docker', 'GitHub Actions', 'CI/CD', 'DevOps', 'Self-Hosted'],
-        link: 'https://github.com/zer0-sh/gh-runner-selfhosted-docker'
+        link: 'https://github.com/zer0sh/gh-runner-selfhosted-docker'
       },
       project2: {
         name: 'API RESTful con Spring Boot',
         description: 'Diseño e implementación de una API RESTful usando Spring Boot, con arquitectura en capas, persistencia basada en JPA y pruebas unitarias para asegurar la calidad del código',
         tags: ['Java', 'Spring Boot', 'REST API', 'JPA', 'Development'],
-        link: 'https://github.com/zer0-sh/crud-java'
+        link: 'https://github.com/zer0sh/crud-java'
       },
       project3: {
         name: 'K3s Dev Platform Lab (In progress)',
         description: 'Diseño e implementación de una plataforma cloud-native basada en Kubernetes con K3s, incorporando flujos GitOps con ArgoCD, monitoreo centralizado y logging, y despliegues automatizados de aplicaciones',
         tags: ['Kubernetes', 'K3s', 'ArgoCD', 'GitOps', 'Grafana', 'Prometheus', 'Loki', 'DevOps'],
-        link: 'https://github.com/zer0-sh/k3s-lab'
+        link: 'https://github.com/zer0sh/k3s-lab'
       },
     },
     contact: {
