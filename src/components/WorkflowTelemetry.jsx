@@ -77,7 +77,7 @@ export const WorkflowTelemetry = () => {
   return (
     <div className="bg-[#0c0e14] border border-[#131722] p-4 sm:p-5 max-w-2xl my-6">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[0.72rem] tracking-wider mb-3 pb-2.5 border-b border-[#131722]">
+      <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[0.75rem] tracking-wider mb-3 pb-2.5 border-b border-[#131722]">
         <div className="flex items-center gap-2 text-[#10b981]">
           <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
           <span className="uppercase font-bold">{probeLabel}</span>
@@ -85,19 +85,19 @@ export const WorkflowTelemetry = () => {
             [{telemetry.isLive ? 'LIVE' : 'CACHED'}]
           </span>
         </div>
-        <div className="text-[#64748b] text-[0.7rem]">
+        <div className="text-[#64748b] text-[0.72rem]">
           GITHUB_ACTIONS // zer0sh.github.io
         </div>
       </div>
 
       {/* Main Stats Row */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3.5">
         <div>
           <span className="font-mono text-xs text-[#64748b] uppercase tracking-wider block mb-1">
             {successLabel}
           </span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white tracking-tight font-mono">
+            <span className="text-3xl sm:text-[2.2rem] font-black text-white tracking-tight font-mono">
               {telemetry.rate}%
             </span>
             <span className="font-mono text-xs text-[#10b981]">
@@ -108,10 +108,10 @@ export const WorkflowTelemetry = () => {
 
         {/* Micro Visual Status Bar */}
         <div>
-          <span className="font-mono text-[0.7rem] text-[#64748b] uppercase tracking-wider block mb-1.5 sm:text-right">
+          <span className="font-mono text-[0.72rem] text-[#64748b] uppercase tracking-wider block mb-1.5 sm:text-right">
             {runsLabel} ({telemetry.runs.length || 28})
           </span>
-          <div className="flex items-center gap-1 flex-wrap">
+          <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap">
             {(telemetry.runs.length > 0
               ? telemetry.runs
               : Array.from({ length: 28 }, (_, i) => ({
@@ -135,7 +135,7 @@ export const WorkflowTelemetry = () => {
                 <span
                   key={idx}
                   title={`${run.name || 'Workflow'}: ${run.conclusion || run.status || 'success'}`}
-                  className={`w-1.5 h-4 sm:h-5 rounded-[1px] transition-colors cursor-pointer ${barColor}`}
+                  className={`w-1.5 sm:w-2 h-4 sm:h-5 rounded-[1px] transition-colors cursor-pointer ${barColor}`}
                 />
               );
             })}
@@ -144,11 +144,11 @@ export const WorkflowTelemetry = () => {
       </div>
 
       {/* Footer Info */}
-      <div className="font-mono text-[0.68rem] text-[#64748b] flex items-center justify-between pt-2 border-t border-[#131722]">
+      <div className="font-mono text-[0.72rem] text-[#64748b] flex items-center justify-between pt-2.5 border-t border-[#131722]">
         <span>
           {lang === 'es' ? 'Último workflow' : 'Last run'}: <span className="text-white">{telemetry.lastRunName}</span>
         </span>
-        <span className="text-[#10b981]">
+        <span className="text-[#10b981] font-bold">
           {telemetry.rate >= 95 ? 'STATUS: NOMINAL' : 'STATUS: DEGRADED'}
         </span>
       </div>

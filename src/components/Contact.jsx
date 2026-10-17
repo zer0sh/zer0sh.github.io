@@ -34,15 +34,15 @@ export const Contact = () => {
   return (
     <section id="contact" className="py-24 sm:py-32">
       {/* Kicker */}
-      <p className="font-mono text-[0.75rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
+      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
         {t('contact.kicker')}
       </p>
 
-      <h2 className="text-[clamp(2rem,4vw,3.2rem)] font-extrabold tracking-[-0.03em] leading-tight text-white uppercase mb-3">
+      <h2 className="text-[clamp(2.15rem,4vw,3.3rem)] font-extrabold tracking-[-0.03em] leading-tight text-white uppercase mb-3">
         {t('contact.title')}
       </h2>
 
-      <p className="text-[#64748b] text-base sm:text-lg mb-16 sm:mb-20 max-w-[50ch]">
+      <p className="text-[#64748b] text-base sm:text-[1.05rem] mb-14 sm:mb-18 max-w-[54ch]">
         {t('contact.description')}
       </p>
 
@@ -55,10 +55,10 @@ export const Contact = () => {
             rel="noopener noreferrer"
             className="group block"
           >
-            <p className="font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#10b981] mb-1">
+            <p className="font-mono text-[0.76rem] font-bold uppercase tracking-[0.2em] text-[#10b981] mb-1.5">
               {ch.label}
             </p>
-            <p className="text-lg font-bold text-white group-hover:text-[#10b981] transition-colors break-all">
+            <p className="text-lg sm:text-[1.18rem] font-extrabold text-white group-hover:text-[#10b981] transition-colors break-all">
               {ch.value}
             </p>
           </a>

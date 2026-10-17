@@ -30,25 +30,25 @@ export const TechStack = () => {
   return (
     <section id="stack" className="py-24 sm:py-32">
       {/* Kicker */}
-      <p className="font-mono text-[0.75rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
+      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
         {t('skills.kicker')}
       </p>
 
-      <h2 className="text-[clamp(2rem,4vw,3.2rem)] font-extrabold tracking-[-0.03em] leading-tight text-white uppercase mb-16 sm:mb-20">
+      <h2 className="text-[clamp(2.15rem,4vw,3.3rem)] font-extrabold tracking-[-0.03em] leading-tight text-white uppercase mb-14 sm:mb-18">
         {t('skills.title')}
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10">
         {categories.map((cat) => (
           <div key={cat.key}>
-            <h3 className="font-mono text-[0.8rem] uppercase tracking-[0.15em] text-[#10b981] mb-5">
+            <h3 className="font-mono text-[0.84rem] font-bold uppercase tracking-[0.15em] text-[#10b981] mb-4">
               {cat.name}
             </h3>
             <ul className="space-y-2.5">
               {cat.items.map((item) => (
                 <li
                   key={item}
-                  className="text-[0.95rem] text-white/90 hover:text-[#10b981] transition-colors"
+                  className="text-[0.98rem] text-white/90 hover:text-[#10b981] transition-colors"
                 >
                   {item}
                 </li>
