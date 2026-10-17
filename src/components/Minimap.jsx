@@ -9,12 +9,12 @@ export const Minimap = () => {
     { id: 'hero', label: lang === 'es' ? '00 // Inicio' : '00 // Top' },
     { id: 'projects', label: lang === 'es' ? '01 // Proyectos' : '01 // Projects' },
     { id: 'operations', label: lang === 'es' ? '02 // Operaciones' : '02 // Operations' },
-    { id: 'routine', label: lang === 'es' ? '03 // Rutina SRE' : '03 // Routine' },
-    { id: 'disciplines', label: lang === 'es' ? '04 // Disciplinas' : '04 // Disciplines' },
-    { id: 'stack', label: lang === 'es' ? '05 // Sistemas' : '05 // Stack' },
+    { id: 'routine', label: lang === 'es' ? '03 // Flujo Operativo' : '03 // Workflow' },
+    { id: 'disciplines', label: lang === 'es' ? '04 // Especialidades' : '04 // Competencies' },
+    { id: 'stack', label: lang === 'es' ? '05 // Stack' : '05 // Stack' },
     { id: 'about', label: lang === 'es' ? '06 // Filosofía' : '06 // Philosophy' },
     { id: 'dispatches', label: lang === 'es' ? '07 // Artículos' : '07 // Dispatches' },
-    { id: 'contact', label: lang === 'es' ? '08 // Contacto' : '08 // Signals' },
+    { id: 'contact', label: lang === 'es' ? '08 // Contacto' : '08 // Contact' },
   ];
 
   useEffect(() => {

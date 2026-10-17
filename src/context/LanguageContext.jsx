@@ -26,14 +26,14 @@ const translations = {
     },
     about: {
       kicker: 'SYSTEMS PHILOSOPHY',
-      title: 'Site Reliability Engineering',
-      description: 'Systems engineer operating production infrastructure with a focus on observability, automation, and deterministic failure recovery. Specialized in Linux environments, Kubernetes platform operations, and distributed telemetry.',
-      experience: 'Bridging the gap between software execution and underlying infrastructure: from bare-metal thermal management and kernel process constraints to GitOps pipelines, container runtime isolation, and automated incident mitigation.',
+      title: 'Platform Operations & Reliability',
+      description: 'Systems engineer focused on the stability, security, and continuous evolution of production platforms. My day-to-day work centers on hands-on infrastructure challenges: automating repetitive toil, streamlining operational workflows, optimizing declarative rollouts with ArgoCD, and keeping GitHub Actions pipelines hardened and up to date.',
+      experience: 'Operating with both preventive rigor and calm under live pressure: analyzing logs and telemetry metrics to anticipate anomalies before service degradation, triaging critical incidents in hot production environments, and auditing container and dependency vulnerabilities. Every incident is transformed into an automated runbook, tuned alert rules, and deterministic self-healing systems.',
     },
     dailyOps: {
-      kicker: 'PRODUCTION OPERATIONS // RUNBOOK',
-      title: 'Day-to-Day Operations',
-      subtitle: 'Real production responsibilities, Linux fleet administration, CI/CD triage, and platform reliability.',
+      kicker: 'PRODUCTION // RUNBOOKS & OPERATIONS',
+      title: 'Production Experience',
+      subtitle: 'Hands-on responsibilities in live environments: Linux fleet administration, CI/CD orchestration, and platform reliability.',
       op1: {
         code: 'OPS.01',
         title: 'Active Telemetry & Alert Triage',
@@ -66,9 +66,9 @@ const translations = {
       },
     },
     timeline: {
-      kicker: 'CHRONO LOG // SRE LIFE TRACE',
-      title: 'A Day in the Life of an Aspirant to SRE',
-      subtitle: 'A chronological trace through an operational shift: from morning telemetry triage to incident debugging and systemic toil reduction.',
+      kicker: 'OPERATIONAL TRACE // SRE PROTOCOL',
+      title: 'Operational Workflow & Triage',
+      subtitle: 'Chronological trace through an operational shift: from morning telemetry inspection and anomaly anticipation to live incident triage and systematic toil reduction.',
       step1: {
         time: '08:30',
         status: 'STATUS: NOMINAL',
@@ -103,9 +103,9 @@ const translations = {
       },
     },
     work: {
-      kicker: 'OPERATIONAL COMPETENCIES',
-      title: 'Infrastructure Disciplines',
-      subtitle: 'Core operational responsibilities across distributed systems',
+      kicker: 'TECHNICAL CAPABILITIES',
+      title: 'Core Competencies',
+      subtitle: 'Engineering focus across distributed systems, automation, and operational resilience',
       function1: {
         name: 'Kubernetes Platform Operations',
         description: 'Orchestrating production workloads with K3s and Kubernetes, implementing GitOps synchronization via ArgoCD, and maintaining self-healing cluster states.',
@@ -139,7 +139,7 @@ const translations = {
     },
     skills: {
       kicker: 'TECHNICAL MATRIX',
-      title: 'Systems & Tooling',
+      title: 'Technical Stack',
       infrastructure: {
         name: 'Cloud-Native & Orchestration',
         items: ['Kubernetes', 'K3s', 'Docker', 'Docker Compose', 'ArgoCD', 'Helm', 'Self-Hosted'],
@@ -158,9 +158,9 @@ const translations = {
       },
     },
     projects: {
-      kicker: 'SYSTEMS REGISTRY',
-      title: 'Operational Systems',
-      subtitle: 'Engineered platforms, developer tooling, and infrastructure automation',
+      kicker: 'PORTFOLIO // SYSTEMS ENGINEERING',
+      title: 'Featured Projects',
+      subtitle: 'Engineering platforms, operator tooling, and production infrastructure automation',
       viewAll: 'Explore all repositories on GitHub',
       project1: {
         name: 'k3s-lab',
@@ -206,9 +206,9 @@ const translations = {
       },
     },
     dispatches: {
-      kicker: 'INCIDENT ANALYSES & ARTICLES',
-      title: 'Field Dispatches',
-      subtitle: 'Technical deep dives, vulnerability analysis, and operator tooling reviews',
+      kicker: 'RESEARCH // FIELD NOTES',
+      title: 'Field Dispatches & Research',
+      subtitle: 'Real production post-mortems, systems engineering investigations, and reliability practices',
       readArticle: 'Read Dispatch',
       post1: {
         title: 'Post-Mortem: NGINX Socket Exhaustion & Kernel Tuning',
@@ -230,8 +230,8 @@ const translations = {
       },
     },
     contact: {
-      kicker: 'DISPATCH FREQUENCY',
-      title: 'Direct Signals',
+      kicker: 'DIRECT SIGNALS',
+      title: 'Contact & Signals',
       description: 'Available for Site Reliability Engineering, distributed infrastructure, and systems platform challenges.',
       email: 'Email',
       discord: 'Discord',
@@ -251,10 +251,10 @@ const translations = {
   },
   es: {
     nav: {
-      systems: 'Sistemas',
-      architecture: 'Arquitectura',
+      systems: 'Stack',
+      architecture: 'Especialidades',
       operations: 'Operaciones',
-      routine: 'Rutina',
+      routine: 'Flujo Operativo',
       projects: 'Proyectos',
       dispatches: 'Artículos',
       contact: 'Contacto',
@@ -272,14 +272,14 @@ const translations = {
     },
     about: {
       kicker: 'FILOSOFÍA DE SISTEMAS',
-      title: 'Site Reliability Engineering',
-      description: 'Ingeniero de sistemas enfocado en la fiabilidad, observabilidad y recuperación determinista ante fallos. Especializado en entornos Linux, operación de plataformas Kubernetes y telemetría distribuida.',
-      experience: 'Conectando la ejecución de software con la infraestructura subyacente: desde restricciones a nivel de kernel y gestión térmica hasta flujos GitOps, aislamiento de contenedores y mitigación automatizada de incidentes en producción.',
+      title: 'Operaciones de Plataforma & Fiabilidad',
+      description: 'Ingeniero enfocado en la estabilidad, seguridad y evolución continua de plataformas en producción. Mi día a día transcurre resolviendo problemas reales de infraestructura: automatizando tareas repetitivas para erradicar el toil, organizando flujos de trabajo eficientes, optimizando implementaciones declarativas en ArgoCD y manteniendo pipelines seguros y actualizados en GitHub Actions.',
+      experience: 'Combino una postura preventiva con capacidad de respuesta bajo presión: analizo logs y métricas de telemetría para anticipar anomalías antes de que degraden el servicio, resuelvo incidentes críticos en caliente cuando el sistema falla, y audito vulnerabilidades en contenedores y dependencias. Cada incidente se convierte en un runbook automatizado, reglas de alerta precisas y sistemas que se recuperan de forma determinista.',
     },
     dailyOps: {
-      kicker: 'OPERACIONES EN PRODUCCIÓN // RUNBOOK',
-      title: 'Operaciones del Día a Día',
-      subtitle: 'Responsabilidades reales en producción, administración de flota Linux, triage de CI/CD y fiabilidad de plataforma.',
+      kicker: 'PRODUCCIÓN // RUNBOOKS & OPERACIONES',
+      title: 'Experiencia en Producción',
+      subtitle: 'Responsabilidades reales en entornos vivos: administración de flotas Linux, orquestación de despliegues y fiabilidad de plataforma.',
       op1: {
         code: 'OPS.01',
         title: 'Telemetría Activa y Triage de Alertas',
@@ -312,9 +312,9 @@ const translations = {
       },
     },
     timeline: {
-      kicker: 'REGISTRO CRONOLÓGICO // TRAZA SRE',
-      title: 'Un Día en la Vida de un Aspirante a SRE',
-      subtitle: 'Traza cronológica de una jornada operativa: desde el triage matutino de telemetría hasta la depuración de incidentes y reducción sistemática de toil.',
+      kicker: 'TRAZA OPERATIVA // PROTOCOLO SRE',
+      title: 'Flujo Operativo & Triage',
+      subtitle: 'Traza cronológica de una jornada operativa: desde el triage matutino de telemetría y anticipación de anomalías hasta la atención en caliente de incidentes y reducción sistemática de toil.',
       step1: {
         time: '08:30',
         status: 'ESTADO: NOMINAL',
@@ -349,9 +349,9 @@ const translations = {
       },
     },
     work: {
-      kicker: 'COMPETENCIAS OPERATIVAS',
-      title: 'Disciplinas de Infraestructura',
-      subtitle: 'Responsabilidades centrales en sistemas distribuidos',
+      kicker: 'CAPACIDADES TÉCNICAS',
+      title: 'Áreas de Especialidad',
+      subtitle: 'Enfoque de ingeniería en sistemas distribuidos, automatización y resiliencia operativa',
       function1: {
         name: 'Operaciones en Kubernetes',
         description: 'Orquestación de cargas con K3s y Kubernetes, sincronización declarativa GitOps mediante ArgoCD y mantenimiento de clústeres auto-reparables.',
@@ -385,7 +385,7 @@ const translations = {
     },
     skills: {
       kicker: 'MATRIZ TÉCNICA',
-      title: 'Sistemas y Herramientas',
+      title: 'Stack Tecnológico',
       infrastructure: {
         name: 'Cloud-Native & Orquestación',
         items: ['Kubernetes', 'K3s', 'Docker', 'Docker Compose', 'ArgoCD', 'Helm', 'Self-Hosted'],
@@ -404,9 +404,9 @@ const translations = {
       },
     },
     projects: {
-      kicker: 'REGISTRO DE SISTEMAS',
-      title: 'Sistemas Operativos',
-      subtitle: 'Plataformas de ingeniería, herramientas para operadores y automatización de infraestructura',
+      kicker: 'PORTFOLIO // INGENIERÍA DE SISTEMAS',
+      title: 'Proyectos Destacados',
+      subtitle: 'Plataformas de ingeniería, herramientas para operadores y automatización de infraestructura en producción',
       viewAll: 'Explorar todos los repositorios en GitHub',
       project1: {
         name: 'k3s-lab',
@@ -452,9 +452,9 @@ const translations = {
       },
     },
     dispatches: {
-      kicker: 'ANÁLISIS DE INCIDENTES Y ARTÍCULOS',
-      title: 'Notas de Campo',
-      subtitle: 'Inmersión técnica, análisis de vulnerabilidades y herramientas de operador',
+      kicker: 'INVESTIGACIÓN // NOTAS DE CAMPO',
+      title: 'Artículos & Notas de Campo',
+      subtitle: 'Análisis de incidentes reales en producción, ingeniería de fiabilidad e investigaciones de sistemas',
       readArticle: 'Leer Artículo',
       post1: {
         title: 'Post-Mortem: Agotamiento de Sockets en NGINX y Kernel Linux',
@@ -476,9 +476,9 @@ const translations = {
       },
     },
     contact: {
-      kicker: 'CANALES DE FRECUENCIA',
-      title: 'Señales Directas',
-      description: 'Disponible para desafíos en Site Reliability Engineering, infraestructura distribuida y plataformas cloud-native.',
+      kicker: 'CANALES DIRECTOS',
+      title: 'Contacto & Canales Directos',
+      description: 'Disponible para roles de SRE, ingeniería de plataforma y consultoría de fiabilidad e infraestructura cloud-native.',
       email: 'Correo',
       discord: 'Discord',
       linkedin: 'LinkedIn',

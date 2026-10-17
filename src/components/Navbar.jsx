@@ -61,14 +61,14 @@ export const Navbar = ({ currentLang, onOpenTerminal, onOpenShortcuts }) => {
             <button
               onClick={onOpenTerminal}
               className="px-2 py-0.5 bg-[#0c0e14] border border-[#131722] hover:border-[#10b981] text-[#10b981] hover:text-white transition-colors cursor-pointer"
-              title="Abrir consola SRE (~ o `)"
+              title={currentLang === 'es' ? "Abrir consola SRE (~ o `)" : "Open SRE terminal (~ or `)"}
             >
               [CLI]
             </button>
             <button
               onClick={onOpenShortcuts}
               className="px-1.5 py-0.5 text-[#64748b] hover:text-white transition-colors cursor-pointer"
-              title="Guía de atajos de teclado (?)"
+              title={currentLang === 'es' ? "Guía de atajos de teclado (?)" : "Keyboard shortcuts guide (?)"}
             >
               [?]
             </button>
@@ -164,7 +164,7 @@ export const Navbar = ({ currentLang, onOpenTerminal, onOpenShortcuts }) => {
               }}
               className="text-left text-[#10b981] hover:text-white"
             >
-              [CLI] Consola Terminal SRE
+              {currentLang === 'es' ? '[CLI] Consola Terminal SRE' : '[CLI] SRE Terminal Console'}
             </button>
             <button
               onClick={() => {
@@ -173,7 +173,7 @@ export const Navbar = ({ currentLang, onOpenTerminal, onOpenShortcuts }) => {
               }}
               className="text-left text-[#64748b] hover:text-white"
             >
-              [?] Atajos de Teclado
+              {currentLang === 'es' ? '[?] Atajos de Teclado' : '[?] Keyboard Shortcuts'}
             </button>
           </div>
         </div>
