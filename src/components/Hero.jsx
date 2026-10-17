@@ -12,12 +12,13 @@ export const Hero = () => {
 
   return (
     <header className="relative pt-16 sm:pt-24 pb-28 sm:pb-36 overflow-hidden">
-      {/* Ghost Ambient Watermark */}
+      {/* Ghost Ambient Watermark - Stacked Two Lines */}
       <div 
         aria-hidden="true" 
-        className="pointer-events-none select-none text-[#131722] font-black uppercase tracking-[-0.06em] text-[clamp(3.5rem,12vw,10.5rem)] leading-[0.85] mb-[-1.5rem] sm:mb-[-2rem]"
+        className="pointer-events-none select-none text-[#131722] font-black uppercase tracking-[-0.05em] text-[clamp(4.2rem,13vw,9.5rem)] leading-[0.8] mb-[-2rem] sm:mb-[-3.2rem] flex flex-col"
       >
-        {t('hero.kicker')}
+        <span>{t('hero.kickerLine1') || 'INFRA'}</span>
+        <span>{t('hero.kickerLine2') || 'STRUCTURE'}</span>
       </div>
 
       {/* Telemetry Strip */}

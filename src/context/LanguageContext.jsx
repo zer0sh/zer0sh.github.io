@@ -16,6 +16,8 @@ const translations = {
     },
     hero: {
       kicker: 'INFRASTRUCTURE',
+      kickerLine1: 'INFRA',
+      kickerLine2: 'STRUCTURE',
       telemetry: 'RUNTIME // SRE_NODE_0 · AVAILABILITY: 99.99% · LATENCY: 12MS',
       name: 'Steven Muñoz',
       handle: 'zer0sh — Site Reliability Engineer',
@@ -260,6 +262,8 @@ const translations = {
     },
     hero: {
       kicker: 'INFRAESTRUCTURA',
+      kickerLine1: 'INFRA',
+      kickerLine2: 'ESTRUCTURA',
       telemetry: 'RUNTIME // SRE_NODE_0 · DISPONIBILIDAD: 99.99% · LATENCIA: 12MS',
       name: 'Steven Muñoz',
       handle: 'zer0sh — Site Reliability Engineer',
