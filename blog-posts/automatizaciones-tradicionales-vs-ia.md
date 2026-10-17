@@ -67,6 +67,24 @@ Hoy en día, un desarrollador backend con conocimientos básicos de HTML y Tailw
 
 Esto no elimina la necesidad de ingenieros frontend senior —quienes dominan la accesibilidad profunda, la gestión de estado a gran escala y el rendimiento del navegador—, pero sí elimina la barrera de entrada para que cualquier backend construya interfaces utilitarias, limpias y funcionales sin depender de nadie más.
 
+```
++-- MATRIZ DE DECISIÓN: AUTOMATIZACIÓN TRADICIONAL vs IA -----------------+
+|                                                                        |
+| ¿La tarea tiene consecuencias destructivas, financieras o de estado?   |
+|   ├── SÍ  ──> [AUTOMATIZACIÓN DETERMINISTA TRADICIONAL]                |
+|   │           └── Bash, Terraform, Ansible, CRON, Go, Rust             |
+|   │           └── Regla: 100% predecible, idempotente, zero-hallucinate|
+|   │                                                                    |
+|   └── NO  ──> ¿Requiere interpretar texto, logs ambiguos o crear UI?   |
+|                 ├── SÍ  ──> [AUTOMATIZACIÓN ASISTIDA POR IA]           |
+|                 │           └── Resumen Sentry, Generación de Paneles, |
+|                 │               Borradores de Config, Triage inicial   |
+|                 │           └── Regla: Acelera x10, requiere auditoría |
+|                 │                                                      |
+|                 └── NO  ──> Evalúa simplicidad y coste de mantenimiento|
++------------------------------------------------------------------------+
+```
+
 ---
 
 ## Conclusión: El criterio pragmático

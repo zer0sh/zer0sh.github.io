@@ -25,6 +25,22 @@ Cuando desarrollamos directamente sobre el sistema operativo anfitrión (bare-me
 
 La solución de aislar entornos virtuales (como `venv` en Python o `nvm` en Node) es un paso adelante, pero solo aísla la capa de lenguaje. **No aísla el sistema operativo, los servicios auxiliares ni las dependencias nativas.**
 
+```
++-- TRADICIONAL (Bare-Metal Drift) -----------+   +-- DOCKER ESTANDARIZADO (Paridad Total) ----+
+| [Código de la Aplicación]                   |   | [Código de la Aplicación]                  |
+|        v                                    |   |        v                                   |
+| [Librerías del Lenguaje (nvm / venv)]       |   | [Librerías del Lenguaje (fijadas)]         |
+|        v (Peligro de Deriva)                |   |        v                                   |
+| [SO Anfitrión: glibc / Homebrew / DLLs]     |   | [Sistema Base Container: Debian/Alpine]    |
+|        v                                    |   |        v                                   |
+| [Hardware Divergente: Mac / Win / Linux]    |   | [Docker Engine Abstraction / OCI Runtime]  |
+|                                             |   |        v                                   |
+| RESULTADO: "En mi máquina sí funcionaba"    |   | [SO Host (Linux / WSL2 / OrbStack)]        |
+|                                             |   |                                            |
+|                                             |   | RESULTADO: 100% Idéntico a Producción      |
++---------------------------------------------+   +--------------------------------------------+
+```
+
 ---
 
 ## La ventaja de Docker: Declaratividad reproducible
