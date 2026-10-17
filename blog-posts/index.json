@@ -10,6 +10,42 @@
       "coverAlt": "Auditoría de sockets en kernel Linux y logs de NGINX"
     },
     {
+      "slug": "docker-entornos-estandarizados",
+      "title": "Por qué Docker sigue siendo la cura definitiva al 'en mi máquina sí funciona'",
+      "date": "2026-10-15",
+      "category": "Contenedores",
+      "excerpt": "Estandarizar entornos locales con Docker no es capricho: elimina fricción, alinea dependencias con producción y ahorra horas de depuración. Una perspectiva práctica sobre consistencia técnica.",
+      "coverImage": "/blog-posts/images/oxker.png",
+      "coverAlt": "Gestión de contenedores Docker en terminal"
+    },
+    {
+      "slug": "automatizaciones-tradicionales-vs-ia",
+      "title": "Automatización Tradicional vs IA: Cuándo usar cada una (y el superpoder del backend moderno)",
+      "date": "2026-10-14",
+      "category": "Automatización",
+      "excerpt": "El choque entre el determinismo de scripts y la flexibilidad de los modelos de IA. Cómo decidir qué herramienta usar y cómo la IA desbloqueó a los ingenieros de backend para crear interfaces y paneles completos.",
+      "coverImage": "/blog-posts/images/opencode.png",
+      "coverAlt": "Código y modelos de automatización en desarrollo"
+    },
+    {
+      "slug": "github-actions-dependabot-ciclos-actualizacion",
+      "title": "GitHub Actions y Actualización de Dependencias: ¿Dependabot automático o ciclos con supervisión humana?",
+      "date": "2026-10-13",
+      "category": "CI/CD & DevOps",
+      "excerpt": "Consejos prácticos para optimizar GitHub Actions y el debate de fondo: la conveniencia de la auto-entrega de Dependabot frente a la disciplina de runbooks planificados con supervisión humana.",
+      "coverImage": "/blog-posts/images/tui-banner.png",
+      "coverAlt": "Pipelines de GitHub Actions y flujos de dependencias"
+    },
+    {
+      "slug": "mkdocs-documentacion-simple-y-efectiva",
+      "title": "MkDocs: Por qué la simpleza gana al documentar proyectos (y el caso real de mis dotfiles)",
+      "date": "2026-10-12",
+      "category": "Herramientas & Docs",
+      "excerpt": "Escribir documentación en Markdown puro y desplegarla como sitio estático sin lidiar con configuraciones complejas. Por qué MkDocs es mi opción predilecta y cómo lo uso para documentar mis dotfiles.",
+      "coverImage": "/blog-posts/images/vim.png",
+      "coverAlt": "Documentación de proyectos y archivos Markdown en terminal"
+    },
+    {
       "slug": "shell-builtins",
       "title": "Top 15 de shell builtins clásicos de Linux",
       "date": "2026-08-10",
