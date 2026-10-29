@@ -178,10 +178,12 @@ const translations = {
       },
       project3: {
         name: 'zer0sh-site-health-monitor',
-        domain: 'Runtime Reliability Engine',
-        description: 'Read-only operational diagnostic engine auditing server runtime constraints, HTTP security posture, loopback reliability, and automated CVE exposure checks with zero performance overhead.',
-        tags: ['PHP', 'Security Headers', 'Vulnerability Telemetry', 'Cron Diagnostics'],
+        domain: 'WordPress.org Plugin & Runtime Reliability Engine',
+        description: 'Open-source, ultra-lightweight, 100% read-only WordPress plugin published on WordPress.org. Diagnoses PHP runtime constraints, HTTP security headers, WP-Cron/loopback health, and scans CVEs via WPVulnerability API with zero telemetry and transient caching.',
+        tags: ['WordPress Plugin', 'WordPress.org', 'PHP', 'Security Headers', 'WPVulnerability API', 'Zero Telemetry'],
         link: 'https://github.com/zer0sh/zer0sh-site-health-monitor',
+        externalLink: 'https://wordpress.org/plugins/zer0sh-site-health-monitor/',
+        externalLabel: 'WordPress.org Plugin',
       },
       project4: {
         name: 'cms-local-envs',
@@ -424,10 +426,12 @@ const translations = {
       },
       project3: {
         name: 'zer0sh-site-health-monitor',
-        domain: 'Motor de Fiabilidad en Runtime',
-        description: 'Motor de diagnóstico operacional de solo lectura para auditar restricciones de servidor, postura de seguridad en cabeceras HTTP, salud de crons y detección automatizada de CVEs sin impacto en rendimiento.',
-        tags: ['PHP', 'Security Headers', 'Telemetría de Vulnerabilidades', 'Diagnóstico Cron'],
+        domain: 'Plugin WordPress.org & Motor de Diagnóstico en Runtime',
+        description: 'Plugin de código abierto para WordPress, ultra ligero y 100% de solo lectura publicado en WordPress.org. Diagnostica restricciones de PHP, cabeceras de seguridad HTTP, salud de WP-Cron/loopback y analiza CVEs vía WPVulnerability API sin telemetría y con caché nativa.',
+        tags: ['Plugin WordPress', 'WordPress.org', 'PHP', 'Cabeceras HTTP', 'WPVulnerability API', 'Cero Telemetría'],
         link: 'https://github.com/zer0sh/zer0sh-site-health-monitor',
+        externalLink: 'https://wordpress.org/plugins/zer0sh-site-health-monitor/',
+        externalLabel: 'Plugin en WordPress.org',
       },
       project4: {
         name: 'cms-local-envs',

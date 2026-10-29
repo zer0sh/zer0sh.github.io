@@ -136,7 +136,7 @@ export const TerminalModal = ({ isOpen, onClose }) => {
             'REGISTERED REPOSITORIES & LABS:',
             '  1. k3s-lab                      -> Production K3s GitOps cluster with ArgoCD & Prometheus',
             '  2. sunim-tui                    -> Async POSIX Terminal UI written in Rust',
-            '  3. zer0sh-site-health-monitor   -> Automated vulnerability & security telemetry monitor',
+            '  3. zer0sh-site-health-monitor   -> WordPress.org plugin & security vulnerability monitor',
             '  4. cms-local-envs               -> Hardened Docker Compose environments with CI/CD',
             '  5. gh-runner-selfhosted-docker  -> Ephemeral self-hosted GitHub Actions container runner',
             '  6. dotfiles                     -> Declarative Hyprland / Wayland POSIX environment',

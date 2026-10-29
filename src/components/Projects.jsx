@@ -33,17 +33,19 @@ const TOPOLOGIES = {
 |                                     [ANSI Escape Flush]                  |
 +--------------------------------------------------------------------------+`,
 
-  'zer0sh-site-health-monitor': `+-- AUTOMATED SECURITY HEADERS & VULNERABILITY AUDITOR --------------------+
-| [Scheduled Cron Worker @ 00:00 UTC] ---> [Endpoint Multiplexer]          |
-|                                                   |                      |
-|        +------------------------------------------+------------------+   |
-|        v                                          v                  v   |
-| [TLS/SSL Handshake]                     [HTTP Security Headers] [DNS NS] |
-|   - Expiration warning (<14d)             - CSP, HSTS, X-Frame    - TTL  |
-|        |                                          |                  |   |
-|        +------------------------------------------+------------------+   |
-|                                                   v                      |
-|                      [Telemetry JSON Report & Discord Dispatch]          |
+  'zer0sh-site-health-monitor': `+-- WORDPRESS.ORG RUNTIME HEALTH & VULNERABILITY AUDITOR -------------------+
+| [Admin Trigger / WP-Cron Scheduler] ---> [Diagnostic Engine (Read-Only)]  |
+|                                                     |                    |
+|        +-------------------+------------------------+-----------------+  |
+|        v                   v                        v                 v  |
+| [PHP & Server Checks] [Core & Plugins]       [HTTP Security]  [Reliability]|
+|  - EOL & memory_limit  - Pending updates      - HSTS, CSP, XFO - WP-Cron  |
+|  - Required modules    - WPVulnerability API  - XML-RPC, SSL   - Loopback |
+|        |                   |                        |                 |  |
+|        +-------------------+------------------------+-----------------+  |
+|                                    |                                     |
+|                                    v                                     |
+|              [WP Transient Cache (12h TTL) · Zero Telemetry]              |
 +--------------------------------------------------------------------------+`,
 
   'cms-local-envs': `+-- ISOLATED REPRODUCIBLE CONTAINER WORKFLOW -----------------------------+
@@ -124,6 +126,8 @@ export const Projects = () => {
           const domain = t(`projects.${key}.domain`);
           const description = t(`projects.${key}.description`);
           const link = t(`projects.${key}.link`);
+          const externalLink = t(`projects.${key}.externalLink`);
+          const externalLabel = t(`projects.${key}.externalLabel`);
           const projectTagsList = t(`projects.${key}.tags`);
           const tags = Array.isArray(projectTagsList) ? projectTagsList.join(' · ') : '';
 
@@ -152,6 +156,20 @@ export const Projects = () => {
                 <p className="font-mono text-[0.8rem] tracking-[0.08em] uppercase text-[#10b981] mt-1.5">
                   {domain}
                 </p>
+                {externalLink && (
+                  <div className="mt-2.5">
+                    <a
+                      href={externalLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[0.72rem] tracking-wider text-[#10b981] hover:text-white uppercase inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#10b981]/10 border border-[#10b981]/30 hover:border-[#10b981] transition-colors"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] inline-block animate-pulse"></span>
+                      <span>{externalLabel || 'WORDPRESS.ORG'}</span>
+                      <span>&nearr;</span>
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div>
