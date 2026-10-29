@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const BANNER = `
   ______ ______ _____   ____   _____ _    _ 
@@ -26,6 +27,7 @@ const COMMANDS = {
 };
 
 export const TerminalModal = ({ isOpen, onClose }) => {
+  const { lang } = useLanguage();
   const [history, setHistory] = useState([]);
   const [inputVal, setInputVal] = useState('');
   const [historyIdx, setHistoryIdx] = useState(-1);
@@ -181,17 +183,29 @@ export const TerminalModal = ({ isOpen, onClose }) => {
 
       case 'dispatches':
       case 'blog': {
+        const postsList = lang === 'es'
+          ? [
+              '  - Docker y entornos estandarizados: Evitando el "en mi máquina funcionaba"',
+              '  - Automatizaciones tradicionales vs Automatizaciones con IA',
+              '  - GitHub Actions: Guía de uso, dependencias y runbooks con criterio humano',
+              '  - Análisis forense de un OOMKilled en Kubernetes',
+              '  - Post-Mortem: Caída de resolución DNS interna en alta demanda',
+            ]
+          : [
+              '  - Standardized Docker Environments: Eradicating "Works On My Machine"',
+              '  - Traditional Automation vs AI-Driven Workflows',
+              '  - GitHub Actions: Production Runbooks & Human-Centered Guardrails',
+              '  - Forensic Analysis of Kubernetes OOMKilled Containers',
+              '  - Post-Mortem: Internal DNS Resolution Degradation Under High Load',
+            ];
+
         newEntries.push({
           type: 'output',
           text: [
             'LATEST SRE FIELD NOTES:',
-            '  - Docker y entornos estandarizados: Evitando el "en mi máquina funcionaba"',
-            '  - Automatizaciones tradicionales vs Automatizaciones con IA',
-            '  - GitHub Actions: Guía de uso, dependencias y runbooks con criterio humano',
-            '  - Análisis forense de un OOMKilled en Kubernetes',
-            '  - Post-Mortem: Caída de resolución DNS interna en alta demanda',
+            ...postsList,
             '',
-            'Redirecting to /blog in 1 second...',
+            lang === 'es' ? 'Redirigiendo a /blog en 1 segundo...' : 'Redirecting to /blog in 1 second...',
           ].join('\n'),
         });
         setTimeout(() => {

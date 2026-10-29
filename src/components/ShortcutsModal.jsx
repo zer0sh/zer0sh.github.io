@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const ShortcutsModal = ({ isOpen, onClose }) => {
+  const { lang } = useLanguage();
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
@@ -14,13 +17,13 @@ export const ShortcutsModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const shortcuts = [
-    { key: 'j  or  ↓', action: 'Saltar a la siguiente sección (Down)' },
-    { key: 'k  or  ↑', action: 'Saltar a la sección anterior (Up)' },
-    { key: 'g g', action: 'Saltar al inicio de la plataforma (Hero)' },
-    { key: 'G', action: 'Saltar al final de la plataforma (Contacto)' },
-    { key: '~  or  `', action: 'Abrir / cerrar terminal SRE interactiva' },
-    { key: '?', action: 'Abrir / cerrar esta guía de atajos de teclado' },
-    { key: 'Esc', action: 'Cerrar cualquier ventana modal activa' },
+    { key: 'j  or  ↓', action: lang === 'es' ? 'Saltar a la siguiente sección (Down)' : 'Jump to next section (Down)' },
+    { key: 'k  or  ↑', action: lang === 'es' ? 'Saltar a la sección anterior (Up)' : 'Jump to previous section (Up)' },
+    { key: 'g g', action: lang === 'es' ? 'Saltar al inicio de la plataforma (Hero)' : 'Jump to top of platform (Hero)' },
+    { key: 'G', action: lang === 'es' ? 'Saltar al final de la plataforma (Contacto)' : 'Jump to bottom of platform (Contact)' },
+    { key: '~  or  `', action: lang === 'es' ? 'Abrir / cerrar terminal SRE interactiva' : 'Open / close interactive SRE terminal' },
+    { key: '?', action: lang === 'es' ? 'Abrir / cerrar esta guía de atajos de teclado' : 'Open / close this keyboard shortcuts guide' },
+    { key: 'Esc', action: lang === 'es' ? 'Cerrar cualquier ventana modal activa' : 'Close any active modal window' },
   ];
 
   return (
@@ -73,7 +76,7 @@ export const ShortcutsModal = ({ isOpen, onClose }) => {
             onClick={onClose}
             className="text-[#10b981] hover:text-white transition-colors"
           >
-            [ENTENDIDO]
+            {lang === 'es' ? '[ENTENDIDO]' : '[GOT IT]'}
           </button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const LanguageContext = createContext();
 
@@ -500,8 +500,13 @@ const translations = {
 export const LanguageProvider = ({ children }) => {
   const [lang, setLang] = useState('en');
 
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   const t = (path) => {
-    return path.split('.').reduce((obj, key) => obj?.[key], translations[lang]) || '';
+    const val = path.split('.').reduce((obj, key) => obj?.[key], translations[lang]);
+    return val !== undefined ? val : '';
   };
 
   const changeLang = (newLang) => {

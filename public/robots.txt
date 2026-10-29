@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zer0sh.github.io/sitemap.xml

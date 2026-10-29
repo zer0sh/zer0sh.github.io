@@ -68,7 +68,7 @@ export const Minimap = () => {
             <button
               key={sec.id}
               onClick={() => scrollTo(sec.id)}
-              className="group relative w-7 h-7 flex items-center justify-center rounded-full focus:outline-none cursor-pointer"
+              className="group relative w-7 h-7 flex items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981] cursor-pointer"
               aria-label={`Jump to ${sec.label}`}
             >
               {/* Tooltip Label on Hover or Active */}

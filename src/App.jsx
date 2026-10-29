@@ -10,12 +10,35 @@ import { TerminalModal } from './components/TerminalModal';
 import { ShortcutsModal } from './components/ShortcutsModal';
 import './index.css';
 
-const BlogPage = () => {
-  return (
-    <LanguageProvider>
-      <Blog />
-    </LanguageProvider>
-  );
+const LanguageSyncer = () => {
+  const location = useLocation();
+  const { changeLang, lang: currentCtxLang } = useLanguage();
+
+  useEffect(() => {
+    const pathParts = location.pathname.split('/').filter(Boolean);
+    const routeLang = pathParts[0];
+    const isBlog = location.pathname.includes('/blog');
+
+    if (routeLang === 'es' || routeLang === 'en') {
+      changeLang(routeLang);
+    }
+
+    const effectiveLang = routeLang === 'es' || routeLang === 'en' ? routeLang : currentCtxLang;
+
+    if (isBlog) {
+      document.title =
+        effectiveLang === 'es'
+          ? 'Steven Muñoz // Notas de Campo SRE & Artículos'
+          : 'Steven Muñoz // SRE Field Notes & Articles';
+    } else {
+      document.title =
+        effectiveLang === 'es'
+          ? 'Steven Muñoz // zer0sh — Ingeniero de Fiabilidad de Sitios (SRE)'
+          : 'Steven Muñoz // zer0sh — Site Reliability Engineer';
+    }
+  }, [location.pathname, changeLang, currentCtxLang]);
+
+  return null;
 };
 
 const LanguageWrapper = ({ isTerminalOpen, setIsTerminalOpen, isShortcutsOpen, setIsShortcutsOpen }) => {
@@ -27,15 +50,13 @@ const LanguageWrapper = ({ isTerminalOpen, setIsTerminalOpen, isShortcutsOpen, s
   const currentLang = validLangs.includes(lang) ? lang : 'en';
 
   return (
-    <LanguageProvider>
-      <LanguageContent
-        currentLang={currentLang}
-        isTerminalOpen={isTerminalOpen}
-        setIsTerminalOpen={setIsTerminalOpen}
-        isShortcutsOpen={isShortcutsOpen}
-        setIsShortcutsOpen={setIsShortcutsOpen}
-      />
-    </LanguageProvider>
+    <LanguageContent
+      currentLang={currentLang}
+      isTerminalOpen={isTerminalOpen}
+      setIsTerminalOpen={setIsTerminalOpen}
+      isShortcutsOpen={isShortcutsOpen}
+      setIsShortcutsOpen={setIsShortcutsOpen}
+    />
   );
 };
 
@@ -89,25 +110,28 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/en" replace />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route
-            path="/:lang"
-            element={
-              <LanguageWrapper
-                isTerminalOpen={isTerminalOpen}
-                setIsTerminalOpen={setIsTerminalOpen}
-                isShortcutsOpen={isShortcutsOpen}
-                setIsShortcutsOpen={setIsShortcutsOpen}
-              />
-            }
-          />
-        </Routes>
-        <TerminalModal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
-        <ShortcutsModal isOpen={isShortcutsOpen} onClose={() => setIsShortcutsOpen(false)} />
-      </Router>
+      <LanguageProvider>
+        <Router>
+          <LanguageSyncer />
+          <Routes>
+            <Route path="/" element={<Navigate to="/en" replace />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route
+              path="/:lang"
+              element={
+                <LanguageWrapper
+                  isTerminalOpen={isTerminalOpen}
+                  setIsTerminalOpen={setIsTerminalOpen}
+                  isShortcutsOpen={isShortcutsOpen}
+                  setIsShortcutsOpen={setIsShortcutsOpen}
+                />
+              }
+            />
+          </Routes>
+          <TerminalModal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+          <ShortcutsModal isOpen={isShortcutsOpen} onClose={() => setIsShortcutsOpen(false)} />
+        </Router>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

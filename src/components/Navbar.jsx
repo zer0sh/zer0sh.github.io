@@ -61,6 +61,7 @@ export const Navbar = ({ currentLang, onOpenTerminal, onOpenShortcuts }) => {
             <button
               onClick={onOpenTerminal}
               className="px-2 py-0.5 bg-[#0c0e14] border border-[#131722] hover:border-[#10b981] text-[#10b981] hover:text-white transition-colors cursor-pointer"
+              aria-label={currentLang === 'es' ? "Abrir consola SRE (~ o `)" : "Open SRE terminal (~ or `)"}
               title={currentLang === 'es' ? "Abrir consola SRE (~ o `)" : "Open SRE terminal (~ or `)"}
             >
               [CLI]
@@ -68,6 +69,7 @@ export const Navbar = ({ currentLang, onOpenTerminal, onOpenShortcuts }) => {
             <button
               onClick={onOpenShortcuts}
               className="px-1.5 py-0.5 text-[#64748b] hover:text-white transition-colors cursor-pointer"
+              aria-label={currentLang === 'es' ? "Guía de atajos de teclado (?)" : "Keyboard shortcuts guide (?)"}
               title={currentLang === 'es' ? "Guía de atajos de teclado (?)" : "Keyboard shortcuts guide (?)"}
             >
               [?]

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Footer } from '../components/Footer';
+import { useLanguage } from '../context/LanguageContext';
 
 const calculateReadingTime = (content) => {
   const wordsPerMinute = 200;
@@ -56,6 +57,7 @@ const CodeBlock = ({ children }) => {
 };
 
 export const Blog = () => {
+  const { lang } = useLanguage();
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -176,7 +178,7 @@ export const Blog = () => {
             className="font-mono text-xs uppercase tracking-[0.2em] text-[#10b981] hover:text-white transition-colors mb-12 flex items-center gap-2"
           >
             <span>&larr;</span>
-            <span>Volver a las notas de campo</span>
+            <span>{lang === 'es' ? 'Volver a las notas de campo' : 'Back to field notes'}</span>
           </button>
 
           <article>
@@ -188,7 +190,7 @@ export const Blog = () => {
                 <span className="text-[#64748b]">·</span>
                 <span className="text-[#10b981]">{readingTime} MIN READ</span>
                 <span className="text-[#64748b]">·</span>
-                <span className="text-[#64748b] font-mono">{Math.round(scrollProgress)}% LEÍDO</span>
+                <span className="text-[#64748b] font-mono">{Math.round(scrollProgress)}% {lang === 'es' ? 'LEÍDO' : 'READ'}</span>
               </div>
 
               <h1 className="text-[clamp(2.4rem,5vw,4.2rem)] font-extrabold tracking-[-0.04em] leading-[1.0] text-white mb-6">
@@ -293,7 +295,7 @@ export const Blog = () => {
           className="font-mono text-xs uppercase tracking-[0.2em] text-[#10b981] hover:text-white transition-colors mb-16 inline-flex items-center gap-2"
         >
           <span>&larr;</span>
-          <span>Volver al inicio</span>
+          <span>{lang === 'es' ? 'Volver al inicio' : 'Back to home'}</span>
         </Link>
 
         {/* Section Header */}
@@ -305,7 +307,9 @@ export const Blog = () => {
             Field Dispatches
           </h1>
           <p className="text-lg text-[#64748b] max-w-[52ch]">
-            Artículos técnicos, investigación de incidentes en producción, automatizaciones y arquitectura de sistemas.
+            {lang === 'es'
+              ? 'Artículos técnicos, investigación de incidentes en producción, automatizaciones y arquitectura de sistemas.'
+              : 'Technical articles, production incident investigations, automations, and systems architecture.'}
           </p>
         </div>
 
@@ -321,7 +325,7 @@ export const Blog = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="BUSCAR EN NOTAS DE CAMPO // TÍTULO, STACK O TEXTO..."
+                placeholder={lang === 'es' ? 'BUSCAR EN NOTAS DE CAMPO // TÍTULO, STACK O TEXTO...' : 'SEARCH IN FIELD NOTES // TITLE, STACK OR TEXT...'}
                 className="w-full bg-[#0c0e14] border border-[#131722] focus:border-[#10b981] text-white font-mono text-xs sm:text-sm pl-10 pr-4 py-2.5 outline-none transition-colors placeholder:text-[#64748b]/60"
               />
               {searchQuery && (
@@ -329,20 +333,20 @@ export const Blog = () => {
                   onClick={() => setSearchQuery('')}
                   className="absolute right-3 top-1/2 -translate-y-1/2 font-mono text-xs text-[#64748b] hover:text-white"
                 >
-                  [LIMPIAR]
+                  {lang === 'es' ? '[LIMPIAR]' : '[CLEAR]'}
                 </button>
               )}
             </div>
 
             <div className="font-mono text-xs text-[#64748b]">
-              MOSTRANDO <span className="text-[#10b981] font-bold">{filteredPosts.length}</span> DE {posts.length} DISPATCHES
+              {lang === 'es' ? 'MOSTRANDO' : 'SHOWING'} <span className="text-[#10b981] font-bold">{filteredPosts.length}</span> {lang === 'es' ? 'DE' : 'OF'} {posts.length} DISPATCHES
             </div>
           </div>
 
           {/* Category Filter Pills */}
           <div className="flex flex-wrap items-center gap-2">
             <span className="font-mono text-[0.74rem] uppercase tracking-wider text-[#64748b] mr-2">
-              CATEGORÍAS:
+              {lang === 'es' ? 'CATEGORÍAS:' : 'CATEGORIES:'}
             </span>
             {categories.map((cat) => {
               const isSelected = selectedCategory.toUpperCase() === cat.toUpperCase();
@@ -367,15 +371,15 @@ export const Blog = () => {
         <div className="grid row-gap-12 sm:row-gap-16">
           {posts.length === 0 ? (
             <div className="py-20 font-mono text-sm text-[#64748b]">
-              CARGANDO REGISTRO DE DISPATCHES...
+              {lang === 'es' ? 'CARGANDO REGISTRO DE DISPATCHES...' : 'LOADING DISPATCHES REGISTRY...'}
             </div>
           ) : filteredPosts.length === 0 ? (
             <div className="py-16 text-center border border-[#131722] bg-[#0c0e14] p-8">
               <p className="font-mono text-sm text-[#ef4444] mb-3">
-                [!] NO SE ENCONTRARON DISPATCHES QUE COINCIDAN CON LOS CRITERIOS
+                {lang === 'es' ? '[!] NO SE ENCONTRARON DISPATCHES QUE COINCIDAN CON LOS CRITERIOS' : '[!] NO DISPATCHES FOUND MATCHING SEARCH CRITERIA'}
               </p>
               <p className="text-sm text-[#64748b] mb-5">
-                Prueba buscando otros términos o resetea los filtros aplicados.
+                {lang === 'es' ? 'Prueba buscando otros términos o resetea los filtros aplicados.' : 'Try searching different terms or reset active filters.'}
               </p>
               <button
                 onClick={() => {
@@ -384,7 +388,7 @@ export const Blog = () => {
                 }}
                 className="font-mono text-xs uppercase tracking-wider px-4 py-2 bg-[#131722] text-[#10b981] hover:bg-[#10b981] hover:text-[#07080b] transition-colors"
               >
-                [RESETEAR FILTROS]
+                {lang === 'es' ? '[RESETEAR FILTROS]' : '[RESET FILTERS]'}
               </button>
             </div>
           ) : (

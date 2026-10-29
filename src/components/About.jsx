@@ -55,7 +55,9 @@ export const About = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-4 font-mono text-[0.74rem]">
           <div className="bg-[#0c0e14] border border-[#131722] p-3.5 flex flex-col gap-1">
             <span className="text-[#64748b] tracking-wider uppercase">{lang === 'es' ? 'DETECCIÓN TEMPRANA' : 'PROACTIVE TRIAGE'}</span>
-            <span className="text-white font-bold text-sm tracking-tight">&gt; 85% TELEMETRÍA</span>
+            <span className="text-white font-bold text-sm tracking-tight">
+              {lang === 'es' ? '> 85% TELEMETRÍA' : '> 85% TELEMETRY'}
+            </span>
           </div>
           <div className="bg-[#0c0e14] border border-[#131722] p-3.5 flex flex-col gap-1">
             <span className="text-[#64748b] tracking-wider uppercase">{lang === 'es' ? 'RESOLUCIÓN P1' : 'P1 MTTR TARGET'}</span>
@@ -67,7 +69,9 @@ export const About = () => {
           </div>
           <div className="bg-[#0c0e14] border border-[#131722] p-3.5 flex flex-col gap-1">
             <span className="text-[#64748b] tracking-wider uppercase">{lang === 'es' ? 'PRESUPUESTO TOIL' : 'TOIL REDUCTION'}</span>
-            <span className="text-[#10b981] font-bold text-sm tracking-tight">AUTOMATIZACIÓN CI/CD</span>
+            <span className="text-[#10b981] font-bold text-sm tracking-tight">
+              {lang === 'es' ? 'AUTOMATIZACIÓN CI/CD' : 'CI/CD AUTOMATION'}
+            </span>
           </div>
         </div>
       </div>

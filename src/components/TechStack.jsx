@@ -10,28 +10,28 @@ export const TechStack = () => {
       name: t('skills.infrastructure.name'),
       domain: 'DOMAIN.01 // ORCHESTRATION',
       status: 'CLUSTER READY',
-      items: ['Kubernetes', 'K3s', 'Docker', 'Docker Compose', 'ArgoCD', 'Helm', 'Self-Hosted'],
+      items: t('skills.infrastructure.items') || ['Kubernetes', 'K3s', 'Docker', 'Docker Compose', 'ArgoCD', 'Helm', 'Self-Hosted'],
     },
     {
       key: 'observability',
       name: t('skills.observability.name'),
       domain: 'DOMAIN.02 // TELEMETRY',
       status: 'REALTIME STREAM',
-      items: ['Prometheus', 'Grafana', 'Loki', 'Sentry', 'Log Aggregation', 'Metric Alerts'],
+      items: t('skills.observability.items') || ['Prometheus', 'Grafana', 'Loki', 'Sentry', 'Log Aggregation', 'Metric Alerts'],
     },
     {
       key: 'systems',
       name: t('skills.systems.name'),
       domain: 'DOMAIN.03 // POSIX & RUNTIMES',
       status: 'POSIX STRICT',
-      items: ['Linux Administration', 'POSIX Shell', 'Bash', 'Rust', 'Wayland', 'Hardware Telemetry'],
+      items: t('skills.systems.items') || ['Linux Administration', 'POSIX Shell', 'Bash', 'Rust', 'Wayland', 'Hardware Telemetry'],
     },
     {
       key: 'reliability',
       name: t('skills.reliability.name'),
       domain: 'DOMAIN.04 // RESILIENCE',
       status: 'SECURITY AUDITED',
-      items: ['GitHub Actions', 'Trivy Scanning', 'NGINX', 'PostgreSQL', 'MySQL', 'SSL/TLS'],
+      items: t('skills.reliability.items') || ['GitHub Actions', 'Trivy Scanning', 'NGINX', 'PostgreSQL', 'MySQL', 'SSL/TLS'],
     },
   ];
 

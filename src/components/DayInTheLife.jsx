@@ -7,28 +7,24 @@ export const DayInTheLife = () => {
   const steps = [
     {
       key: 'step1',
-      tags: ['Grafana Dashboards', 'Sentry Streams', 'Host Health', 'SLO Budget'],
       nodeBorder: 'border-[#10b981]',
       nodeBg: 'bg-[#10b981]',
       badgeStyle: 'text-[#10b981] bg-[#10b981]/10 border-[#10b981]/30',
     },
     {
       key: 'step2',
-      tags: ['GitHub Actions', 'Docker Buildx', 'Trivy CVE Scan', 'Zero-Downtime Rollout'],
       nodeBorder: 'border-[#38bdf8]',
       nodeBg: 'bg-[#38bdf8]',
       badgeStyle: 'text-[#38bdf8] bg-[#38bdf8]/10 border-[#38bdf8]/30',
     },
     {
       key: 'step3',
-      tags: ['SSH Bastion', 'systemd Journal', 'Network Sockets', 'Root-Cause Discovery'],
       nodeBorder: 'border-[#ef4444]',
       nodeBg: 'bg-[#ef4444]',
       badgeStyle: 'text-[#ef4444] bg-[#ef4444]/10 border-[#ef4444]/30',
     },
     {
       key: 'step4',
-      tags: ['Blameless Post-Mortem', 'Alerting Rules', 'Idempotent Automation', 'GitOps Commit'],
       nodeBorder: 'border-[#10b981]',
       nodeBg: 'bg-[#10b981]',
       badgeStyle: 'text-[#10b981] bg-[#10b981]/10 border-[#10b981]/30',
@@ -52,11 +48,12 @@ export const DayInTheLife = () => {
 
       {/* Graphical Chronological Trace */}
       <div className="relative border-l-2 border-[#131722] ml-3 sm:ml-6 pl-7 sm:pl-10 space-y-12 sm:space-y-16">
-        {steps.map(({ key, tags, nodeBorder, nodeBg, badgeStyle }) => {
+        {steps.map(({ key, nodeBorder, nodeBg, badgeStyle }) => {
           const time = t(`timeline.${key}.time`);
           const status = t(`timeline.${key}.status`);
           const title = t(`timeline.${key}.title`);
           const description = t(`timeline.${key}.description`);
+          const tags = t(`timeline.${key}.tags`) || [];
 
           return (
             <article key={key} className="relative">

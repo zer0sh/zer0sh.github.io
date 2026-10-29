@@ -106,27 +106,7 @@ export const DailyOperations = () => {
 
                 {/* Scope Indicators */}
                 <div className="flex flex-wrap gap-2">
-                  {key === 'op1' && ['Prometheus', 'Grafana', 'Sentry', 'SLI/SLO Auditing'].map((tag) => (
-                    <span key={tag} className="font-mono text-[0.76rem] text-[#94a3b8] bg-[#0c0e14] border border-[#131722] px-2.5 py-1 uppercase tracking-wider">
-                      {tag}
-                    </span>
-                  ))}
-                  {key === 'op2' && ['GitHub Actions', 'Docker Buildx', 'Rollback Hooks', 'Multi-Env Delivery'].map((tag) => (
-                    <span key={tag} className="font-mono text-[0.76rem] text-[#94a3b8] bg-[#0c0e14] border border-[#131722] px-2.5 py-1 uppercase tracking-wider">
-                      {tag}
-                    </span>
-                  ))}
-                  {key === 'op3' && ['Incident Response', 'NGINX Upstream', 'SSL/TLS', 'Cloudflare Proxy', 'Blameless RCA'].map((tag) => (
-                    <span key={tag} className="font-mono text-[0.76rem] text-[#94a3b8] bg-[#0c0e14] border border-[#131722] px-2.5 py-1 uppercase tracking-wider">
-                      {tag}
-                    </span>
-                  ))}
-                  {key === 'op4' && ['Linux (Debian/Ubuntu)', 'Docker Compose', 'SSH Bastion Hardening', 'UFW / Fail2ban'].map((tag) => (
-                    <span key={tag} className="font-mono text-[0.76rem] text-[#94a3b8] bg-[#0c0e14] border border-[#131722] px-2.5 py-1 uppercase tracking-wider">
-                      {tag}
-                    </span>
-                  ))}
-                  {key === 'op5' && ['Bash Scripting', 'Python Automation', 'DB Sanitization', 'Toil Elimination'].map((tag) => (
+                  {(t(`dailyOps.${key}.tags`) || []).map((tag) => (
                     <span key={tag} className="font-mono text-[0.76rem] text-[#94a3b8] bg-[#0c0e14] border border-[#131722] px-2.5 py-1 uppercase tracking-wider">
                       {tag}
                     </span>

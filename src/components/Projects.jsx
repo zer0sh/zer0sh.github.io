@@ -124,14 +124,8 @@ export const Projects = () => {
           const domain = t(`projects.${key}.domain`);
           const description = t(`projects.${key}.description`);
           const link = t(`projects.${key}.link`);
-          const tags = [
-            'k3s-lab' === name ? 'Kubernetes · ArgoCD · Prometheus · Grafana · Loki · Shell' : null,
-            'sunim-tui' === name ? 'Rust · Terminus CLI · Asynchronous POSIX · Vim-Style TUI' : null,
-            'zer0sh-site-health-monitor' === name ? 'PHP · Security Headers · Vulnerability Telemetry · Cron Diagnostics' : null,
-            'cms-local-envs' === name ? 'Docker Compose · GitHub Actions · Trivy Security · Automatic Rollback · CI/CD' : null,
-            'gh-runner-selfhosted-docker' === name ? 'Docker · GitHub Actions · CI/CD Automation · Linux Isolation' : null,
-            'dotfiles' === name ? 'Hyprland · Wayland · POSIX Shell · Declarative Config · Wiki' : null,
-          ].filter(Boolean)[0] || '';
+          const projectTagsList = t(`projects.${key}.tags`);
+          const tags = Array.isArray(projectTagsList) ? projectTagsList.join(' · ') : '';
 
           const hasTopology = Boolean(TOPOLOGIES[name]);
           const isExpanded = expandedTopology === name;
