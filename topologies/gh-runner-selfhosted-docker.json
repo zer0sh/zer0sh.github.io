@@ -1,0 +1,125 @@
+{
+  "$schema": "/schemas/architecture-v1.json",
+  "project": "gh-runner-selfhosted-docker",
+  "version": "1.0.0",
+  "title": "EPHEMERAL DOCKER-IN-DOCKER EXECUTION RUNBOOK",
+  "zones": [
+    { "id": "trigger", "label": "ZONE // 01: GITHUB WEBHOOKS & BASTION ORCHESTRATOR" },
+    { "id": "sandbox", "label": "ZONE // 02: DIND ISOLATION & JOB EXECUTION CONTAINER" },
+    { "id": "cleanup", "label": "ZONE // 03: AUTO-DEREGISTRATION & RESOURCE PRUNING" }
+  ],
+  "nodes": [
+    {
+      "id": "webhook",
+      "zone": "trigger",
+      "col": 0,
+      "badge": "GITHUB API DISPATCH",
+      "label": "Repository Job Trigger",
+      "status": "LISTENING",
+      "color": "cyan",
+      "details": ["TLS Signed Payload", "Workflow Matrix Dispatch"]
+    },
+    {
+      "id": "bastion-loop",
+      "zone": "trigger",
+      "col": 1,
+      "badge": "CONTROL PLANE",
+      "label": "Bastion Host Control Loop",
+      "status": "WATCHING",
+      "color": "emerald",
+      "details": ["Worker Scaling Daemon", "Ephemeral Token Minting"]
+    },
+    {
+      "id": "spawn-runner",
+      "zone": "trigger",
+      "col": 2,
+      "badge": "ORCHESTRATOR",
+      "label": "Spawn Ephemeral Runner",
+      "status": "READY",
+      "color": "amber",
+      "details": ["1 Job = 1 Clean Container", "Zero Persistent State"]
+    },
+    {
+      "id": "dind-socket",
+      "zone": "sandbox",
+      "col": 0,
+      "badge": "SECURITY BOUNDARY",
+      "label": "DinD Socket Isolation",
+      "status": "ISOLATED",
+      "color": "emerald",
+      "details": [
+        "Unshared Host Docker Socket",
+        "Systemd cgroups v2 Limits"
+      ]
+    },
+    {
+      "id": "job-runner",
+      "zone": "sandbox",
+      "col": 1,
+      "badge": "CONTAINER RUNNER",
+      "label": "Actions Runner Binary",
+      "status": "RUNNING",
+      "color": "cyan",
+      "details": [
+        "Official GitHub Runner Core",
+        "Non-root POSIX Workspace"
+      ]
+    },
+    {
+      "id": "build-engine",
+      "zone": "sandbox",
+      "col": 2,
+      "badge": "BUILD ENGINE",
+      "label": "Inner Docker Daemon",
+      "status": "EXEC_JOB",
+      "color": "amber",
+      "details": [
+        "docker build / test execution",
+        "Layer Cache tmpfs Mount"
+      ]
+    },
+    {
+      "id": "artifact-flush",
+      "zone": "cleanup",
+      "col": 0,
+      "badge": "TELEMETRY DISPATCH",
+      "label": "Logs & Artifact Upload",
+      "status": "STREAMING",
+      "color": "cyan",
+      "details": ["Encrypted Artifact Push", "Step Exit Code Verification"]
+    },
+    {
+      "id": "deregister-api",
+      "zone": "cleanup",
+      "col": 1,
+      "badge": "GITHUB API HOOK",
+      "label": "Auto-Deregister API",
+      "status": "REVOKING",
+      "color": "emerald",
+      "details": ["Instant Runner Token Revocation", "Remove from GitHub Pool"]
+    },
+    {
+      "id": "prune-daemon",
+      "zone": "cleanup",
+      "col": 2,
+      "badge": "HOST CLEANUP",
+      "label": "Docker Prune & Destroy",
+      "status": "PRUNED",
+      "color": "amber",
+      "details": [
+        "docker rm -f ephemeral container",
+        "Zero Disk Leak on Bastion"
+      ]
+    }
+  ],
+  "flows": [
+    { "from": "webhook", "to": "bastion-loop", "busType": "primary" },
+    { "from": "bastion-loop", "to": "spawn-runner", "busType": "primary" },
+    { "from": "spawn-runner", "to": "dind-socket", "busType": "ingress" },
+    { "from": "dind-socket", "to": "job-runner", "busType": "primary" },
+    { "from": "job-runner", "to": "build-engine", "busType": "primary" },
+    { "from": "build-engine", "to": "artifact-flush", "busType": "ingress" },
+    { "from": "artifact-flush", "to": "deregister-api", "busType": "primary" },
+    { "from": "deregister-api", "to": "prune-daemon", "busType": "primary" }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "/schemas/architecture-v1.json",
+  "project": "k3s-lab",
+  "version": "1.0.0",
+  "title": "EDGE INGRESS & CLOUD-NATIVE OBSERVABILITY PIPELINE",
+  "zones": [
+    { "id": "ingress", "label": "ZONE // 01: EDGE INGRESS & ZERO TRUST" },
+    { "id": "workload", "label": "ZONE // 02: K3S CLUSTER ORCHESTRATION & STATEFUL STORAGE" },
+    { "id": "observability", "label": "ZONE // 03: OBSERVABILITY BUS & TELEMETRY STREAM" }
+  ],
+  "nodes": [
+    {
+      "id": "traffic",
+      "zone": "ingress",
+      "col": 0,
+      "badge": "CLIENT // INGRESS",
+      "label": "Internet Traffic",
+      "status": "ONLINE",
+      "color": "cyan",
+      "details": ["TLS 1.3 / HTTPS:443", "Anycast WAN Edge"]
+    },
+    {
+      "id": "cloudflare",
+      "zone": "ingress",
+      "col": 1,
+      "badge": "WAN GATEWAY · ZERO TRUST",
+      "label": "Cloudflare Edge Tunnel",
+      "status": "ACTIVE",
+      "color": "emerald",
+      "details": ["Zero Trust Ingress", "SSL Auto-Offload"]
+    },
+    {
+      "id": "traefik",
+      "zone": "ingress",
+      "col": 2,
+      "badge": "K3S INGRESS LAYER · PROXY",
+      "label": "Traefik Ingress Controller",
+      "status": "HA_ACTIVE",
+      "color": "cyan",
+      "details": ["Dynamic Path Routing", "TLS SNI Termination"]
+    },
+    {
+      "id": "workloads",
+      "zone": "workload",
+      "col": 0,
+      "badge": "WORKLOAD NAMESPACE // PROD",
+      "label": "Stateful Production Services",
+      "status": "SYNCED",
+      "color": "emerald",
+      "details": [
+        "Nextcloud / Vaultwarden Secure Store",
+        "Authelia SSO / Postgres DB HA"
+      ]
+    },
+    {
+      "id": "storage",
+      "zone": "workload",
+      "col": 1,
+      "badge": "STORAGE ENGINE",
+      "label": "Longhorn Block Storage",
+      "status": "HEALTHY",
+      "color": "amber",
+      "details": ["Distributed CSI Replicated Volumes", "Snapshot Snap/Sync"]
+    },
+    {
+      "id": "monitoring-stack",
+      "zone": "workload",
+      "col": 2,
+      "badge": "OBSERVABILITY NAMESPACE",
+      "label": "Monitoring Stack Core",
+      "status": "ACTIVE",
+      "color": "cyan",
+      "details": ["Prometheus Metrics Scraper", "Loki Structured Log Engine"]
+    },
+    {
+      "id": "daemonsets",
+      "zone": "observability",
+      "col": 0,
+      "badge": "NODE AGENTS // DAEMONSET",
+      "label": "Vector + cAdvisor + Exporters",
+      "status": "RUNNING",
+      "color": "emerald",
+      "details": ["Kernel cgroups v2 Metrics Stream", "Container Logs Ingest"]
+    },
+    {
+      "id": "tsdb",
+      "zone": "observability",
+      "col": 1,
+      "badge": "STORAGE & TSDB ENGINE",
+      "label": "Prometheus Server + Loki",
+      "status": "ONLINE",
+      "color": "cyan",
+      "details": ["High-Resolution PromQL TSDB", "Compressed Chunks Store"]
+    },
+    {
+      "id": "grafana",
+      "zone": "observability",
+      "col": 2,
+      "badge": "TELEMETRY DASHBOARD",
+      "label": "Grafana Operational HUD",
+      "status": "SRE_READY",
+      "color": "amber",
+      "details": ["Real-time Node Health Graphs", "P99 Latency & Alert Hooks"]
+    }
+  ],
+  "flows": [
+    { "from": "traffic", "to": "cloudflare", "busType": "primary" },
+    { "from": "cloudflare", "to": "traefik", "busType": "primary" },
+    { "from": "traefik", "to": "workloads", "busType": "ingress" },
+    { "from": "traefik", "to": "monitoring-stack", "busType": "ingress" },
+    { "from": "workloads", "to": "storage", "busType": "primary" },
+    { "from": "storage", "to": "monitoring-stack", "busType": "ingress" },
+    { "from": "daemonsets", "to": "tsdb", "busType": "primary" },
+    { "from": "tsdb", "to": "grafana", "busType": "primary" }
+  ]
+}

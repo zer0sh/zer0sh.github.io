@@ -1,0 +1,131 @@
+{
+  "$schema": "/schemas/architecture-v1.json",
+  "project": "zer0sh-site-health-monitor",
+  "version": "1.0.0",
+  "title": "WORDPRESS RUNTIME HEALTH & VULNERABILITY AUDITOR",
+  "zones": [
+    { "id": "trigger", "label": "ZONE // 01: EXECUTION TRIGGERS & HOOKS" },
+    { "id": "engine", "label": "ZONE // 02: READ-ONLY DIAGNOSTIC & CVE ENGINE" },
+    { "id": "storage", "label": "ZONE // 03: ZERO-TELEMETRY & TRANSIENT STORAGE" }
+  ],
+  "nodes": [
+    {
+      "id": "admin-hook",
+      "zone": "trigger",
+      "col": 0,
+      "badge": "WP-ADMIN DISPATCHER",
+      "label": "Admin Dashboard Request",
+      "status": "READ_ONLY",
+      "color": "cyan",
+      "details": ["Current Screen Hook", "Zero Database Mutations"]
+    },
+    {
+      "id": "cron-scheduler",
+      "zone": "trigger",
+      "col": 1,
+      "badge": "BACKGROUND SCHEDULER",
+      "label": "WP-Cron Periodic Runner",
+      "status": "NONBLOCKING",
+      "color": "emerald",
+      "details": ["Daily Background Audit", "Zero Impact on Page Load"]
+    },
+    {
+      "id": "cli-trigger",
+      "zone": "trigger",
+      "col": 2,
+      "badge": "CLI ENTRYPOINT",
+      "label": "WP-CLI Command Runner",
+      "status": "HEADLESS",
+      "color": "amber",
+      "details": ["wp zer0sh-health audit", "Automated CI/CD Verification"]
+    },
+    {
+      "id": "server-checks",
+      "zone": "engine",
+      "col": 0,
+      "badge": "RUNTIME AUDIT",
+      "label": "PHP & Server Environment",
+      "status": "AUDITED",
+      "color": "emerald",
+      "details": [
+        "PHP Version & Official EOL Status",
+        "memory_limit, display_errors, extensions"
+      ]
+    },
+    {
+      "id": "cve-scanner",
+      "zone": "engine",
+      "col": 1,
+      "badge": "VULNERABILITY ENGINE",
+      "label": "WPVulnerability API Check",
+      "status": "SECURE",
+      "color": "cyan",
+      "details": [
+        "Core, Plugins & Active Themes",
+        "Zero Credentials or Secrets Shared"
+      ]
+    },
+    {
+      "id": "security-headers",
+      "zone": "engine",
+      "col": 2,
+      "badge": "DEFENSE EVALUATION",
+      "label": "HTTP Security & Hardening",
+      "status": "VERIFIED",
+      "color": "amber",
+      "details": [
+        "HSTS, CSP, X-Frame-Options, SSL",
+        "XML-RPC & DISALLOW_FILE_EDIT"
+      ]
+    },
+    {
+      "id": "transient-cache",
+      "zone": "storage",
+      "col": 0,
+      "badge": "PERFORMANCE LAYER",
+      "label": "WP Transient Cache (12h TTL)",
+      "status": "CACHED",
+      "color": "emerald",
+      "details": [
+        "Local Database Transients",
+        "Instant Load Without HTTP Overhead"
+      ]
+    },
+    {
+      "id": "zero-telemetry",
+      "zone": "storage",
+      "col": 1,
+      "badge": "PRIVACY BOUNDARY",
+      "label": "Zero-Telemetry Boundary",
+      "status": "ISOLATED",
+      "color": "cyan",
+      "details": [
+        "No User Tracking or External Beacons",
+        "100% On-Premise Audit Results"
+      ]
+    },
+    {
+      "id": "report-view",
+      "zone": "storage",
+      "col": 2,
+      "badge": "DASHBOARD OUTPUT",
+      "label": "Unified SRE Health View",
+      "status": "READY",
+      "color": "amber",
+      "details": [
+        "Single-Screen Diagnostic Report",
+        "Exportable Audit Markdown/JSON"
+      ]
+    }
+  ],
+  "flows": [
+    { "from": "admin-hook", "to": "server-checks", "busType": "primary" },
+    { "from": "cron-scheduler", "to": "cve-scanner", "busType": "primary" },
+    { "from": "cli-trigger", "to": "security-headers", "busType": "primary" },
+    { "from": "server-checks", "to": "cve-scanner", "busType": "ingress" },
+    { "from": "cve-scanner", "to": "security-headers", "busType": "ingress" },
+    { "from": "server-checks", "to": "transient-cache", "busType": "primary" },
+    { "from": "cve-scanner", "to": "zero-telemetry", "busType": "primary" },
+    { "from": "security-headers", "to": "report-view", "busType": "primary" }
+  ]
+}

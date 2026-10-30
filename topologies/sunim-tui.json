@@ -1,0 +1,125 @@
+{
+  "$schema": "/schemas/architecture-v1.json",
+  "project": "sunim-tui",
+  "version": "1.0.0",
+  "title": "ASYNCHRONOUS POSIX EVENT-DRIVEN PIPELINE",
+  "zones": [
+    { "id": "input", "label": "ZONE // 01: POSIX TERMINAL INPUT & INTERACTION" },
+    { "id": "runtime", "label": "ZONE // 02: ASYNC RUST RUNTIME & TERMINUS BACKEND" },
+    { "id": "render", "label": "ZONE // 03: DIFF ENGINE & ANSI FRAMEBUFFER FLUSH" }
+  ],
+  "nodes": [
+    {
+      "id": "raw-mode",
+      "zone": "input",
+      "col": 0,
+      "badge": "IO INTERFACE // POSIX",
+      "label": "Terminal Raw Mode",
+      "status": "NONBLOCKING",
+      "color": "cyan",
+      "details": ["Unbuffered Keystrokes", "OSC 52 Clipboard Bridge"]
+    },
+    {
+      "id": "crossterm",
+      "zone": "input",
+      "col": 1,
+      "badge": "EVENT SUBSYSTEM",
+      "label": "Crossterm Event Stream",
+      "status": "STREAMING",
+      "color": "emerald",
+      "details": ["Non-blocking Key Events", "Window Resize SIGWINCH"]
+    },
+    {
+      "id": "cmd-bar",
+      "zone": "input",
+      "col": 2,
+      "badge": "INPUT PARSER",
+      "label": "Vim Command Bar (:)",
+      "status": "READY",
+      "color": "amber",
+      "details": ["Interactive fuzzy filter (/)", "Instant modal navigation"]
+    },
+    {
+      "id": "tokio",
+      "zone": "runtime",
+      "col": 0,
+      "badge": "CORE ASYNC ENGINE",
+      "label": "Tokio Multi-Thread Runtime",
+      "status": "ACTIVE",
+      "color": "emerald",
+      "details": [
+        "Rust 2024 Async Worker Pool",
+        "Non-blocking Subprocess Timeouts"
+      ]
+    },
+    {
+      "id": "terminus",
+      "zone": "runtime",
+      "col": 1,
+      "badge": "CLI ORCHESTRATION",
+      "label": "Terminus Subprocess Daemon",
+      "status": "PARALLEL",
+      "color": "cyan",
+      "details": [
+        "Pantheon Session & Token Storage",
+        "Isolated Background Tasks"
+      ]
+    },
+    {
+      "id": "cache-layer",
+      "zone": "runtime",
+      "col": 2,
+      "badge": "PERSISTENT DISK CACHE",
+      "label": "Zero-Latency Cache Engine",
+      "status": "SYNCED",
+      "color": "amber",
+      "details": [
+        "~/.cache/sunim-tui/cache.json",
+        "Instant Launch Without Network Lag"
+      ]
+    },
+    {
+      "id": "state-mutex",
+      "zone": "render",
+      "col": 0,
+      "badge": "CONCURRENCY CONTROL",
+      "label": "Arc<Mutex<AppState>>",
+      "status": "LOCKED",
+      "color": "emerald",
+      "details": ["Thread-Safe State Synchronization", "Atomic UI Snapshots"]
+    },
+    {
+      "id": "diff-engine",
+      "zone": "render",
+      "col": 1,
+      "badge": "FRAME BUFFER COMPOSITOR",
+      "label": "Double-Buffer Diff Engine",
+      "status": "ZERO_ALLOC",
+      "color": "cyan",
+      "details": ["Cell-Level Damage Calculation", "Minimal Redraw Overhead"]
+    },
+    {
+      "id": "ansi-flush",
+      "zone": "render",
+      "col": 2,
+      "badge": "POSIX STDOUT OUTPUT",
+      "label": "ANSI Escape Byte Flush",
+      "status": "60FPS_MAX",
+      "color": "amber",
+      "details": [
+        "Buffered stdout write_all()",
+        "Cursor Restoration on Panic"
+      ]
+    }
+  ],
+  "flows": [
+    { "from": "raw-mode", "to": "crossterm", "busType": "primary" },
+    { "from": "crossterm", "to": "cmd-bar", "busType": "primary" },
+    { "from": "crossterm", "to": "tokio", "busType": "ingress" },
+    { "from": "tokio", "to": "terminus", "busType": "primary" },
+    { "from": "terminus", "to": "cache-layer", "busType": "primary" },
+    { "from": "tokio", "to": "state-mutex", "busType": "ingress" },
+    { "from": "state-mutex", "to": "diff-engine", "busType": "primary" },
+    { "from": "diff-engine", "to": "ansi-flush", "busType": "primary" }
+  ]
+}
