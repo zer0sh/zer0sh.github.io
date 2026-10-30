@@ -8,6 +8,7 @@ import { Home } from './pages/Home';
 import { Blog } from './pages/Blog';
 import { TerminalModal } from './components/TerminalModal';
 import { ShortcutsModal } from './components/ShortcutsModal';
+import { CursorSpotlight } from './components/CursorSpotlight';
 import './index.css';
 
 const LanguageSyncer = () => {
@@ -112,6 +113,7 @@ export default function App() {
     <ThemeProvider>
       <LanguageProvider>
         <Router>
+          <CursorSpotlight />
           <LanguageSyncer />
           <Routes>
             <Route path="/" element={<Navigate to="/en" replace />} />

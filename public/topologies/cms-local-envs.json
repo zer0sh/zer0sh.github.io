@@ -1,0 +1,116 @@
+{
+  "$schema": "/schemas/architecture-v1.json",
+  "project": "cms-local-envs",
+  "version": "1.0.0",
+  "title": "ISOLATED REPRODUCIBLE CONTAINER WORKFLOW",
+  "zones": [
+    { "id": "ci", "label": "ZONE // 01: CI/CD PIPELINE & VULNERABILITY SCAN" },
+    { "id": "compose", "label": "ZONE // 02: DOCKER COMPOSE MULTI-TIER STACK" },
+    { "id": "storage", "label": "ZONE // 03: DATABASE FIXTURES & AUTOMATION HOOKS" }
+  ],
+  "nodes": [
+    {
+      "id": "git-push",
+      "zone": "ci",
+      "col": 0,
+      "badge": "DEVELOPER ENTRYPOINT",
+      "label": "Local Dev Commit",
+      "status": "SOURCE_OK",
+      "color": "cyan",
+      "details": ["Git Conventional Commits", "Automated Pre-commit Hooks"]
+    },
+    {
+      "id": "ci-runner",
+      "zone": "ci",
+      "col": 1,
+      "badge": "CI PIPELINE RUNNER",
+      "label": "GitHub Actions CI",
+      "status": "BUILDING",
+      "color": "emerald",
+      "details": ["Buildx Multi-Platform Cache", "Syntax & Lint Matrix"]
+    },
+    {
+      "id": "trivy-scan",
+      "zone": "ci",
+      "col": 2,
+      "badge": "CONTAINER AUDITOR",
+      "label": "Trivy Security Gate",
+      "status": "VERIFIED",
+      "color": "amber",
+      "details": ["CVE & Misconfiguration Scan", "SARIF Security Report"]
+    },
+    {
+      "id": "nginx-gateway",
+      "zone": "compose",
+      "col": 0,
+      "badge": "REVERSE PROXY",
+      "label": "NGINX Gateway Gateway",
+      "status": "ACTIVE",
+      "color": "emerald",
+      "details": ["TLS Offload & HTTP/2", "FastCGI Unix Socket Bridge"]
+    },
+    {
+      "id": "php-worker",
+      "zone": "compose",
+      "col": 1,
+      "badge": "APPLICATION RUNTIME",
+      "label": "PHP-FPM Worker Pod",
+      "status": "SANDBOXED",
+      "color": "cyan",
+      "details": ["Non-root Execution Boundary", "OPcache Accelerated JIT"]
+    },
+    {
+      "id": "env-config",
+      "zone": "compose",
+      "col": 2,
+      "badge": "ENVIRONMENT ROOT",
+      "label": "Bedrock / Drupal Root",
+      "status": "MOUNTED",
+      "color": "amber",
+      "details": ["Dotenv Multi-Stage Config", "Immutable Composer Lock"]
+    },
+    {
+      "id": "mariadb-db",
+      "zone": "storage",
+      "col": 0,
+      "badge": "DATABASE ENGINE",
+      "label": "MariaDB Sanitized Fixture",
+      "status": "SYNCED",
+      "color": "emerald",
+      "details": [
+        "Ephemeral Local Data Volume",
+        "Automated Schema Migration"
+      ]
+    },
+    {
+      "id": "rollback-hook",
+      "zone": "storage",
+      "col": 1,
+      "badge": "FAIL-SAFE ORCHESTRATION",
+      "label": "Healthcheck Auto-Recovery",
+      "status": "ARMED",
+      "color": "cyan",
+      "details": ["Docker Healthcheck Probes", "Graceful Container Restart"]
+    },
+    {
+      "id": "cli-tools",
+      "zone": "storage",
+      "col": 2,
+      "badge": "ORCHESTRATION HOOKS",
+      "label": "WP-CLI / Drush Automation",
+      "status": "AUTOMATED",
+      "color": "amber",
+      "details": ["make up / make down recipes", "Headless Site Bootstrap"]
+    }
+  ],
+  "flows": [
+    { "from": "git-push", "to": "ci-runner", "busType": "primary" },
+    { "from": "ci-runner", "to": "trivy-scan", "busType": "primary" },
+    { "from": "trivy-scan", "to": "nginx-gateway", "busType": "ingress" },
+    { "from": "nginx-gateway", "to": "php-worker", "busType": "primary" },
+    { "from": "php-worker", "to": "env-config", "busType": "primary" },
+    { "from": "php-worker", "to": "mariadb-db", "busType": "primary" },
+    { "from": "mariadb-db", "to": "rollback-hook", "busType": "ingress" },
+    { "from": "rollback-hook", "to": "cli-tools", "busType": "primary" }
+  ]
+}
