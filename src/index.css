@@ -45,3 +45,27 @@
     outline-offset: 2px;
   }
 }
+
+@keyframes neon-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 6px rgba(16, 185, 129, 0.8),
+      0 0 14px rgba(16, 185, 129, 0.55),
+      0 0 28px rgba(16, 185, 129, 0.35),
+      0 0 60px rgba(16, 185, 129, 0.2);
+    opacity: 0.85;
+  }
+  50% {
+    text-shadow:
+      0 0 9px rgba(16, 185, 129, 0.95),
+      0 0 20px rgba(16, 185, 129, 0.7),
+      0 0 40px rgba(16, 185, 129, 0.45),
+      0 0 80px rgba(16, 185, 129, 0.25);
+    opacity: 1;
+  }
+}
+
+.neon-text-infra {
+  color: #10b981;
+  animation: neon-pulse 3.5s ease-in-out infinite;
+}
