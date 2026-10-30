@@ -46,6 +46,24 @@
       "coverAlt": "Documentación de proyectos y archivos Markdown en terminal"
     },
     {
+      "slug": "php2shell-mantenimiento-preventivo-php82",
+      "title": "PHP2Shell: Por Qué Mantener la Flota en PHP 8.2 nos Salvó de un Desastre en Producción",
+      "date": "2026-10-06",
+      "category": "Runtime & SRE",
+      "excerpt": "Cuando saltó la alerta de PHP2Shell, el fantasma del pánico sobrevoló el equipo. Sin embargo, tener toda la flota estandarizada en PHP 8.2 gracias al mantenimiento preventivo convirtió un potencial desastre en una mitigación limpia y sin estrés.",
+      "coverImage": "/blog-posts/images/cve-2026-9860.png",
+      "coverAlt": "Auditoría de runtimes PHP y actualización de paquetes en contenedores de producción"
+    },
+    {
+      "slug": "wp2shell-incidente-parche-emergencia",
+      "title": "WP2Shell en Producción: Crónica de un Parche a Contrarreloj, Dos Sitios en Blanco y el Rescate de los Backups",
+      "date": "2026-09-22",
+      "category": "Incident Response",
+      "excerpt": "Llegó como la típica alerta casual de 'hay una nueva actualización disponible', pero detrás venía un intento masivo de RCE. Crónica de una carrera contra reloj, cómo la defensa en profundidad frenó la intrusión y por qué los backups matutinos salvaron la jornada.",
+      "coverImage": "/blog-posts/images/cve-2026-9860.png",
+      "coverAlt": "Auditoría de seguridad y análisis de logs durante el incidente WP2Shell"
+    },
+    {
       "slug": "shell-builtins",
       "title": "Top 15 de shell builtins clásicos de Linux",
       "date": "2026-08-10",
