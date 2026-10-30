@@ -166,7 +166,7 @@ export const Projects = () => {
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] inline-block animate-pulse"></span>
                       <span>{externalLabel || 'WORDPRESS.ORG'}</span>
-                      <span>&nearr;</span>
+                      <span aria-hidden="true">&#x2197;</span>
                     </a>
                   </div>
                 )}
