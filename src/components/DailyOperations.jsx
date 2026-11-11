@@ -2,14 +2,14 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 export const DailyOperations = () => {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
 
   const opsKeys = ['op1', 'op2', 'op3', 'op4', 'op5'];
 
   return (
     <section id="operations" className="py-24 sm:py-32">
       {/* Kicker */}
-      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
+      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#10b981] mb-4">
         {t('dailyOps.kicker')}
       </p>
 
@@ -46,63 +46,9 @@ export const DailyOperations = () => {
                 <h3 className="text-xl sm:text-[1.65rem] font-extrabold tracking-tight text-white mb-2.5">
                   {title}
                 </h3>
-                <p className="text-[1.02rem] leading-[1.65] text-[#cbd5e1] mb-4 max-w-[70ch]">
+                <p className="text-[1.02rem] leading-[1.65] text-[#cbd5e1] mb-5 max-w-[70ch]">
                   {description}
                 </p>
-
-                {/* SRE Operational Telemetry Gauge / Workflow Indicator */}
-                {key === 'op1' && (
-                  <div className="mb-4 p-2.5 bg-[#07080b] border border-[#131722] font-mono text-[0.72rem] text-[#64748b] flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <span className="text-[#10b981] font-bold">SLO TARGET: 99.95%</span>
-                    <span className="text-[#1e2433]">|</span>
-                    <span className="text-white">ACTUAL AVAILABILITY: 99.99%</span>
-                    <span className="text-[#1e2433]">|</span>
-                    <span className="text-[#10b981] font-bold">STATUS: NOMINAL</span>
-                  </div>
-                )}
-
-                {key === 'op2' && (
-                  <div className="mb-4 p-2.5 bg-[#07080b] border border-[#131722] font-mono text-[0.72rem] text-[#64748b] overflow-x-auto whitespace-nowrap">
-                    <span className="text-white font-bold">GITOPS:</span>{' '}
-                    <span className="text-[#10b981]">[LINT]</span> &rarr;{' '}
-                    <span className="text-[#10b981]">[TRIVY_SCAN]</span> &rarr;{' '}
-                    <span className="text-[#10b981]">[BUILDX]</span> &rarr;{' '}
-                    <span className="text-[#10b981]">[CANARY_TEST]</span> &rarr;{' '}
-                    <span className="text-white font-bold">[PROD_SYNC]</span>
-                  </div>
-                )}
-
-                {key === 'op3' && (
-                  <div className="mb-4 p-2.5 bg-[#07080b] border border-[#131722] font-mono text-[0.72rem] text-[#64748b] overflow-x-auto whitespace-nowrap">
-                    <span className="text-[#ef4444] font-bold">[INCIDENT_ALERT]</span> &rarr;{' '}
-                    <span className="text-white">[PAGERDUTY]</span> &rarr;{' '}
-                    <span className="text-white">[CANARY_DRAIN]</span> &rarr;{' '}
-                    <span className="text-[#10b981] font-bold">[AUTO_ROLLBACK]</span> &rarr;{' '}
-                    <span className="text-[#64748b]">[BLAMELESS_RCA]</span>
-                  </div>
-                )}
-
-                {key === 'op4' && (
-                  <div className="mb-4 p-2.5 bg-[#07080b] border border-[#131722] font-mono text-[0.72rem] text-[#64748b] overflow-x-auto whitespace-nowrap">
-                    <span className="text-[#64748b]">SECURITY BOUNDARY:</span>{' '}
-                    <span className="text-white">WAN</span> &rarr;{' '}
-                    <span className="text-[#10b981]">[CLOUDFLARE_EDGE]</span> &rarr;{' '}
-                    <span className="text-[#10b981]">[UFW+FAIL2BAN]</span> &rarr;{' '}
-                    <span className="text-white font-bold">[SSH_BASTION]</span> &rarr;{' '}
-                    <span className="text-[#10b981]">[SECURE_K3S_NODE]</span>
-                  </div>
-                )}
-
-                {key === 'op5' && (
-                  <div className="mb-4 p-2.5 bg-[#07080b] border border-[#131722] font-mono text-[0.72rem] text-[#64748b] flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <span className="text-white">TOIL BUDGET:</span>{' '}
-                    <span className="text-[#10b981] font-bold">&lt; 33%</span>
-                    <span className="text-[#1e2433]">|</span>
-                    <span className="text-white">CURRENT BURN: 14%</span>
-                    <span className="text-[#1e2433]">|</span>
-                    <span className="text-[#10b981] font-bold">AUTOMATION DELTA: -4.5h/{lang === 'es' ? 'sem' : 'wk'}</span>
-                  </div>
-                )}
 
                 {/* Scope Indicators */}
                 <div className="flex flex-wrap gap-2">
