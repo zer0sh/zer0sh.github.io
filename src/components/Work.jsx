@@ -17,8 +17,8 @@ export const Work = () => {
     function2: {
       badge: 'TRIAGE // RCA P1',
       status: 'BLAMELESS',
-      statusColor: 'text-[#ef4444]',
-      dotBg: 'bg-[#ef4444]',
+      statusColor: 'text-[#10b981]',
+      dotBg: 'bg-[#10b981]',
       cmd: 'ss -tulpn && journalctl -u nginx -f',
     },
     function3: {
@@ -54,7 +54,7 @@ export const Work = () => {
   return (
     <section id="disciplines" className="py-24 sm:py-32">
       {/* Kicker */}
-      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
+      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#10b981] mb-4">
         {t('work.kicker')}
       </p>
 

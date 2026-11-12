@@ -47,7 +47,7 @@ export const Dispatches = () => {
   return (
     <section id="dispatches" className="py-24 sm:py-32">
       {/* Kicker */}
-      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
+      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#10b981] mb-4">
         {t('dispatches.kicker')}
       </p>
 

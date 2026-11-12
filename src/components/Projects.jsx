@@ -194,7 +194,7 @@ export const Projects = () => {
   return (
     <section id="projects" className="py-24 sm:py-32">
       {/* Section Kicker */}
-      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
+      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#10b981] mb-4">
         {t('projects.kicker')}
       </p>
 

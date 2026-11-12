@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 export const Contact = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const channels = [
     {
@@ -33,31 +33,31 @@ export const Contact = () => {
 
   const channelMeta = {
     github: {
-      protocol: 'PROTOCOL // GIT-SSH',
-      status: '25+ REPOSITORIES',
+      protocol: 'GITHUB',
+      status: lang === 'es' ? 'CÓDIGO & REPOS' : 'CODE & REPOS',
       dotBg: 'bg-[#10b981]',
     },
     linkedin: {
-      protocol: 'NETWORK // SRE B2B',
-      status: 'AVAILABLE // ROLES',
+      protocol: 'LINKEDIN',
+      status: lang === 'es' ? 'RED PROFESIONAL' : 'PROFESSIONAL NETWORK',
       dotBg: 'bg-[#38bdf8]',
     },
     discord: {
-      protocol: 'SOCKET // WS-TLS',
-      status: 'DIRECT CHAT',
+      protocol: 'DISCORD',
+      status: lang === 'es' ? 'COMUNIDAD & CHAT' : 'COMMUNITY & CHAT',
       dotBg: 'bg-[#10b981]',
     },
     email: {
-      protocol: 'DISPATCH // SMTP-PGP',
-      status: 'DIRECT INBOX',
-      dotBg: 'bg-[#ef4444]',
+      protocol: 'EMAIL',
+      status: lang === 'es' ? 'CONTACTO DIRECTO' : 'DIRECT INBOX',
+      dotBg: 'bg-[#10b981]',
     },
   };
 
   return (
     <section id="contact" className="py-24 sm:py-32">
       {/* Kicker */}
-      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#ef4444] mb-4">
+      <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#10b981] mb-4">
         {t('contact.kicker')}
       </p>
 

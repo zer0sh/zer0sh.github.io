@@ -42,7 +42,7 @@ export const Footer = () => {
             rel="noopener noreferrer"
             className="block text-[#10b981] font-bold hover:text-white mt-1 transition-colors"
           >
-            BUILD // {buildCommit.slice(0, 7)} · 99.99%
+            BUILD // {buildCommit.slice(0, 7)} · STABLE
           </a>
         </div>
       </div>
