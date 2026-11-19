@@ -33,23 +33,23 @@ export const Contact = () => {
 
   const channelMeta = {
     github: {
-      protocol: 'GITHUB',
-      status: lang === 'es' ? 'CÓDIGO & REPOS' : 'CODE & REPOS',
+      protocol: lang === 'es' ? 'PROYECTOS' : 'PROJECTS',
+      status: lang === 'es' ? 'EXPLORAR CÓDIGO' : 'EXPLORE REPOS',
       dotBg: 'bg-[#10b981]',
     },
     linkedin: {
-      protocol: 'LINKEDIN',
-      status: lang === 'es' ? 'RED PROFESIONAL' : 'PROFESSIONAL NETWORK',
+      protocol: lang === 'es' ? 'PERFIL' : 'PROFILE',
+      status: lang === 'es' ? 'CONECTEMOS' : "LET'S CONNECT",
       dotBg: 'bg-[#38bdf8]',
     },
     discord: {
-      protocol: 'DISCORD',
-      status: lang === 'es' ? 'COMUNIDAD & CHAT' : 'COMMUNITY & CHAT',
+      protocol: lang === 'es' ? 'COMUNIDAD' : 'COMMUNITY',
+      status: lang === 'es' ? 'HABLEMOS EN VIVO' : 'CHAT DIRECTLY',
       dotBg: 'bg-[#10b981]',
     },
     email: {
-      protocol: 'EMAIL',
-      status: lang === 'es' ? 'CONTACTO DIRECTO' : 'DIRECT INBOX',
+      protocol: lang === 'es' ? 'MENSAJE' : 'MESSAGE',
+      status: lang === 'es' ? 'ESCRÍBEME' : 'DROP AN EMAIL',
       dotBg: 'bg-[#10b981]',
     },
   };

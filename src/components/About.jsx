@@ -28,23 +28,37 @@ export const About = () => {
       <div className="mt-12 sm:mt-16">
         <div className="flex items-center justify-between mb-3 font-mono text-[0.74rem] uppercase tracking-[0.2em] text-[#64748b]">
           <span className="text-[#10b981] font-bold">
-            {lang === 'es' ? '// ESQUEMA: CICLO OPERATIVO SRE Y RESOLUCIÓN' : '// SCHEMATIC: SRE OPERATIONAL & RESOLUTION LOOP'}
+            {lang === 'es' ? '// CÓMO ABORDO LOS PROBLEMAS: DE LA ALERTA A LA SOLUCIÓN' : '// HOW I APPROACH PROBLEMS: FROM ALERT TO FIX'}
           </span>
         </div>
 
         <div className="bg-[#0c0e14] border border-[#131722] p-4 sm:p-5 overflow-x-auto text-[0.68rem] sm:text-[0.78rem] font-mono leading-relaxed text-[#10b981]">
           <pre className="whitespace-pre m-0">
-{`+-- SRE RELIABILITY & OPERATIONAL LOOP ---------------------------------------------+
+{lang === 'es'
+? `+-- CÓMO ABORDO LOS PROBLEMAS EN PRODUCCIÓN -----------------------------------------+
 |                                                                                   |
-|  [TELEMETRY & LOG STREAMS]                                                        |
+|  [MÉTRICAS Y LOGS EN VIVO]                                                        |
 |         |                                                                         |
-|         +--> [PROACTIVE ANOMALY DETECTION] ---> [PREVENTIVE HARDENING]            |
+|         +--> [PREVENCIÓN TEMPRANA] ---------> [AJUSTES ANTES DE QUE SE ROMPA]     |
 |         |                                              |                          |
 |         v                                              v                          |
-|  [HOT INCIDENT (P1)] ---> [LIVE RUNBOOK TRIAGE] ---> [ROOT CAUSE ANALYSIS (RCA)]  |
+|  [ALERTA O INCIDENTE] -------> [REVISAR CON CALMA] -> [ENCONTRAR LA CAUSA REAL]   |
 |                                                              |                    |
 |                                                              v                    |
-|  [TOIL ELIMINATION] <--- [ARGOCD & GITHUB ACTIONS] <--- [AUTOMATED REMEDIATION]   |
+|  [MENOS TRABAJO MANUAL] <----- [GITOPS Y CI/CD] <---- [AUTOMATIZAR LA SOLUCIÓN]   |
+|                                                                                   |
++-----------------------------------------------------------------------------------+`
+: `+-- HOW I APPROACH PROBLEMS IN PRODUCTION ------------------------------------------+
+|                                                                                   |
+|  [REAL-TIME METRICS & LOGS]                                                       |
+|         |                                                                         |
+|         +--> [EARLY ANOMALY DETECTION] -----> [PREVENTIVE HARDENING]              |
+|         |                                              |                          |
+|         v                                              v                          |
+|  [LIVE INCIDENT / ALERT] ----> [CALM INVESTIGATION] -> [FINDING THE ROOT CAUSE]   |
+|                                                              |                    |
+|                                                              v                    |
+|  [NO REPETITIVE TOIL] <------- [GITOPS & CI/CD] <----- [AUTOMATE THE FIX]         |
 |                                                                                   |
 +-----------------------------------------------------------------------------------+`}
           </pre>
