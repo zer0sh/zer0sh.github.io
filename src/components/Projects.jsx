@@ -94,9 +94,36 @@ const TOPOLOGIES = {
 |                                  v                                       |
 |                [Declarative Dotbot Symlink Automation]                   |
 +--------------------------------------------------------------------------+`,
+
+  'universal-appimage-installer': `+-- ZERO-EXECUTION APPIMAGE INSPECTION & XDG INTEGRATION PIPELINE ---------+
+| [TUI Dashboard (uai)] ---> [JSON Distribution Catalog] ---> [Curl Stream]  |
+|                                                                    |      |
+|                                                                    v      |
+|                                                      [--appimage-extract] |
+|                                                                    |      |
+|           +-----------------------+--------------------------------+      |
+|           v                       v                                       |
+|  [.desktop Parser]       [High-Res Icon Matcher]                          |
+|  - StartupWMClass         - Hicolor PNG/SVG                               |
+|  - MimeType & Name        - Asset Normalization                           |
+|           |                       |                                       |
+|           +-----------+-----------+                                       |
+|                       |                                                   |
+|                       v                                                   |
+|  [~/.local/share/applications] <--- [XDG Desktop Launcher Generator]      |
+|  [~/.applications/installed]   <--- [Zero-Privilege Binary Deployment]   |
++--------------------------------------------------------------------------+`,
 };
 
 const PROJECT_METADATA = {
+  'universal-appimage-installer': {
+    image: '/images/projects/universal-appimage-installer.png',
+    badge: 'RUST // TUI // XDG_DESKTOP',
+    tagline: 'INTERACTIVE APPIMAGE LIFECYCLE & XDG INTEGRATION',
+    branch: 'git:(main)',
+    runtime: 'Rust 2024 / Linux (x86_64 / aarch64)',
+    telemetry: 'Zero-Execution Extraction · XDG Compliant',
+  },
   'k3s-lab': {
     image: '/images/projects/k3s-lab.png',
     badge: 'K3S // ARGO_CD // PROMETHEUS',
@@ -153,7 +180,7 @@ const BATCHES = [
     lotNumber: '01',
     badge: 'CORE_SYSTEMS',
     label: 'Core Infrastructure & Tools',
-    keys: ['project1', 'project3', 'project2'],
+    keys: ['project1', 'project7', 'project2', 'project3'],
   },
   {
     id: 'batch-infra',
@@ -309,7 +336,7 @@ export const Projects = () => {
                     <span>{t('projects.runtimeStatus') || 'SYSTEM_OK'}</span>
                   </span>
                   <span className="text-[#64748b] text-[0.72rem] hidden md:inline">
-                    NODE // 0{activeBatchIndex * 3 + index + 1}
+                    NODE // {String(BATCHES.slice(0, activeBatchIndex).reduce((acc, b) => acc + b.keys.length, 0) + index + 1).padStart(2, '0')}
                   </span>
                 </div>
               </div>

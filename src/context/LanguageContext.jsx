@@ -246,6 +246,13 @@ const translations = {
         tags: ['Hyprland', 'Wayland', 'POSIX Shell', 'Declarative Config', 'Wiki'],
         link: 'https://github.com/zer0sh/dotfiles',
       },
+      project7: {
+        name: 'universal-appimage-installer',
+        domain: 'AppImage Package Manager & XDG Integrator (Rust)',
+        description: 'An interactive terminal tool (uai) written in Rust to inspect, install, and manage AppImage packages with zero-execution payload extraction and automatic XDG desktop launcher integration.',
+        tags: ['Rust', 'AppImage', 'XDG Desktop', 'TUI', 'Wayland', 'Linux'],
+        link: 'https://github.com/zer0sh/universal-appimage-installer',
+      },
     },
     dispatches: {
       kicker: 'NOTES & EXPERIENCES',
@@ -533,6 +540,13 @@ const translations = {
         description: 'Mi configuración diaria de trabajo en Linux: Hyprland, Wayland, scripts en Bash y atajos de teclado pensados para trabajar cómodo y sin distracciones.',
         tags: ['Hyprland', 'Wayland', 'POSIX Shell', 'Configuración Declarativa', 'Wiki'],
         link: 'https://github.com/zer0sh/dotfiles',
+      },
+      project7: {
+        name: 'universal-appimage-installer',
+        domain: 'Gestor de AppImages e Integración XDG (Rust)',
+        description: 'Herramienta de terminal interactiva (uai) desarrollada en Rust para descargar, inspeccionar e instalar paquetes AppImage con extracción segura sin ejecución e integración nativa con el escritorio XDG.',
+        tags: ['Rust', 'AppImage', 'Integración XDG', 'TUI', 'Wayland / X11', 'Linux'],
+        link: 'https://github.com/zer0sh/universal-appimage-installer',
       },
     },
     dispatches: {
