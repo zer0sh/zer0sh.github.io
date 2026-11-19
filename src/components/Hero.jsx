@@ -27,6 +27,16 @@ export const Hero = () => {
             <p className="font-mono text-sm sm:text-[0.95rem] text-[#94a3b8]">
               {t('hero.handle')}
             </p>
+            <div className="flex flex-wrap items-center gap-2 mt-2">
+              <span className="inline-flex items-center gap-1.5 font-mono text-[0.72rem] text-[#10b981] bg-[#10b981]/10 border border-[#10b981]/30 px-2.5 py-0.5 rounded-full">
+                <span>🌱</span>
+                <span>{t('hero.learner')}</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 font-mono text-[0.72rem] text-[#94a3b8] bg-[#0c0e14] border border-[#131722] px-2.5 py-0.5 rounded-full">
+                <span>📍</span>
+                <span>{t('hero.location')}</span>
+              </span>
+            </div>
           </div>
         </div>
 

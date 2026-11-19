@@ -4,36 +4,24 @@ import { useLanguage } from '../context/LanguageContext';
 export const TechStack = () => {
   const { t } = useLanguage();
 
-  const categories = [
-    {
-      key: 'infrastructure',
-      name: t('skills.infrastructure.name'),
-      domain: 'DOMAIN.01 // ORCHESTRATION',
-      status: 'CLUSTER READY',
-      items: t('skills.infrastructure.items') || ['Kubernetes', 'K3s', 'Docker', 'Docker Compose', 'ArgoCD', 'Helm', 'Self-Hosted'],
-    },
-    {
-      key: 'observability',
-      name: t('skills.observability.name'),
-      domain: 'DOMAIN.02 // TELEMETRY',
-      status: 'REALTIME STREAM',
-      items: t('skills.observability.items') || ['Prometheus', 'Grafana', 'Loki', 'Sentry', 'Log Aggregation', 'Metric Alerts'],
-    },
-    {
-      key: 'systems',
-      name: t('skills.systems.name'),
-      domain: 'DOMAIN.03 // POSIX & RUNTIMES',
-      status: 'POSIX STRICT',
-      items: t('skills.systems.items') || ['Linux Administration', 'POSIX Shell', 'Bash', 'Rust', 'Wayland', 'Hardware Telemetry'],
-    },
-    {
-      key: 'reliability',
-      name: t('skills.reliability.name'),
-      domain: 'DOMAIN.04 // RESILIENCE',
-      status: 'SECURITY AUDITED',
-      items: t('skills.reliability.items') || ['GitHub Actions', 'Trivy Scanning', 'NGINX', 'PostgreSQL', 'MySQL', 'SSL/TLS'],
-    },
+  const categoryKeys = [
+    'infrastructure',
+    'observability',
+    'systems',
+    'reliability',
+    'fullstack',
+    'aiDevelopment',
+    'codeOptimization',
+    'maintenance',
   ];
+
+  const categories = categoryKeys.map((key) => ({
+    key,
+    name: t(`skills.${key}.name`),
+    domain: t(`skills.${key}.domain`),
+    status: t(`skills.${key}.status`),
+    items: t(`skills.${key}.items`) || [],
+  }));
 
   return (
     <section id="stack" className="py-24 sm:py-32">
@@ -82,7 +70,7 @@ export const TechStack = () => {
               </ul>
             </div>
 
-            {/* Bottom Telemetry Verification Pill */}
+            {/* Bottom Status Verification Pill */}
             <div className="mt-6 pt-3 border-t border-[#131722]/80 font-mono text-[0.68rem] text-[#64748b] flex items-center justify-between">
               <span className="tracking-wider uppercase">STATUS</span>
               <span className="text-white/80 font-bold">{cat.status}</span>
