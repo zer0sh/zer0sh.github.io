@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { ProjectReadmeModal } from './ProjectReadmeModal';
 import ProjectTopologyViewer from './ProjectTopologyViewer';
+import { ParallaxProjectPreview } from './ParallaxProjectPreview';
+import { ImageLightboxModal } from './ImageLightboxModal';
 
 const TOPOLOGIES = {
   'k3s-lab': `+--------------------------------------------------------------------------+
@@ -197,6 +199,7 @@ export const Projects = () => {
   const [activeTabs, setActiveTabs] = useState({});
   const [activeModalRepo, setActiveModalRepo] = useState(null);
   const [activeModalTitle, setActiveModalTitle] = useState('');
+  const [lightboxData, setLightboxData] = useState(null);
 
   const currentBatch = BATCHES[activeBatchIndex];
   const visibleKeys = currentBatch.keys;
@@ -216,6 +219,14 @@ export const Projects = () => {
   const closeReadmeModal = () => {
     setActiveModalRepo(null);
     setActiveModalTitle('');
+  };
+
+  const openLightbox = (src, alt, badge, tagline, title) => {
+    setLightboxData({ src, alt, badge, tagline, title });
+  };
+
+  const closeLightbox = () => {
+    setLightboxData(null);
   };
 
   return (
@@ -316,7 +327,7 @@ export const Projects = () => {
           return (
             <article
               key={key}
-              className="bg-[#07080b] border border-[#131722] hover:border-[#10b981]/40 transition-colors shadow-2xl overflow-hidden flex flex-col"
+              className="bg-[#07080b] border border-[#131722] hover:border-[#10b981]/50 hover:shadow-[0_10px_35px_-10px_rgba(16,185,129,0.1)] transition-all duration-300 shadow-2xl overflow-hidden flex flex-col"
             >
               {/* Window Titlebar */}
               <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 bg-[#0a0c12] border-b border-[#131722] font-mono text-xs select-none">
@@ -384,38 +395,17 @@ export const Projects = () => {
                 {/* TAB 1: PREVIEW */}
                 {activeTab === 'preview' && (
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-                    {/* Media Container */}
+                    {/* Media Container with 3D Parallax Tilt, 80% default opacity, 100% full vibrant color on hover */}
                     <div className="lg:col-span-7">
-                      <div className="relative aspect-[16/10] overflow-hidden bg-[#050608] border border-[#131722] group shadow-inner">
-                        <img
-                          src={meta.image}
-                          alt={`${name} preview`}
-                          className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03] opacity-85 group-hover:opacity-100"
-                          onError={(e) => {
-                            e.currentTarget.src = '/images/og-preview.png';
-                          }}
-                        />
-
-                        {/* Cyber overlay gradient & subtle scanline feel */}
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07080b] via-transparent to-transparent opacity-80" />
-
-                        {/* Floating HUD Chip */}
-                        <div className="absolute top-2.5 right-2.5">
-                          <span className="font-mono text-[0.68rem] tracking-wider px-2 py-1 bg-[#07080b]/90 border border-[#131722] text-[#10b981] uppercase backdrop-blur-sm shadow-md">
-                            {meta.badge}
-                          </span>
-                        </div>
-
-                        {/* Bottom Tagline Overlay */}
-                        <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between font-mono text-[0.68rem] text-[#94a3b8] px-2 py-1 bg-[#07080b]/80 border border-[#131722]/60 backdrop-blur-sm">
-                          <span className="text-[#10b981] font-bold uppercase truncate mr-2">
-                            {meta.tagline}
-                          </span>
-                          <span className="text-[#64748b] hidden sm:inline shrink-0">
-                            LIVE_PREVIEW
-                          </span>
-                        </div>
-                      </div>
+                      <ParallaxProjectPreview
+                        src={meta.image}
+                        alt={`${name} preview`}
+                        badge={meta.badge}
+                        tagline={meta.tagline}
+                        onImageClick={(src, alt, badge, tagline) =>
+                          openLightbox(src, alt, badge, tagline, name)
+                        }
+                      />
                     </div>
 
                     {/* Description & Technical Summary */}
@@ -615,6 +605,17 @@ export const Projects = () => {
         onClose={closeReadmeModal}
         repoName={activeModalRepo}
         projectTitle={activeModalTitle}
+      />
+
+      {/* High-Resolution Screenshot Inspector Lightbox Modal */}
+      <ImageLightboxModal
+        isOpen={Boolean(lightboxData)}
+        onClose={closeLightbox}
+        imageSrc={lightboxData?.src}
+        alt={lightboxData?.alt}
+        badge={lightboxData?.badge}
+        tagline={lightboxData?.tagline}
+        title={lightboxData?.title}
       />
     </section>
   );
