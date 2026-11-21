@@ -1,0 +1,113 @@
+{
+  "$schema": "/schemas/architecture-v1.json",
+  "project": "universal-appimage-installer",
+  "version": "1.0.0",
+  "title": "ZERO-EXECUTION APPIMAGE INSPECTION & XDG INTEGRATION PIPELINE",
+  "zones": [
+    { "id": "input", "label": "ZONE // 01: CATALOG & DOWNLOAD PIPELINE" },
+    { "id": "inspect", "label": "ZONE // 02: ZERO-EXECUTION METADATA EXTRACTION" },
+    { "id": "install", "label": "ZONE // 03: XDG DESKTOP INTEGRATION & COMPOSITOR BINDING" }
+  ],
+  "nodes": [
+    {
+      "id": "tui-menu",
+      "zone": "input",
+      "col": 0,
+      "badge": "INTERACTIVE UI // RUST",
+      "label": "TUI Dashboard (`uai`)",
+      "status": "NONBLOCKING",
+      "color": "emerald",
+      "details": ["Keyboard-driven ratatui/crossterm", "Dynamic dirs resolution"]
+    },
+    {
+      "id": "catalog-manager",
+      "zone": "input",
+      "col": 1,
+      "badge": "PACKAGE CATALOG",
+      "label": "JSON Distribution Catalog",
+      "status": "EXTENSIBLE",
+      "color": "cyan",
+      "details": ["Local & remote catalog entries", "Checksum & URL verification"]
+    },
+    {
+      "id": "download-engine",
+      "zone": "input",
+      "col": 2,
+      "badge": "DOWNLOAD ENGINE",
+      "label": "Curl Progress Stream",
+      "status": "STREAMING",
+      "color": "amber",
+      "details": ["Non-clobbering file stream", "Live throughput telemetry"]
+    },
+    {
+      "id": "sandbox-extract",
+      "zone": "inspect",
+      "col": 0,
+      "badge": "SANDBOX PAYLOAD",
+      "label": "Zero-Execution Extract",
+      "status": "ISOLATED",
+      "color": "emerald",
+      "details": ["--appimage-extract into /tmp", "No untrusted binary execution"]
+    },
+    {
+      "id": "metadata-parser",
+      "zone": "inspect",
+      "col": 1,
+      "badge": "METADATA ENGINE",
+      "label": ".desktop & Icon Parser",
+      "status": "PARSED",
+      "color": "cyan",
+      "details": ["Detects StartupWMClass & MimeType", "Version & Name normalizer"]
+    },
+    {
+      "id": "icon-selector",
+      "zone": "inspect",
+      "col": 2,
+      "badge": "ASSET RESOLVER",
+      "label": "High-Res Icon Matcher",
+      "status": "OPTIMIZED",
+      "color": "amber",
+      "details": ["Hicolor PNG/SVG selection", "Fallback asset synthesis"]
+    },
+    {
+      "id": "binary-deploy",
+      "zone": "install",
+      "col": 0,
+      "badge": "USER PATH RUNTIME",
+      "label": "~/.applications/installed",
+      "status": "USER_SPACE",
+      "color": "emerald",
+      "details": ["Zero-root privileges required", "Safe separation from launchers"]
+    },
+    {
+      "id": "desktop-entry",
+      "zone": "install",
+      "col": 1,
+      "badge": "XDG SPEC COMPLIANT",
+      "label": "XDG Launcher Generator",
+      "status": "REGISTERED",
+      "color": "cyan",
+      "details": ["Writes to ~/.local/share/applications", "Wayland & X11 taskbar binding"]
+    },
+    {
+      "id": "clean-uninstall",
+      "zone": "install",
+      "col": 2,
+      "badge": "LIFECYCLE MANAGEMENT",
+      "label": "Idempotent Uninstaller",
+      "status": "VERIFIED",
+      "color": "emerald",
+      "details": ["Removes icons, desktop entries & binary", "Atomic cleanup confirmation"]
+    }
+  ],
+  "flows": [
+    { "from": "tui-menu", "to": "catalog-manager", "type": "data", "status": "active" },
+    { "from": "catalog-manager", "to": "download-engine", "type": "control", "status": "active" },
+    { "from": "download-engine", "to": "sandbox-extract", "type": "data", "status": "active" },
+    { "from": "sandbox-extract", "to": "metadata-parser", "type": "control", "status": "active" },
+    { "from": "metadata-parser", "to": "icon-selector", "type": "data", "status": "active" },
+    { "from": "metadata-parser", "to": "binary-deploy", "type": "control", "status": "active" },
+    { "from": "icon-selector", "to": "desktop-entry", "type": "data", "status": "active" },
+    { "from": "binary-deploy", "to": "clean-uninstall", "type": "control", "status": "active" }
+  ]
+}
