@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 534" width="1100" height="534">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#080a0f"/>
+    </linearGradient>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#0f141c"/>
+    </linearGradient>
+    <filter id="windowShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <style>
+    .font-mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
+    .text-title { font-size: 12px; fill: #94a3b8; font-weight: 600; letter-spacing: 0.05em; }
+    .text-prompt-user { font-size: 13px; fill: #10b981; font-weight: bold; }
+    .text-prompt-at { font-size: 13px; fill: #64748b; }
+    .text-prompt-host { font-size: 13px; fill: #38bdf8; font-weight: bold; }
+    .text-prompt-path { font-size: 13px; fill: #f59e0b; }
+    .text-prompt-cmd { font-size: 13px; fill: #f1f5f9; }
+    .text-line-num { font-size: 12px; fill: #475569; text-anchor: end; user-select: none; }
+    .text-comment { font-size: 12.5px; fill: #64748b; font-style: italic; }
+    .text-alert-comment { font-size: 12.5px; fill: #f87171; font-weight: bold; }
+    .text-keyword { font-size: 12.5px; fill: #f43f5e; font-weight: 600; }
+    .text-directive { font-size: 12.5px; fill: #38bdf8; }
+    .text-param { font-size: 12.5px; fill: #e2e8f0; }
+    .text-highlight { font-size: 12.5px; fill: #fbbf24; font-weight: bold; }
+    .text-ip { font-size: 12.5px; fill: #ef4444; font-weight: bold; text-decoration: underline; }
+    .text-var { font-size: 12.5px; fill: #a78bfa; }
+    .text-semicolon { font-size: 12.5px; fill: #64748b; }
+  </style>
+
+  <!-- Ventana Exterior con Sombra -->
+  <rect x="20" y="20" width="1060" height="494" rx="10" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5" filter="url(#windowShadow)"/>
+
+  <!-- Barra de Encabezado de la Ventana -->
+  <path d="M 20 30 Q 20 20 30 20 L 1070 20 Q 1080 20 1080 30 L 1080 62 L 20 62 Z" fill="url(#headerGrad)"/>
+  <line x1="20" y1="62" x2="1080" y2="62" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Botones de Control de Ventana (Rojo, Amarillo, Verde) -->
+  <circle cx="44" cy="41" r="6" fill="#ef4444"/>
+  <circle cx="64" cy="41" r="6" fill="#f59e0b"/>
+  <circle cx="84" cy="41" r="6" fill="#10b981"/>
+
+  <!-- Título Centrado -->
+  <text x="550" y="45" text-anchor="middle" class="font-mono text-title">sre-cluster — docker compose up -d --wait</text>
+
+  <!-- Badge en la Derecha -->
+  <rect x="940" y="32" width="120" height="20" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="1000" y="46" text-anchor="middle" class="font-mono" font-size="10" fill="#38bdf8" font-weight="bold" letter-spacing="0.1em">DOCKER DETERMINISM</text>
+
+  <!-- Contenido de Terminal -->
+  <g class="font-mono" transform="translate(45, 95)">
+    <!-- Prompt de Comandos -->
+    <text x="0" y="0">
+      <tspan class="text-prompt-user">zer0</tspan>
+      <tspan class="text-prompt-at">@</tspan>
+      <tspan class="text-prompt-host">sre-node-01</tspan>
+      <tspan class="text-prompt-at">:</tspan>
+      <tspan class="text-prompt-path">~/projects/core-api</tspan>
+      <tspan class="text-prompt-user">#</tspan>
+      <tspan class="text-prompt-cmd"> docker compose up -d --wait &amp;&amp; docker compose ps</tspan>
+    </text>
+
+    <!-- Líneas de salida / código -->
+    <text x="-15" y="110" class="text-line-num">1</text>
+    <text x="15" y="110" class="text-comment"># Despliegue determinista del stack completo con salud verificada</text>
+    <text x="-15" y="134" class="text-line-num">2</text>
+    <text x="15" y="134"><tspan class="text-directive">[+] Running 6/6</tspan></text>
+    <text x="-15" y="158" class="text-line-num">3</text>
+    <text x="15" y="158"><tspan class="text-prompt-user"> ✔ </tspan><tspan class="text-param">Network core_mesh        </tspan><tspan class="text-directive">Created</tspan><tspan class="text-semicolon">                             0.04s</tspan></text>
+    <text x="-15" y="182" class="text-line-num">4</text>
+    <text x="15" y="182"><tspan class="text-prompt-user"> ✔ </tspan><tspan class="text-param">Volume core_pgdata       </tspan><tspan class="text-directive">Created</tspan><tspan class="text-semicolon">                             0.01s</tspan></text>
+    <text x="-15" y="206" class="text-line-num">5</text>
+    <text x="15" y="206"><tspan class="text-prompt-user"> ✔ </tspan><tspan class="text-param">Container core-db        </tspan><tspan class="text-highlight">Started (postgres:16-alpine)   </tspan><tspan class="text-prompt-user">[healthy]</tspan></text>
+    <text x="-15" y="230" class="text-line-num">6</text>
+    <text x="15" y="230"><tspan class="text-prompt-user"> ✔ </tspan><tspan class="text-param">Container core-redis     </tspan><tspan class="text-highlight">Started (redis:7.2-alpine)     </tspan><tspan class="text-prompt-user">[healthy]</tspan></text>
+    <text x="-15" y="254" class="text-line-num">7</text>
+    <text x="15" y="254"><tspan class="text-prompt-user"> ✔ </tspan><tspan class="text-param">Container core-api       </tspan><tspan class="text-highlight">Started (python:3.11-slim)     </tspan><tspan class="text-prompt-user">[healthy]</tspan></text>
+    <text x="-15" y="278" class="text-line-num">8</text>
+    <text x="15" y="278"><tspan class="text-prompt-user"> ✔ </tspan><tspan class="text-param">Container core-worker    </tspan><tspan class="text-highlight">Started (celery:5.3.6)         </tspan><tspan class="text-prompt-user">[healthy]</tspan></text>
+    <text x="-15" y="302" class="text-line-num">9</text>
+    <text x="15" y="302" class="text-comment"></text>
+    <text x="-15" y="326" class="text-line-num">10</text>
+    <text x="15" y="326"><tspan class="text-directive">NAME            IMAGE                 COMMAND                  SERVICE   STATUS              PORTS</tspan></text>
+    <text x="-15" y="350" class="text-line-num">11</text>
+    <text x="15" y="350"><tspan class="text-param">core-api        python:3.11-slim      &quot;uvicorn app.main:app…&quot;  api       Up (healthy)        0.0.0.0:8000-&gt;8000/tcp</tspan></text>
+    <text x="-15" y="374" class="text-line-num">12</text>
+    <text x="15" y="374"><tspan class="text-param">core-db         postgres:16-alpine    &quot;docker-entrypoint.s…&quot;  db        Up (healthy)        0.0.0.0:5432-&gt;5432/tcp</tspan></text>
+    <text x="-15" y="398" class="text-line-num">13</text>
+    <text x="15" y="398"><tspan class="text-param">core-redis      redis:7.2-alpine      &quot;docker-entrypoint.s…&quot;  cache     Up (healthy)        0.0.0.0:6379-&gt;6379/tcp</tspan></text>
+    <text x="-15" y="422" class="text-line-num">14</text>
+    <text x="15" y="422"><tspan class="text-param">core-worker     python:3.11-slim      &quot;celery -A app.tasks…&quot;  worker    Up (healthy)</tspan></text>
+    <text x="-15" y="446" class="text-line-num">15</text>
+    <text x="15" y="446" class="text-comment"></text>
+    <text x="-15" y="470" class="text-line-num">16</text>
+    <text x="15" y="470"><tspan class="text-prompt-user"># PARIDAD CONFIRMADA: </tspan><tspan class="text-param">Identico en Windows (WSL2), macOS (Apple Silicon), Arch y Debian</tspan></text>
+  </g>
+</svg>

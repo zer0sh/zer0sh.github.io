@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" width="1100" height="620">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#080a0f"/>
+    </linearGradient>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#0f141c"/>
+    </linearGradient>
+    <filter id="windowShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <style>
+    .font-mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+    .text-title { font-size: 12px; fill: #94a3b8; font-weight: 600; letter-spacing: 0.05em; }
+    .text-prompt-user { font-size: 13px; fill: #10b981; font-weight: bold; }
+    .text-prompt-at { font-size: 13px; fill: #64748b; }
+    .text-prompt-host { font-size: 13px; fill: #38bdf8; font-weight: bold; }
+    .text-prompt-path { font-size: 13px; fill: #f59e0b; }
+    .text-prompt-cmd { font-size: 13px; fill: #f1f5f9; }
+    .text-cli-out { font-size: 12.5px; fill: #cbd5e1; }
+    .text-bad { font-size: 12.5px; fill: #ef4444; font-weight: bold; }
+    .text-warn { font-size: 12.5px; fill: #f59e0b; font-weight: bold; }
+    .text-ok { font-size: 12.5px; fill: #10b981; font-weight: bold; }
+    .text-comment { font-size: 12px; fill: #64748b; font-style: italic; }
+    .text-dmesg-time { font-size: 12px; fill: #38bdf8; }
+    .text-dmesg-oom { font-size: 12px; fill: #f87171; font-weight: bold; }
+  </style>
+
+  <!-- Ventana Exterior -->
+  <rect x="20" y="20" width="1060" height="580" rx="10" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5" filter="url(#windowShadow)"/>
+
+  <!-- Barra de Encabezado -->
+  <path d="M 20 30 Q 20 20 30 20 L 1070 20 Q 1080 20 1080 30 L 1080 62 L 20 62 Z" fill="url(#headerGrad)"/>
+  <line x1="20" y1="62" x2="1080" y2="62" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Botones de Control -->
+  <circle cx="44" cy="41" r="6" fill="#ef4444"/>
+  <circle cx="64" cy="41" r="6" fill="#f59e0b"/>
+  <circle cx="84" cy="41" r="6" fill="#10b981"/>
+
+  <!-- Título -->
+  <text x="550" y="45" text-anchor="middle" class="font-mono text-title">aws-cloudshell — ec2:t2.micro diagnosis &amp; console logs</text>
+
+  <!-- Badge -->
+  <rect x="910" y="32" width="150" height="20" rx="3" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="985" y="46" text-anchor="middle" class="font-mono" font-size="10" fill="#f59e0b" font-weight="bold" letter-spacing="0.1em">OOM-KILLER DETECTED</text>
+
+  <!-- Contenido de Terminal -->
+  <g class="font-mono" transform="translate(45, 95)">
+    <!-- Bloque 1: El error de lectura del CLI -->
+    <text x="0" y="0">
+      <tspan class="text-prompt-user">cloudshell</tspan>
+      <tspan class="text-prompt-at">:</tspan>
+      <tspan class="text-prompt-host">aws-cli</tspan>
+      <tspan class="text-prompt-user">$</tspan>
+      <tspan class="text-prompt-cmd"> aws ec2 describe-instance-status --instance-id i-0294bc17ef --output text</tspan>
+    </text>
+
+    <text x="0" y="26">
+      <tspan class="text-cli-out">SYSTEMSTATUS   </tspan><tspan class="text-bad">impaired   ok</tspan><tspan class="text-comment">   # [!] ERROR DE LECTURA: Orden alfabético combinó dos valores distintos</tspan>
+    </text>
+    <text x="0" y="50" class="text-comment"># En JSON: SystemStatus="ok" (hardware AWS perfecto) | InstanceStatus="impaired" (OS colapsado)</text>
+
+    <!-- Separador sutil -->
+    <line x1="0" y1="75" x2="1000" y2="75" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Bloque 2: Consola del Kernel y OOM -->
+    <text x="0" y="105">
+      <tspan class="text-prompt-user">cloudshell</tspan>
+      <tspan class="text-prompt-at">:</tspan>
+      <tspan class="text-prompt-host">aws-cli</tspan>
+      <tspan class="text-prompt-user">$</tspan>
+      <tspan class="text-prompt-cmd"> aws ec2 get-console-output --instance-id i-0294bc17ef | grep -i "oom\|killed"</tspan>
+    </text>
+
+    <text x="0" y="135">
+      <tspan class="text-dmesg-time">[ 8.7h freeze ] </tspan><tspan class="text-cli-out">kernel: [31249.102] </tspan><tspan class="text-dmesg-oom">Out of memory: Killed process 812 (php-fpm)</tspan>
+    </text>
+    <text x="0" y="159" class="text-cli-out">kernel: [31249.105] total-vm:845120kB, anon-rss:430180kB, file-rss:0kB, shmem-rss:0kB</text>
+    <text x="0" y="183">
+      <tspan class="text-cli-out">kernel: [31249.108] oom_score_adj: 0, uid: </tspan><tspan class="text-warn">82 (www-data)</tspan><tspan class="text-cli-out">, container: </tspan><tspan class="text-ok">pulsar-api-backend</tspan>
+    </text>
+
+    <!-- Separador sutil -->
+    <line x1="0" y1="210" x2="1000" y2="210" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Bloque 3: Intento de reinicio y falta de capacidad -->
+    <text x="0" y="240">
+      <tspan class="text-prompt-user">cloudshell</tspan>
+      <tspan class="text-prompt-at">:</tspan>
+      <tspan class="text-prompt-host">aws-cli</tspan>
+      <tspan class="text-prompt-user">$</tspan>
+      <tspan class="text-prompt-cmd"> aws ec2 start-instances --instance-ids i-0294bc17ef</tspan>
+    </text>
+
+    <text x="0" y="270">
+      <tspan class="text-bad">An error occurred (InsufficientInstanceCapacity): </tspan><tspan class="text-cli-out">We currently do not have sufficient t2.micro capacity in us-east-1a.</tspan>
+    </text>
+    <text x="0" y="294" class="text-ok">→ Remedio temporal: Migración en caliente a t2.small (2 GB RAM) para desbloquear el arranque y aplicar el parche.</text>
+    <text x="0" y="322" class="text-comment">→ Blindaje final: Contenedor limitado a 640M + Swap 2GB + PHP max_children 3 + Alarma CloudWatch autoreboot.</text>
+  </g>
+</svg>
