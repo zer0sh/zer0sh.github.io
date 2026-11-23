@@ -260,10 +260,10 @@ const translations = {
       subtitle: 'Real-world incident breakdowns, Linux explorations, and practical lessons from production',
       readArticle: 'Read Article',
       post1: {
-        title: 'Post-Mortem: NGINX Socket Exhaustion & Kernel Tuning',
-        tag: 'P1 Post-Mortem',
-        description: 'Analyzing a live production P1: how sudden traffic surges saturated TCP listen queues (somaxconn) triggering 502 Bad Gateways, and the kernel remedies applied.',
-        slug: 'postmortem-nginx-socket-exhaustion',
+        title: 'WP2Shell in Production: Emergency Hotfix & Backup Recovery',
+        tag: 'Incident Response',
+        description: 'Chronicle of a real-world race against time: patching a critical RCE attempt, handling white-screen dependencies, and restoring from morning backups.',
+        slug: 'wp2shell-incidente-parche-emergencia',
       },
       post2: {
         title: 'Shell Builtins Deep Dive',
@@ -555,10 +555,10 @@ const translations = {
       subtitle: 'Análisis de incidentes reales, pruebas de herramientas y lo que voy aprendiendo en el camino.',
       readArticle: 'Leer Artículo',
       post1: {
-        title: 'Post-Mortem: Agotamiento de Sockets en NGINX y Kernel Linux',
-        tag: 'Post-Mortem P1',
-        description: 'Análisis de un incidente real en producción: cómo una ráfaga de tráfico saturó el backlog de sockets TCP (somaxconn) generando errores 502, y el tuning de kernel aplicado.',
-        slug: 'postmortem-nginx-socket-exhaustion',
+        title: 'WP2Shell en Producción: Parche de Emergencia y Rescate con Backups',
+        tag: 'Respuesta a Incidentes',
+        description: 'Crónica de una carrera contra el reloj: mitigación de un intento de RCE masivo, resolución de dependencias en blanco y restauración con backups.',
+        slug: 'wp2shell-incidente-parche-emergencia',
       },
       post2: {
         title: 'Shell Builtins Deep Dive',

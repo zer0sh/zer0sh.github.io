@@ -25,9 +25,309 @@ const extractHeadings = (content) => {
   return headings;
 };
 
+const ArchitectureDiagram = () => {
+  return (
+    <div className="my-10 border border-[#1e293b] bg-[#080a0f] p-4 sm:p-6 font-mono text-xs select-none shadow-2xl">
+      {/* Top Header */}
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-[#1e293b]">
+        <div className="flex items-center gap-2.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ef4444] animate-pulse"></span>
+          <span className="text-white font-bold tracking-wider uppercase text-xs sm:text-sm">
+            TOPOLOGÍA DESCUBIERTA // CADENA DE SERVICIO Y VECTORES DE AMENAZA
+          </span>
+        </div>
+        <span className="px-2.5 py-1 bg-[#ef4444]/15 border border-[#ef4444]/40 text-[#ef4444] text-[0.7rem] uppercase font-bold tracking-widest">
+          INCIDENTE P1 // SERVIDOR EN CUARENTENA
+        </span>
+      </div>
+
+      {/* Main Flow: Pipeline horizontal/vertical */}
+      <div className="space-y-4">
+        {/* Step 1: Internet & Perimeter */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {/* Node 1 */}
+          <div className="border border-[#1e293b] bg-[#0c0e14] p-3.5 flex flex-col justify-between">
+            <div>
+              <div className="text-[#64748b] text-[0.7rem] uppercase mb-1">PUNTO DE ENTRADA</div>
+              <div className="text-white font-bold text-sm">Internet / Clientes</div>
+            </div>
+            <div className="text-[#10b981] text-[0.7rem] mt-2 font-mono">Tráfico Web Público</div>
+          </div>
+
+          {/* Node 2 */}
+          <div className="border border-[#1e293b] bg-[#0c0e14] p-3.5 flex flex-col justify-between">
+            <div>
+              <div className="text-[#64748b] text-[0.7rem] uppercase mb-1">EDGE WAF & DNS</div>
+              <div className="text-white font-bold text-sm">Cloudflare Proxy</div>
+            </div>
+            <div className="text-[#10b981] text-[0.7rem] mt-2 font-mono">Terminación TLS + WAF</div>
+          </div>
+
+          {/* Node 3 */}
+          <div className="border border-[#1e293b] bg-[#0c0e14] p-3.5 flex flex-col justify-between">
+            <div>
+              <div className="text-[#64748b] text-[0.7rem] uppercase mb-1">REVERSE PROXY CACHE</div>
+              <div className="text-white font-bold text-sm">srv-horizonte-cache</div>
+            </div>
+            <div className="text-[#10b981] text-[0.7rem] mt-2 font-mono">10.10.10.15 (NGINX)</div>
+          </div>
+        </div>
+
+        {/* Down Arrow / Connector */}
+        <div className="flex items-center justify-center gap-2 py-1 text-[#ef4444] font-bold text-xs">
+          <span>&darr;</span>
+          <span className="bg-[#ef4444]/10 border border-[#ef4444]/30 px-3 py-1 uppercase tracking-wider text-[0.72rem]">
+            proxy_pass :8080 (Tráfico real activo a /campanas-especiales/*)
+          </span>
+          <span>&darr;</span>
+        </div>
+
+        {/* The Compromised Node (Highlighted in Danger Red) */}
+        <div className="border-2 border-[#ef4444] bg-[#ef4444]/10 p-5 relative overflow-hidden">
+          <div className="absolute top-0 right-0 px-3 py-1 bg-[#ef4444] text-[#07080b] font-black text-[0.7rem] tracking-wider uppercase">
+            EPICENTRO DEL INCIDENTE
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+            <div>
+              <div className="text-white font-black text-base sm:text-lg tracking-wide flex items-center gap-2">
+                <span className="text-[#ef4444] font-black">[!]</span>
+                <span>srv-legacy-2023</span>
+                <span className="text-xs font-normal text-[#94a3b8]">(10.10.10.50 · Apache 2.4 + PHP 7.4)</span>
+              </div>
+              <div className="text-[#ef4444] font-bold text-xs uppercase tracking-wider mt-1">
+                Estado documental: "CONGELADO" &rarr; Realidad: EN PRODUCCIÓN ACTIVA
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-4 pt-3 border-t border-[#ef4444]/30 text-xs">
+            <div className="flex items-center gap-2 text-[#fca5a5]">
+              <span className="text-[#ef4444] font-bold">&bull;</span>
+              <span><strong>Backdoor activo:</strong> /usr/local/bin/uptime_check en puerto 5000</span>
+            </div>
+            <div className="flex items-center gap-2 text-[#fca5a5]">
+              <span className="text-[#ef4444] font-bold">&bull;</span>
+              <span><strong>Exposición pública:</strong> ufw 80/443 abierto a 0.0.0.0/0 (sin pasar por WAF)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Branching Connectors to Compromised Targets */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          {/* Left Branch: Database Access */}
+          <div className="border border-amber-500/40 bg-[#0c0e14] p-4 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider mb-2">
+                <span>&rarr; CONEXIÓN NO AUTORIZADA // DB LEAK</span>
+              </div>
+              <div className="text-white font-bold text-sm mb-1">srv-horizonte-db (MySQL Prod)</div>
+              <div className="text-[#94a3b8] text-xs">
+                IP 10.10.10.20 &middot; Puerto 3306/tcp directo
+              </div>
+            </div>
+            <div className="mt-3 pt-2.5 border-t border-[#1e293b] text-[0.72rem] text-amber-300/80">
+              [!] Regla de firewall huérfana sin comentario permitía acceso directo total a la base de datos de producción desde el host comprometido.
+            </div>
+          </div>
+
+          {/* Right Branch: Attacker C2 */}
+          <div className="border border-rose-500/40 bg-[#0c0e14] p-4 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 text-rose-400 font-bold text-xs uppercase tracking-wider mb-2">
+                <span>&larr; CANAL DE COMANDO Y CONTROL (C2)</span>
+              </div>
+              <div className="text-white font-bold text-sm mb-1">Atacante Externo / Botnet</div>
+              <div className="text-[#94a3b8] text-xs">
+                Socket 0.0.0.0:5000 &middot; Regla saliente 174.138.59.x:443
+              </div>
+            </div>
+            <div className="mt-3 pt-2.5 border-t border-[#1e293b] text-[0.72rem] text-rose-300/80">
+              [!] Servicio systemd (Restart=always) vivo desde junio; canal de persistencia camuflado bajo tráfico falso de actualización de plugins.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Wp2shellTimeline = () => {
+  const events = [
+    {
+      date: '2026-07-15',
+      status: 'EXPUESTO',
+      statusColor: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
+      dotColor: 'bg-amber-400',
+      title: 'WordPress 6.9.1 en Producción',
+      desc: 'Ambos portales corren versión dentro del rango vulnerable (6.9.0–6.9.4). Sin anomalías reportadas.',
+    },
+    {
+      date: '2026-07-17 (Noche)',
+      status: 'ZERO-DAY DISCLOSURE',
+      statusColor: 'text-[#ef4444] border-red-500/40 bg-red-500/10',
+      dotColor: 'bg-red-500 animate-pulse',
+      title: 'Publicación Masiva del Exploit WP2Shell',
+      desc: 'CVE-2026-63030 (confusión en REST API) + CVE-2026-60137 (SQLi). Ejecución Remota de Código (RCE) no autenticada.',
+    },
+    {
+      date: '2026-07-19 → 07-21',
+      status: 'BRECHA ACTIVA',
+      statusColor: 'text-[#ef4444] border-red-500/40 bg-red-500/10',
+      dotColor: 'bg-red-500 animate-pulse',
+      title: 'Siembra Silenciosa de 11 Administradores Fantasma',
+      desc: 'Aparece wp2_389809@wp2shell.invalid y 10 usuarios bot adicionales en live y test. Los atacantes ya tienen control administrativo.',
+    },
+    {
+      date: '2026-07-23',
+      status: 'FALSA SEGURIDAD',
+      statusColor: 'text-[#38bdf8] border-sky-500/30 bg-sky-500/10',
+      dotColor: 'bg-sky-400',
+      title: 'Autopilot Actualiza el Núcleo a 7.0.2',
+      desc: 'El ciclo semanal cierra la vulnerabilidad técnica, pero no purga usuarios. Las 11 cuentas de administrador sobreviven intactas.',
+    },
+    {
+      date: '2026-08-25',
+      status: 'ATAQUE INTERACTIVO',
+      statusColor: 'text-[#f43f5e] border-rose-500/40 bg-rose-500/10',
+      dotColor: 'bg-rose-500',
+      title: 'Intento de Backdoors y Corrupción de Opciones',
+      desc: 'Sesión desde Azure US East. Filesystem en read-only bloquea backdoors (renombrados a .php_.gif). El atacante vacía template/stylesheet en wp_options.',
+    },
+    {
+      date: '2026-09-03',
+      status: 'RESPUESTA SRE',
+      statusColor: 'text-[#10b981] border-emerald-500/30 bg-emerald-500/10',
+      dotColor: 'bg-emerald-400',
+      title: 'Diagnóstico de Página en Blanco (HTTP 200, 0B) y Remediación',
+      desc: 'Bisección de backups diarios, eliminación de admins falsos, restauración de tema en base de datos e invalidación masiva de sesiones.',
+    },
+  ];
+
+  return (
+    <div className="my-10 border border-[#1e293b] bg-[#080a0f] p-5 sm:p-7 font-mono text-xs select-none shadow-2xl">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-[#1e293b]">
+        <div className="flex items-center gap-2.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ef4444] animate-pulse"></span>
+          <span className="text-white font-bold tracking-wider uppercase text-xs sm:text-sm">
+            CRONOLOGÍA FORENSE // SECUENCIA TEMPORAL DEL ATAQUE WP2SHELL
+          </span>
+        </div>
+        <span className="px-2.5 py-1 bg-[#ef4444]/15 border border-[#ef4444]/40 text-[#ef4444] text-[0.7rem] uppercase font-bold tracking-widest">
+          INCIDENT TIMELINE
+        </span>
+      </div>
+
+      <div className="relative pl-6 sm:pl-8 space-y-5 before:absolute before:left-[11px] sm:before:left-[15px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gradient-to-b before:from-amber-500 before:via-red-500 before:to-emerald-500">
+        {events.map((ev, idx) => (
+          <div key={idx} className="relative group">
+            <div className={`absolute -left-[29px] sm:-left-[33px] top-1.5 w-3 h-3 rounded-full ${ev.dotColor} border-2 border-[#080a0f]`}></div>
+            <div className="border border-[#1e293b] bg-[#0c0e14] p-4 group-hover:border-[#38bdf8]/40 transition-colors">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                <span className="text-[#38bdf8] font-bold text-xs tracking-wider">{ev.date}</span>
+                <span className={`px-2 py-0.5 border text-[0.68rem] font-bold tracking-wider uppercase ${ev.statusColor}`}>
+                  {ev.status}
+                </span>
+              </div>
+              <h4 className="text-white font-bold text-sm sm:text-base tracking-tight mb-1">
+                {ev.title}
+              </h4>
+              <p className="text-[#94a3b8] text-xs leading-relaxed font-sans font-normal">
+                {ev.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const DefenseLayersDiagram = () => {
+  const layers = [
+    {
+      num: 'CAPA 01',
+      title: 'Límite Estricto de Contenedor (Docker cgroups)',
+      metric: 'mem_limit: 640m · memswap_limit: 640m',
+      desc: 'Si un worker entra en trashing o intenta consumir más memoria, Docker mata el proceso aislado sin colapsar el kernel del host.',
+      color: 'border-cyan-500/40 bg-cyan-500/10 text-cyan-400',
+    },
+    {
+      num: 'CAPA 02',
+      title: 'Red de Seguridad en el Sistema Operativo (Swap)',
+      metric: 'Swap 2 GB en SSD · swappiness = 10',
+      desc: 'Evita que el kernel entre en freeze si la memoria llega al 90%. Absorbe picos transitorios y da tiempo de reacción al recolector de métricas.',
+      color: 'border-blue-500/40 bg-blue-500/10 text-blue-400',
+    },
+    {
+      num: 'CAPA 03',
+      title: 'Sintonización Matemática de PHP-FPM',
+      metric: 'max_children: 3 · memory_limit: 256M · max_requests: 500',
+      desc: 'Incluso con todos los workers al máximo simultáneamente (3 × 256M = 768M), matemáticamente no pueden saturar los recursos del contenedor.',
+      color: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400',
+    },
+    {
+      num: 'CAPA 04',
+      title: 'Autorreparación Cloud (AWS CloudWatch Alarms)',
+      metric: 'StatusCheckFailed_Instance > 5 min → EC2 Auto-Reboot',
+      desc: 'Si el driver de red (ENA) o el kernel se traban por cualquier condición imprevista, AWS reinicia la instancia automáticamente sin intervención humana.',
+      color: 'border-purple-500/40 bg-purple-500/10 text-purple-400',
+    },
+  ];
+
+  return (
+    <div className="my-10 border border-[#1e293b] bg-[#080a0f] p-5 sm:p-7 font-mono text-xs select-none shadow-2xl">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-[#1e293b]">
+        <div className="flex items-center gap-2.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse"></span>
+          <span className="text-white font-bold tracking-wider uppercase text-xs sm:text-sm">
+            ARQUITECTURA DE CONTENCIÓN // BLINDAJE EN CUATRO NIVELES
+          </span>
+        </div>
+        <span className="px-2.5 py-1 bg-[#10b981]/15 border border-[#10b981]/40 text-[#10b981] text-[0.7rem] uppercase font-bold tracking-widest">
+          DEFENSE IN DEPTH
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3.5">
+        {layers.map((l, i) => (
+          <div key={i} className="border border-[#1e293b] bg-[#0c0e14] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className={`px-2 py-0.5 border text-[0.68rem] font-bold ${l.color}`}>
+                  {l.num}
+                </span>
+                <span className="text-white font-bold text-sm">{l.title}</span>
+              </div>
+              <p className="text-[#94a3b8] text-xs font-sans leading-relaxed pt-1">
+                {l.desc}
+              </p>
+            </div>
+            <div className="font-mono text-[0.72rem] text-[#10b981] bg-[#07080b] border border-[#1e293b] px-3 py-2 shrink-0">
+              {l.metric}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const CodeBlock = ({ children }) => {
   const [copied, setCopied] = useState(false);
   const codeRef = useRef(null);
+
+  const codeEl = React.Children.toArray(children)[0];
+  const className = codeEl?.props?.className || '';
+
+  if (className === 'language-architecture' || className.includes('architecture')) {
+    return <ArchitectureDiagram />;
+  }
+  if (className === 'language-timeline' || className.includes('timeline')) {
+    return <Wp2shellTimeline />;
+  }
+  if (className === 'language-defense-layers' || className.includes('defense') || className.includes('layers')) {
+    return <DefenseLayersDiagram />;
+  }
 
   const handleCopy = () => {
     const text = codeRef.current?.innerText || '';
@@ -53,6 +353,76 @@ const CodeBlock = ({ children }) => {
         {children}
       </div>
     </div>
+  );
+};
+
+const AlertBlockquote = ({ children }) => {
+  const elements = React.Children.toArray(children).filter(
+    (c) => typeof c !== 'string' || c.trim() !== ''
+  );
+  const firstEl = elements[0];
+
+  if (firstEl && firstEl.props && firstEl.props.children) {
+    const pChildren = React.Children.toArray(firstEl.props.children);
+    if (typeof pChildren[0] === 'string') {
+      const match = pChildren[0].match(/^\[!(WARNING|NOTE|TIP|IMPORTANT|CAUTION)\]\s*/i);
+      if (match) {
+        const type = match[1].toUpperCase();
+        const newFirstText = pChildren[0].slice(match[0].length);
+        const newPChildren = [newFirstText, ...pChildren.slice(1)].filter((c) => c !== '');
+        const newFirstP = React.cloneElement(
+          firstEl,
+          { className: 'mb-0 leading-relaxed text-[#d1d5db]' },
+          ...newPChildren
+        );
+        const rest = elements.slice(1);
+
+        const isWarning = type === 'WARNING' || type === 'CAUTION';
+        const borderColor = isWarning ? 'border-amber-500/40' : 'border-[#10b981]/40';
+        const bgHeader = isWarning ? 'bg-amber-500/15' : 'bg-[#10b981]/15';
+        const textColor = isWarning ? 'text-amber-400' : 'text-[#10b981]';
+        const borderHeader = isWarning ? 'border-amber-500/30' : 'border-[#10b981]/30';
+
+        return (
+          <aside
+            className={`my-8 border ${borderColor} bg-[#0c0e14] relative overflow-hidden not-italic font-normal`}
+          >
+            <div
+              className={`flex items-center gap-2.5 px-4 py-2.5 ${bgHeader} border-b ${borderHeader} font-mono text-xs uppercase tracking-wider ${textColor} font-bold select-none`}
+            >
+              <svg
+                className="w-4 h-4 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              <span>
+                {type === 'WARNING'
+                  ? 'ADVERTENCIA DE SEGURIDAD // CONFIDENCIALIDAD OPERATIVA'
+                  : type}
+              </span>
+            </div>
+            <div className="p-5 text-sm sm:text-base leading-relaxed space-y-3">
+              {newFirstP}
+              {rest}
+            </div>
+          </aside>
+        );
+      }
+    }
+  }
+
+  return (
+    <blockquote className="border-l-2 border-[#10b981] pl-4 my-6 text-[#8e99a8] italic">
+      {children}
+    </blockquote>
   );
 };
 
@@ -198,7 +568,7 @@ export const Blog = () => {
               </h1>
 
               {selectedPost.excerpt && (
-                <p className="text-xl leading-relaxed text-[#8e99a8] max-w-[48ch]">
+                <p className="text-xl leading-relaxed text-[#8e99a8] w-full text-justify hyphens-auto">
                   {selectedPost.excerpt}
                 </p>
               )}
@@ -216,20 +586,30 @@ export const Blog = () => {
             )}
 
             {headings.length >= 2 && (
-              <div className="mb-12 py-6 border-y border-[#131722]">
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#ef4444] mb-3">
-                  Tabla de Contenido
-                </p>
-                <nav className="space-y-1.5 font-mono text-sm">
+              <div className="mb-12 p-6 sm:p-7 border border-[#131722] bg-[#0c0e14]">
+                <div className="flex items-center gap-2.5 pb-4 mb-5 border-b border-[#131722]">
+                  <span className="font-mono text-xs text-[#ef4444] font-bold tracking-widest">[INDEX]</span>
+                  <p className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-white font-extrabold">
+                    Tabla de Contenido
+                  </p>
+                </div>
+                <nav className="space-y-2.5 font-mono">
                   {headings.map((h) => (
                     <button
                       key={h.id}
                       onClick={() => document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth' })}
-                      className={`block text-left text-[#8e99a8] hover:text-[#10b981] transition-colors ${
-                        h.level === 3 ? 'ml-4 text-xs' : ''
+                      className={`group flex items-baseline text-left transition-all ${
+                        h.level === 3
+                          ? 'ml-6 text-sm sm:text-base text-[#8e99a8] hover:text-[#10b981]'
+                          : 'text-base sm:text-lg font-bold text-[#e2e8f0] hover:text-[#10b981]'
                       }`}
                     >
-                      # {h.text}
+                      <span className="text-[#10b981] font-black mr-3 shrink-0 group-hover:text-white transition-colors">
+                        {h.level === 3 ? '##' : '#'}
+                      </span>
+                      <span className="group-hover:underline underline-offset-4">
+                        {h.text}
+                      </span>
                     </button>
                   ))}
                 </nav>
@@ -241,7 +621,7 @@ export const Blog = () => {
               prose-headings:text-white prose-headings:font-extrabold prose-headings:tracking-[-0.03em]
               prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
               prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-              prose-p:text-[#d1d5db] prose-p:leading-[1.75] prose-p:mb-6
+              prose-p:text-[#d1d5db] prose-p:leading-[1.75] prose-p:mb-6 prose-p:text-justify hyphens-auto
               prose-a:text-[#10b981] prose-a:no-underline hover:prose-a:underline
               prose-code:text-[#10b981] prose-code:bg-[#0e1118] prose-code:px-2 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
               prose-blockquote:border-l-2 prose-blockquote:border-[#10b981] prose-blockquote:text-[#8e99a8] prose-blockquote:italic
@@ -250,6 +630,7 @@ export const Blog = () => {
                 remarkPlugins={[remarkGfm]}
                 components={{
                   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
+                  blockquote: AlertBlockquote,
                   img: ({ src, alt, title }) => (
                     <figure className="my-8">
                       <img
@@ -257,7 +638,6 @@ export const Blog = () => {
                         alt={alt}
                         title={title}
                         className="w-full h-auto border border-[#131722]"
-                        loading="lazy"
                       />
                       {title && (
                         <figcaption className="text-center font-mono text-xs text-[#64748b] mt-2">
@@ -411,7 +791,7 @@ export const Blog = () => {
                     <h2 className="text-2xl sm:text-[1.7rem] font-bold tracking-tight text-white group-hover:text-[#10b981] transition-colors mb-2.5">
                       {post.title} &rarr;
                     </h2>
-                    <p className="text-base text-[#8e99a8] leading-relaxed max-w-[56ch]">
+                    <p className="text-base text-[#8e99a8] leading-relaxed w-full">
                       {post.excerpt}
                     </p>
                   </div>

@@ -1,22 +1,22 @@
 {
   "posts": [
     {
-      "slug": "postmortem-nginx-socket-exhaustion",
-      "title": "Post-Mortem: Diagnóstico de Timeouts 502 en NGINX y Agotamiento de Sockets en Kernel Linux",
-      "date": "2026-10-16",
-      "category": "Reliability & Linux",
-      "excerpt": "Análisis técnico de un incidente real en producción: cómo una ráfaga de tráfico saturó el backlog de sockets TCP en el kernel Linux, generando errores 502 Bad Gateway intermitentes, y cómo lo remediamos.",
-      "coverImage": "/blog-posts/images/shell-builtins.png",
-      "coverAlt": "Auditoría de sockets en kernel Linux y logs de NGINX"
+      "slug": "php2shell-mantenimiento-preventivo-php82",
+      "title": "Caída por memoria en la semana de PHP2Shell: OOM-Killer, falsos diagnósticos en AWS y las cuatro capas de defensa",
+      "date": "2026-10-26",
+      "category": "Runtime & SRE",
+      "excerpt": "En plena alerta global por la vulnerabilidad PHP2Shell, un backend Laravel en AWS dejó de responder súbitamente. Entre un OOM que congeló la máquina 9 horas, una mala lectura del CLI de AWS que culpó al hardware y la falta de capacidad en la zona de disponibilidad, construimos una estrategia de contención en cuatro capas.",
+      "coverImage": "/blog-posts/images/php2shell-cover.jpg",
+      "coverAlt": "Monitoreo de métricas cloud, telemetría y servidores Linux en AWS"
     },
     {
       "slug": "docker-entornos-estandarizados",
-      "title": "Por qué Docker sigue siendo la cura definitiva al 'en mi máquina sí funciona'",
+      "title": "La falacia del 'en mi máquina sí funciona': cuatro sistemas operativos, versiones incompatibles y el rescate mediante Docker estandarizado",
       "date": "2026-10-15",
-      "category": "Contenedores",
-      "excerpt": "Estandarizar entornos locales con Docker no es capricho: elimina fricción, alinea dependencias con producción y ahorra horas de depuración. Una perspectiva práctica sobre consistencia técnica.",
-      "coverImage": "/blog-posts/images/oxker.png",
-      "coverAlt": "Gestión de contenedores Docker en terminal"
+      "category": "Infraestructura & Contenedores",
+      "excerpt": "Cuatro ingenieros, cuatro sistemas operativos distintos y una promesa rota: 'solo clona el repo y corre pip install'. Crónica de cómo la deriva de dependencias entre Windows, Arch, Debian y Ubuntu paralizó un despliegue crítico, y por qué Docker es la única cura determinista contra la suposición técnica.",
+      "coverImage": "/blog-posts/images/docker-entornos-estandarizados.png",
+      "coverAlt": "Comparativa de fragmentación de sistemas operativos frente a la estandarización determinista con Docker"
     },
     {
       "slug": "automatizaciones-tradicionales-vs-ia",
@@ -46,22 +46,22 @@
       "coverAlt": "Documentación de proyectos y archivos Markdown en terminal"
     },
     {
-      "slug": "php2shell-mantenimiento-preventivo-php82",
-      "title": "PHP2Shell: Por Qué Mantener la Flota en PHP 8.2 nos Salvó de un Desastre en Producción",
-      "date": "2026-10-06",
-      "category": "Runtime & SRE",
-      "excerpt": "Cuando saltó la alerta de PHP2Shell, el fantasma del pánico sobrevoló el equipo. Sin embargo, tener toda la flota estandarizada en PHP 8.2 gracias al mantenimiento preventivo convirtió un potencial desastre en una mitigación limpia y sin estrés.",
-      "coverImage": "/blog-posts/images/cve-2026-9860.png",
-      "coverAlt": "Auditoría de runtimes PHP y actualización de paquetes en contenedores de producción"
+      "slug": "wp2shell-incidente-parche-emergencia",
+      "title": "La página en blanco que era un ataque: wp2shell, administradores fantasma y la pista falsa de PHP 8.3",
+      "date": "2026-09-08",
+      "category": "Incident Response",
+      "excerpt": "Llegó como un reporte de bug rutinario: una página en blanco devolviendo HTTP 200 con 0 bytes. Al tirar del hilo descubrimos una campaña masiva de wp2shell, 11 administradores fantasma plantados semanas atrás, backdoors camuflados como imágenes y un error de PHP 8.3 que casi nos desvía del diagnóstico real.",
+      "coverImage": "/blog-posts/images/wp2shell-cover.jpg",
+      "coverAlt": "Análisis forense de ciberseguridad y auditoría de WordPress en producción"
     },
     {
-      "slug": "wp2shell-incidente-parche-emergencia",
-      "title": "WP2Shell en Producción: Crónica de un Parche a Contrarreloj, Dos Sitios en Blanco y el Rescate de los Backups",
-      "date": "2026-09-22",
+      "slug": "servidor-congelado-en-produccion",
+      "title": "El servidor 'congelado' que seguía en producción: rootkits silenciosos, firewalls huérfanos y el peligro de asumir",
+      "date": "2026-08-16",
       "category": "Incident Response",
-      "excerpt": "Llegó como la típica alerta casual de 'hay una nueva actualización disponible', pero detrás venía un intento masivo de RCE. Crónica de una carrera contra reloj, cómo la defensa en profundidad frenó la intrusión y por qué los backups matutinos salvaron la jornada.",
-      "coverImage": "/blog-posts/images/cve-2026-9860.png",
-      "coverAlt": "Auditoría de seguridad y análisis de logs durante el incidente WP2Shell"
+      "excerpt": "Un servidor comprometido a nivel root había sido documentado como 'congelado'. Semanas después descubrimos que seguía en el camino crítico de producción, conectado a la base de datos y con un backdoor activo que sobrevivió a la primera limpieza. Crónica de una investigación forense real.",
+      "coverImage": "/blog-posts/images/servidor-congelado.jpg",
+      "coverAlt": "Servidores en rack y análisis de seguridad en infraestructura de producción"
     },
     {
       "slug": "shell-builtins",

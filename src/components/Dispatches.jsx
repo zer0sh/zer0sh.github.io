@@ -29,8 +29,8 @@ export const Dispatches = () => {
   const postMeta = [
     {
       code: 'DISPATCH.01',
-      metric: 'INCIDENT // P1 POSTMORTEM',
-      meta: 'SOMAXCONN · NGINX 502',
+      metric: 'INCIDENT // EMERGENCY HOTFIX',
+      meta: 'RCE DEFENSE · ZERO DATA LOSS',
     },
     {
       code: 'DISPATCH.02',

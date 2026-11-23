@@ -1,97 +1,149 @@
 ---
-title: "PHP2Shell: Por Qué Mantener la Flota en PHP 8.2 nos Salvó de un Desastre en Producción"
-date: "2026-10-06"
+title: "Caída por memoria en la semana de PHP2Shell: OOM-Killer, falsos diagnósticos en AWS y las cuatro capas de defensa"
+date: "2026-10-26"
 category: "Runtime & SRE"
-excerpt: "Cuando saltó la alerta de PHP2Shell, el fantasma del pánico sobrevoló el equipo. Sin embargo, tener toda la flota estandarizada en PHP 8.2 gracias al mantenimiento preventivo convirtió un potencial desastre en una mitigación limpia y sin estrés."
-coverImage: "/blog-posts/images/cve-2026-9860.png"
-coverAlt: "Auditoría de runtimes PHP y actualización de paquetes en contenedores de producción"
+excerpt: "En plena alerta global por la vulnerabilidad PHP2Shell, un backend Laravel en AWS dejó de responder súbitamente. Entre un OOM que congeló la máquina 9 horas, una mala lectura del CLI de AWS que culpó al hardware y la falta de capacidad en la zona de disponibilidad, construimos una estrategia de contención en cuatro capas."
+coverImage: "/blog-posts/images/php2shell-cover.jpg"
+coverAlt: "Monitoreo de métricas cloud, telemetría y servidores Linux en AWS"
 ---
 
-Apenas un par de semanas después del susto de [WP2Shell](/blog/wp2shell-incidente-parche-emergencia), los canales de seguridad volvieron a iluminarse con una alerta de severidad máxima. Esta vez el objetivo no era la capa de aplicación ni un CMS en particular: el vector atacaba directamente el motor subyacente. Se trataba de **PHP2Shell**, una vulnerabilidad de inyección de argumentos y ejecución remota de código (*RCE*) a nivel del runtime de PHP.
-
-El escenario pintaba para ser una repetición del caos: exploit público disponible, escáneres barriendo internet en cuestión de horas y la promesa de dolores de cabeza on-call.
-
-Sin embargo, esta vez la historia fue radicalmente distinta. Y la razón no fue la suerte, sino una decisión estratégica tomada meses atrás: **el mantenimiento preventivo riguroso y la erradicación total de versiones legadas**.
+> [!WARNING] **Nota de confidencialidad y contexto:**  
+> *Los nombres de organizaciones, proyectos, identificadores de red y credenciales han sido anonimizados por motivos de seguridad y confidencialidad operativa. La arquitectura técnica, la cronología de eventos, los comandos ejecutados, los diagnósticos y las lecciones aprendidas corresponden a un incidente real vivido en producción.*
 
 ---
 
-## 1. El contexto de la amenaza: ¿Qué era PHP2Shell?
+Hay momentos en la vida de un equipo de operaciones donde el contexto te juega una mala pasada. Si una vulnerabilidad crítica con RCE no autenticado estalla en las noticias un lunes, y tu servidor backend colapsa y deja de responder el miércoles, tu cerebro salta inmediatamente a la peor conclusión posible: *«nos hackearon»*.
 
-- **Fecha de detección:** Lunes, 6 de Octubre de 2026
-- **Severidad:** Crítica (CVSS 9.8 - Argument Injection / Remote Code Execution en parser de PHP)
-- **Vector de ataque:** Manipulación de parámetros de consulta en entornos CGI/FPM mal configurados o versiones de PHP no parcheadas, permitiendo que un atacante pasara directivas arbitrarias al binario de PHP (`-d auto_prepend_file`, `php://input`) para ejecutar código arbitrario sin autenticación.
+Esto fue exactamente lo que vivimos con un backend SaaS de analítica que llamaremos **Proyecto Pulsar**. La aplicación corría con Laravel dentro de un contenedor Docker sobre una instancia pequeña de AWS EC2 (`t2.micro` con 1 GB de RAM). 
 
-Al publicarse el boletín técnico, las redes y foros de ingeniería se llenaron de mensajes de pánico: miles de servidores en todo el mundo corrían versiones antiguas como PHP 7.4, 8.0 o releases tempranas de 8.1 que requerían compilaciones manuales, parches complejos o migraciones de código a marchas forzadas para evitar ser vulnerados.
+Apenas dos días después de que se filtrara el aviso oficial de **PHP2Shell** (CVE-2026-109618, CVSS 9.2), el servidor de Pulsar enmudeció por completo. Durante casi nueve horas la máquina no procesó una sola petición y estuvo inaccesible.
 
-En nuestro caso, el equipo abrió la matriz de activos y la consola de observabilidad esperando lo peor. Pero al consultar el estado de la flota, el panorama fue revelador:
+Esta es la historia de una investigación bajo máxima presión, de un error de lectura con el CLI de AWS que nos hizo culpar al hardware de la nube, de cómo un kernel Linux sin swap se congela silenciosamente y del diseño de cuatro capas de protección que implementamos para blindar el servicio.
+
+---
+
+## 1. El contexto de paranoia: la semana de PHP2Shell
+
+El 20 de octubre circularon los primeros reportes previos al embargo oficial: **PHP2Shell** permitía ejecución remota de código sin autenticación mediante peticiones HTTP `multipart/form-data` especialmente manipuladas que saturaban y corrompían la gestión de memoria de PHP.
+
+El 21 de octubre PHP publicó los avisos oficiales y las versiones parcheadas (8.2.35, 8.3.36, etc.). Esa misma mañana abrimos un inventario de emergencia de toda la flota de servidores. La aplicación de Pulsar corría **PHP 8.3.30**: estaba dentro del rango vulnerable y marcada con prioridad alta.
+
+Al día siguiente, a las 09:00 COT, la telemetría registró un pico repentino de tráfico de entrada: **10 MB en pocos minutos, casi 100 veces el volumen normal**.
+- 09:39–09:48: Tres peticiones `GET` devuelven errores 500 (peticiones directas a la IP sin cabecera de tenant).
+- 09:54: El consumo de CPU escala al 100%.
+- 09:59:27: Se registra la última línea en el log de Laravel.
+- 10:00: **Silencio absoluto.** La instancia deja de recibir tráfico.
+
+El *status check* de la instancia en AWS falló. No había respuesta por HTTP, ni por SSH, ni por ping. La correlación temporal parecía irrefutable: el ataque se había ejecutado y el servidor había caído.
+
+---
+
+## 2. El laberinto del diagnóstico y el tropiezo con AWS CLI
+
+Al día siguiente, tras obtener las credenciales de la cuenta AWS, iniciamos la investigación desde AWS CloudShell. Y aquí cometimos un error de diagnóstico clásico que todo ingeniero debe conocer.
+
+Ejecutamos el comando de inspección de estado de EC2:
 
 ```bash
-$ ansible webservers -m shell -a "php -v | head -n 1"
-node-01 | CHANGED | rc=0 >> PHP 8.2.22 (cli) (built: Jul 31 2026 14:12:05) (NTS)
-node-02 | CHANGED | rc=0 >> PHP 8.2.22 (cli) (built: Jul 31 2026 14:12:05) (NTS)
-node-03 | CHANGED | rc=0 >> PHP 8.2.22 (cli) (built: Jul 31 2026 14:12:05) (NTS)
+aws ec2 describe-instance-status --instance-id i-0294bc17ef --output text
 ```
 
-**El 100% de nuestros entornos de producción ya estaban estandarizados en la rama activa de PHP 8.2.**
+La salida en consola devolvió textualmente:
 
----
-
-## 2. La ventaja del mantenimiento preventivo
-
-Mantener las dependencias y los runtimes actualizados suele ser una de esas tareas silenciosas que nadie nota cuando todo va bien. A menudo se pospone bajo la clásica excusa de *"si funciona, no lo toques"*.
-
-Meses antes de este incidente, habíamos dedicado ciclos completos de sprint exclusivamente al mantenimiento preventivo:
-* Auditamos cada repositorio para eliminar dependencias incompatibles con PHP 8.2.
-* Reemplazamos extensiones obsoletas por implementaciones nativas modernas.
-* Estandarizamos todas nuestras imágenes base de Docker sobre Debian Trixie y Alpine con PHP 8.2 compilado con banderas de seguridad modernas.
-
-Esa inversión previa de tiempo significó que, cuando estalló PHP2Shell:
-1. **No tuvimos que lidiar con roturas de compatibilidad (*breaking changes*):** Sabíamos con certeza matemática que nuestro código era plenamente compatible con el ecosistema moderno de PHP.
-2. **Los parches upstream estaban listos de inmediato:** A diferencia de las versiones en fin de vida (EOL) que no reciben parches oficiales de los repositorios principales, los mantenedores de PHP y las distribuciones oficiales publicaron paquetes binarios actualizados para PHP 8.2 en cuestión de horas.
-
----
-
-## 3. Una remediación quirúrgica y sin fricción
-
-A diferencia de la carrera contra reloj de WP2Shell, donde tuvimos que restaurar dos sitios desde backups matutinos debido a la afectación en caliente, la resolución de PHP2Shell fue una demostración de excelencia operativa:
-
-### Paso 1: Actualización del paquete en la imagen base
-Actualizamos la versión menor del runtime en nuestro Dockerfile base y en los repositorios de paquetes de los servidores dedicados:
-```bash
-# Actualización del runtime PHP-FPM a la versión parcheada
-sudo apt-get update && sudo apt-get --only-upgrade install -y php8.2-fpm php8.2-cli
-```
-
-### Paso 2: Recarga sin caída de conexiones (Zero-Downtime Reload)
-En lugar de reiniciar abruptamente los servidores o interrumpir el tráfico activo, ejecutamos una recarga limpia mediante la señal `USR2` de PHP-FPM, que levanta nuevos workers con el binario parcheado mientras los workers antiguos terminan de procesar sus peticiones en vuelo:
-```bash
-# Recarga elegante de workers PHP-FPM
-sudo systemctl reload php8.2-fpm
-```
-
-### Paso 3: Verificación de telemetría y reglas de ingress
-Inspeccionamos los logs de NGINX con Vector y Prometheus para rastrear los intentos de inyección de parámetros (`-d` / `-s`):
 ```text
-GET /index.php?+-d+auto_prepend_file%3Dphp://input HTTP/1.1 403 Forbidden
+SYSTEMSTATUS   impaired   ok
 ```
-El motor parcheado ignoró y rechazó inmediatamente cualquier interpretación maliciosa de argumentos. Ningún sitio cayó en blanco, ninguna base de datos fue comprometida y ningún worker se colgó.
 
-El proceso completo tomó menos de 30 minutos de trabajo coordinado y sereno.
+Al leer de izquierda a derecha en modo texto plano, leímos: *«System Status: Impaired (dañado)»*. Asumimos de inmediato que el hardware físico subyacente de AWS había fallado coincidentemente durante la alerta. Levantamos una ceja, sospechamos del datacenter y estuvimos a punto de abrir un ticket de soporte a Amazon.
+
+Pero algo no encajaba. Decidí repetir el comando forzando la salida en **JSON estructurado**:
+
+```json
+{
+    "SystemStatus": {
+        "Status": "ok"
+    },
+    "InstanceStatus": {
+        "Status": "impaired"
+    }
+}
+```
+
+**El formato de texto plano de AWS CLI ordena los campos alfabéticamente**. `InstanceStatus` y `SystemStatus` se habían colapsado en una sola línea donde `impaired` correspondía al sistema operativo interno y `ok` al hipervisor de AWS. El hardware de AWS estaba perfecto: **el fallo era 100% interno del sistema operativo Linux.**
+
+![Diagnóstico de AWS CLI y captura del kernel OOM-killer](/blog-posts/images/terminal-aws-oom.svg "Diagnóstico en CloudShell: la trampa alfabética del CLI de AWS y el registro de dmesg del OOM-killer")
 
 ---
 
-## 4. Conclusión: La deuda técnica se paga con intereses
+## 3. La autopsia: el OOM-killer que congeló la máquina 9 horas
 
-Comparar la experiencia de **WP2Shell** frente a **PHP2Shell** ilustra a la perfección el principio fundamental del Site Reliability Engineering:
+Al solicitar la captura de consola del sistema (`aws ec2 get-console-output`), la verdad salió a la luz:
 
-| Dimensión | WP2Shell | PHP2Shell |
-| :--- | :--- | :--- |
-| **Punto de ataque** | Capa de aplicación (CMS) | Runtime del lenguaje (PHP Core) |
-| **Estado previo del sistema** | Actualización imprevista y reactiva | Flota estandarizada previamente en PHP 8.2 |
-| **Nivel de estrés** | Alto (carrera contrarreloj on-call) | Bajo (procedimiento estándar de despliegue) |
-| **Impacto** | 2 sitios con pantalla en blanco (restaurados con backups) | 0 caídas, 0 degradación de servicio |
-| **Tiempo de resolución** | ~3.5 horas de remediación y verificación | < 30 minutos de actualización controlada |
+```text
+[ 8.7h freeze ] kernel: [31249.102] Out of memory: Killed process 812 (php-fpm)
+kernel: [31249.105] total-vm:845120kB, anon-rss:430180kB, file-rss:0kB
+kernel: [31249.108] oom_score_adj: 0, uid: 82 (www-data)
+```
 
-Cuando no realizas mantenimiento preventivo, el tiempo que "ahorraste" no desaparece: se acumula como deuda técnica que te será cobrada de golpe, con intereses y en el peor momento posible.
+**No hubo intrusión ni malware.** Lo que ocurrió fue un colapso brutal de recursos por diseño:
 
-Tener la disciplina de migrar a PHP 8.2 a tiempo, limpiar código viejo y verificar que tus copias de seguridad funcionen no es burocracia: es la diferencia entre pasar una noche apagando incendios en pánico o disfrutar de un café sabiendo que tus sistemas están construidos para resistir.
+1. **Configuración de memoria sobredimensionada:** PHP-FPM estaba configurado con `pm.max_children = 5` y un `memory_limit` de `512M`. En una máquina física con solo 1 GB de RAM, permitir que 5 workers puedan solicitar 512 MB cada uno significa que la aplicación puede intentar consumir hasta **2.5 GB de memoria**.
+2. **Ausencia total de swap:** La máquina virtual no tenía archivo ni partición de intercambio (*swap*).
+3. **El colapso del subsistema de red:** Cuando un worker de PHP intentó procesar una subida pesada y consumió 430 MB, el kernel Linux agotó todas las páginas de memoria física disponibles. El sistema entró en *trashing*, la CPU se fue al 100% intentando liberar memoria y el kernel ni siquiera pudo ejecutar el demonio de recolección de `sysstat` durante 8 horas y 40 minutos.
+4. Cuando el kernel finalmente ejecutó el `OOM-killer` y liquidó el proceso de PHP, la pila de red del driver de la interfaz elástica (ENA) quedó en un estado irrecuperable (0 paquetes/s). El servidor parecía encendido, pero era un cadáver viviente en la red.
+
+---
+
+## 4. El obstáculo inesperado: falta de capacidad en la nube
+
+Antes de modificar cualquier cosa en el servidor, aplicamos la regla de oro de SRE: **tomar un snapshot de EBS del disco** (`snap-0b64903b...`) y cerrar temporalmente los puertos 80/443 en el Security Group para trabajar de forma aislada.
+
+Para desbloquear el estado del kernel, detuvimos la instancia con `aws ec2 stop-instances`. Pero al intentar encenderla de nuevo:
+
+```text
+An error occurred (InsufficientInstanceCapacity): 
+We currently do not have sufficient t2.micro capacity in the Availability Zone us-east-1a.
+```
+
+AWS no tenía instancias `t2.micro` disponibles en esa zona en ese instante. Reintentar varias veces no funcionó y el servicio continuaba caído.
+
+**Decisión operativa bajo presión:** Modificamos temporalmente el tipo de instancia a **`t2.small`** (2 GB de RAM). En cuestión de segundos la máquina arrancó, pudimos conectarnos por SSH y empezar a trabajar en la remediación.
+
+---
+
+## 5. El parche y el blindaje en cuatro capas
+
+Al inspeccionar el servidor descubrimos que el código fuente no residía en el host: el despliegue consistía únicamente en un archivo `.env` y un `docker-compose.yml` que apuntaba a una imagen en GitHub Container Registry (`GHCR`) compilada hacía siete meses.
+
+Para parchar PHP2Shell sin romper nada:
+1. Reconstruimos localmente la imagen Docker exactamente en el mismo commit de Git (`56d7606`), modificando únicamente la línea base:
+   - De: `FROM php:8.3-fpm-alpine`
+   - A: `FROM php:8.3.36-fpm-alpine`
+2. Verificamos que las firmas MD5 de `composer.lock` e `installed.json` fueran idénticas.
+3. Desactivamos el módulo vulnerable de progreso de subidas: `session.upload_progress.enabled=0`.
+4. Exportamos la imagen con `docker save | gzip`, la transferimos por SSH y la cargamos en el Docker local.
+
+A las 12:54 COT el servicio estaba de vuelta y completamente parcheado contra PHP2Shell.
+
+### El blindaje en cuatro capas defensivas
+Para garantizar que una subida de memoria **nunca más** congele el sistema, diseñamos e implementamos una arquitectura de contención en cuatro niveles:
+
+```defense-layers
+blindaje-cuatro-capas
+```
+
+Con estas cuatro capas:
+- Si un worker se desborda, Docker lo mata de forma aislada sin afectar al resto del sistema operativo.
+- Si hay un pico temporal, la swap de 2 GB le da margen de maniobra al kernel.
+- Si la tarjeta de red llegara a trabarse por cualquier causa imprevista, CloudWatch reinicia la instancia automáticamente a los 5 minutos sin requerir intervención humana de madrugada.
+
+Una vez verificado que el contenedor en reposo solo consumía ~90 MB de los 640 MB asignados, bajamos la instancia nuevamente al tamaño **`t2.micro`** original para no incrementar la factura de AWS del cliente.
+
+---
+
+## 6. Lecciones para la trinchera técnica
+
+1. **Una máquina sin límites ni swap no se cae: se congela.** Y un servidor congelado es infinitamente peor que un servidor caído: los health checks no siempre lo detectan de inmediato y el OOM-killer puede tardar horas en actuar.
+2. **Cuidado con el formato `--output text` en AWS CLI:** El ordenamiento alfabético de campos puede hacerte leer un estado invertido. En incidentes críticos, valida siempre contra JSON.
+3. **Snapshot antes de tocar:** En la urgencia de reiniciar, es fácil destruir evidencia o agravar el problema. Tomar una captura de disco toma dos minutos y te da tranquilidad absoluta.
+4. **La paranoia del contexto sesga el diagnóstico:** El hecho de que ocurra una caída en la semana de un exploit crítico no significa que la causa sea el exploit. Deja que los logs hablen antes de construir teorías conspirativas.

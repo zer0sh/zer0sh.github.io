@@ -140,6 +140,11 @@ Las imágenes se almacenan en `public/blog-posts/images/` y se referencian con r
 /blog-posts/images/mi-imagen.png
 ```
 
+### Ilustraciones de Terminal en SVG
+Para generar maquetas vectoriales de terminal (archivos `.svg`), consulta la guía dedicada:
+- [`docs/guia-ilustraciones-terminal.md`](guia-ilustraciones-terminal.md)
+- Script generador: `node scripts/generate-terminal-svg.js`
+
 ---
 
 ## Flujo de trabajo completo
