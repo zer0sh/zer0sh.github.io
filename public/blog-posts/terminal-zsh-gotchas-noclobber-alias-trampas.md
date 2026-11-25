@@ -3,8 +3,8 @@ title: "La terminal que no era la mía: noclobber, pkill suicida y las trampas d
 date: "2026-11-10"
 category: "Shell & Productividad"
 excerpt: "Asumir que toda terminal Linux o macOS se comporta como Bash estándar es la causa raíz de errores insólitos: desde bucles que fallan en el primer archivo por noclobber hasta comandos pkill que se matan a sí mismos o filtros sed que exponen tokens en pantalla. Autopsia de tropiezos en la consola."
-coverImage: "/blog-posts/images/shell-builtins.png"
-coverAlt: "Línea de comandos de Unix, depuración de scripts en Zsh y buenas prácticas de terminal"
+coverImage: "/blog-posts/images/cover-terminal-zsh-gotchas-noclobber-alias-trampas.jpg"
+coverAlt: "Consola de terminal Unix con depuración de scripts interactivos en Zsh"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -42,6 +42,10 @@ Al consultar la API de GitHub para verificar:
 - **Los otros 37 Pull Requests seguían totalmente abiertos.**
 
 ### ¿Por qué falló?
+
+![Autopsia de Zsh: la redirección defensiva noclobber bloqueando la iteración en archivos preexistentes](/blog-posts/images/terminal-zsh-noclobber.svg "Autopsia de Zsh: la redirección defensiva noclobber bloqueando la iteración en archivos preexistentes")
+
+
 En Zsh, muchas configuraciones tienen activa la opción defensiva `noclobber` (`set -C`):
 > *`noclobber`: Impide que la redirección con `>` sobrescriba un archivo existente sin confirmación explícita.*
 

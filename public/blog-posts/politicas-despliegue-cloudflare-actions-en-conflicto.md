@@ -3,8 +3,8 @@ title: "Los merges que publicaban a producción: políticas contradictorias entr
 date: "2026-09-26"
 category: "Cloud & CI/CD"
 excerpt: "Una directiva de seguridad exigía que ningún merge a master publicara a producción sin un release explícito. Al auditar 24 repositorios serverless descubrimos que otra tarea había configurado exactamente lo contrario: dos políticas opuestas conviviendo en el mismo código."
-coverImage: "/blog-posts/images/opencode.png"
-coverAlt: "Gestión de políticas de despliegue continuo, Cloudflare Workers y gobernanza en GitHub Actions"
+coverImage: "/blog-posts/images/cover-politicas-despliegue-cloudflare-actions-en-conflicto.jpg"
+coverAlt: "Red perimetral Cloudflare, DNS y despliegues serverless"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -29,6 +29,10 @@ Dos políticas diametralmente opuestas estaban activas al mismo tiempo sobre la 
 ---
 
 ## 1. La radiografía del inventario: 24 repositorios y tres realidades
+
+
+![Conflicto en Cloudflare Pages: carreras de despliegue entre la integración Git y GitHub Actions](/blog-posts/images/terminal-cloudflare-actions-conflict.svg "Conflicto en Cloudflare Pages: carreras de despliegue entre la integración Git y GitHub Actions")
+
 
 Para tomar decisiones basadas en datos y no en suposiciones, auditamos los 24 repositorios clasificándolos según su mecanismo real de entrega:
 

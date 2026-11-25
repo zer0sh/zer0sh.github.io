@@ -3,8 +3,8 @@ title: "El reporte que decía 'funciona': reCAPTCHA, configuraciones divididas y
 date: "2026-09-30"
 category: "Frontend & Arquitectura"
 excerpt: "Una tarea simple para evitar exponer secretos de reCAPTCHA en entornos de prueba desencadenó un mes de problemas en cadena: iframes rotos, scripts que cancelaban envíos y un reporte de QA que dio el fix por bueno cuando el entorno seguía mostrando contenido cacheado."
-coverImage: "/blog-posts/images/opencode.png"
-coverAlt: "Formularios web, validación de captcha y arquitectura de configuración por entorno"
+coverImage: "/blog-posts/images/cover-recaptcha-split-configuracion-falsa-aprobacion.jpg"
+coverAlt: "Pruebas de calidad QA, validación de APIs y formularios seguros"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -23,6 +23,10 @@ Lo que empezó como una tarea preventiva de cinco minutos para no utilizar la cl
 ---
 
 ## 1. El objetivo inicial: aislar las llaves de producción
+
+
+![Diferencial de configuraciones: llave de prueba aprobando todo en QA mientras producción fallaba](/blog-posts/images/terminal-recaptcha-split-brain.svg "Diferencial de configuraciones: llave de prueba aprobando todo en QA mientras producción fallaba")
+
 
 En Drupal, es una mala práctica que los entornos de `dev` y `test` envíen eventos a la cuenta de reCAPTCHA de producción. La tarea solicitaba:
 1. Usar las credenciales reales de reCAPTCHA únicamente en el entorno `live`.

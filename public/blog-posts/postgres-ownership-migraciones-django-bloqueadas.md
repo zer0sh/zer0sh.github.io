@@ -3,8 +3,8 @@ title: "Migraciones de Django bloqueadas en PostgreSQL: el laberinto de permisos
 date: "2026-08-28"
 category: "Bases de Datos & SRE"
 excerpt: "Un despliegue rutinario de Django colapsó con 'must be owner of table'. La aplicación tenía permisos de lectura y escritura completos, pero no podía alterar esquemas. Crónica de cómo resolver la propiedad de tablas y secuencias serial en PostgreSQL sin tiempo de inactividad."
-coverImage: "/blog-posts/images/oxker.png"
-coverAlt: "Consola de PostgreSQL y gestión de esquemas en bases de datos relacionales"
+coverImage: "/blog-posts/images/cover-postgres-ownership-migraciones-django-bloqueadas.jpg"
+coverAlt: "Bases de datos PostgreSQL, esquemas relacionales y migraciones en Django"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -26,6 +26,10 @@ La aplicación llevaba meses funcionando normalmente: insertaba, consultaba, act
 ---
 
 ## 1. El síntoma y la trampa del `GRANT`
+
+
+![Fallo de migración en PostgreSQL: incompatibilidad entre permisos USAGE y OWNER de tabla](/blog-posts/images/terminal-postgres-ownership-lock.svg "Fallo de migración en PostgreSQL: incompatibilidad entre permisos USAGE y OWNER de tabla")
+
 
 La primera reacción del equipo fue conectarse a la consola de PostgreSQL con el usuario administrador y otorgar todos los permisos posibles al usuario de la aplicación:
 

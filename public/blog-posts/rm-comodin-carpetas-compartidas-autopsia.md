@@ -3,8 +3,8 @@ title: "El 'rm *.png' que se llevó 70 capturas: autopsia de un descuido con com
 date: "2026-09-11"
 category: "Buenas Prácticas & Shell"
 excerpt: "Durante una sesión de pruebas visuales con Playwright, un comando de limpieza rápida con comodín en un directorio compartido eliminó más de 70 capturas de auditorías anteriores sin posibilidad de recuperación. Crónica sin filtros sobre el peligro de la pereza en la terminal."
-coverImage: "/blog-posts/images/shell-builtins.png"
-coverAlt: "Línea de comandos Linux y borrado accidental de archivos en terminal"
+coverImage: "/blog-posts/images/cover-rm-comodin-carpetas-compartidas-autopsia.jpg"
+coverAlt: "Línea de comandos de Linux, sistemas de archivos ext4 y recuperación forense de datos"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -22,6 +22,10 @@ En la cultura blameless post-mortem, admitir los errores propios con precisión 
 ---
 
 ## 1. El contexto de la tarea
+
+
+![Ejecución del rm con comodín: variable vacía provocando borrado accidental en directorio actual](/blog-posts/images/terminal-rm-wildcard-disaster.svg "Ejecución del rm con comodín: variable vacía provocando borrado accidental en directorio actual")
+
 
 Estábamos trabajando en el rediseño y aseguramiento de un componente de interfaz con navegación tipo *glassmorphism* para un panel interno (`dashboard-tareas`). Para verificar la fidelidad visual entre diferentes resoluciones, ejecutamos un script con **Playwright** que realizaba capturas de pantalla automatizadas del navegador.
 

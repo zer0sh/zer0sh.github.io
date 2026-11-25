@@ -3,8 +3,8 @@ title: "El botón que cambió de color solo: especificidad CSS, :where() en Word
 date: "2026-10-06"
 category: "Frontend & Performance"
 excerpt: "El botón principal de contacto de una firma legal pasó de blanco a gris oscuro sobre fondo azul sin que nadie hubiera editado la página. La causa: un cambio de una sola palabra (:where) en la actualización menor de un plugin de maquetación y una regla de Critical CSS desactualizada."
-coverImage: "/blog-posts/images/opencode.png"
-coverAlt: "Arqueología de CSS, especificidad en navegadores y caché de frontend en producción"
+coverImage: "/blog-posts/images/cover-beaver-builder-wp-rocket-estilos-dinamicos-corruptos.jpg"
+coverAlt: "Desarrollo web frontend, inspección de estilos CSS y maquetadores dinámicos"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -23,6 +23,10 @@ La investigación nos llevó a una verdadera sesión de **arqueología de CSS**,
 ---
 
 ## 1. La inspección con Playwright: buscando al culpable
+
+
+![Auditoría de cabeceras HTTP y colisión de especificidad CSS por minificación estática](/blog-posts/images/terminal-css-specificity-audit.svg "Auditoría de cabeceras HTTP y colisión de especificidad CSS por minificación estática")
+
 
 Abrimos una sesión headless con Playwright para inspeccionar el árbol del DOM y la cascada de estilos computados en vivo:
 

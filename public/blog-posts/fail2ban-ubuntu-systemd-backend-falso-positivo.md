@@ -3,8 +3,8 @@ title: "El Fail2ban que nunca baneó a nadie: journald, rsyslog ausente y la fal
 date: "2026-08-20"
 category: "Linux & Ciberseguridad"
 excerpt: "El servicio de protección contra fuerza bruta figuraba como activo en el servidor de base de datos de producción, pero en tres años no había bloqueado una sola IP. Tras una actualización de sistema operativo descubrimos la causa: rsyslog ya no existía y fail2ban leía un archivo de logs vacío."
-coverImage: "/blog-posts/images/shell-builtins.png"
-coverAlt: "Hardening de SSH, configuración de Fail2ban y gestión de logs con systemd-journald"
+coverImage: "/blog-posts/images/cover-fail2ban-ubuntu-systemd-backend-falso-positivo.jpg"
+coverAlt: "Protección contra intrusiones con Fail2ban, journald y firewalls en Linux"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -49,6 +49,10 @@ Cualquier administrador sabe que internet es un mar turbulento de bots atacando 
 ---
 
 ## 1. El misterio del archivo vacío: la muerte silenciosa de `rsyslog`
+
+
+![Falso positivo de Fail2ban: jail reportando 0 fallos mientras vigilaba un archivo auth.log inexistente](/blog-posts/images/terminal-fail2ban-silent-fail.svg "Falso positivo de Fail2ban: jail reportando 0 fallos mientras vigilaba un archivo auth.log inexistente")
+
 
 Al revisar el archivo que Fail2ban decía estar vigilando:
 

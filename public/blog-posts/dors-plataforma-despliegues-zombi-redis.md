@@ -3,8 +3,8 @@ title: "La aplicación zombi que llevaba semanas caída: 32.000 tareas en Redis 
 date: "2026-11-05"
 category: "Arquitectura & Decomisión"
 excerpt: "Cuando fuimos a dar de baja una vieja plataforma interna de despliegues descubrimos que llevaba semanas muerta: respondía HTTP 200 a los webhooks pero no procesaba nada. 32.000 tareas se acumulaban en Redis y su nombre de dominio compartía la IP del bastión crítico de la organización."
-coverImage: "/blog-posts/images/btop.png"
-coverAlt: "Monitoreo de procesos en Linux, cola de tareas en Redis y servidores zombi"
+coverImage: "/blog-posts/images/cover-dors-plataforma-despliegues-zombi-redis.jpg"
+coverAlt: "Centro de datos y clúster de bases de datos Redis en producción"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -22,6 +22,10 @@ Al iniciar el procedimiento de apagado seguro, la realidad nos sorprendió: **la
 ---
 
 ## 1. La primera pista falsa: "Esta app corre en Gunicorn"
+
+
+![Diagnóstico en Redis: 32.000 tareas encoladas y proceso de despliegue zombi en el bastión](/blog-posts/images/terminal-redis-queue-drift.svg "Diagnóstico en Redis: 32.000 tareas encoladas y proceso de despliegue zombi en el bastión")
+
 
 El primer paso para apagar o migrar un servicio es entender cómo corre. Al inspeccionar el repositorio de código fuente:
 - El archivo `Procfile` declaraba: `web: gunicorn nexus.wsgi:application`

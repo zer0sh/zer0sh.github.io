@@ -3,8 +3,8 @@ title: "MkDocs: Por qué la simpleza gana al documentar proyectos (y el caso rea
 date: "2026-10-12"
 category: "Herramientas & Docs"
 excerpt: "Escribir documentación en Markdown puro y desplegarla como sitio estático sin lidiar con configuraciones complejas. Por qué MkDocs es mi opción predilecta y cómo lo uso para documentar mis dotfiles."
-coverImage: "/blog-posts/images/vim.png"
-coverAlt: "Documentación de proyectos y archivos Markdown en terminal"
+coverImage: "/blog-posts/images/cover-mkdocs-documentacion-simple-y-efectiva.jpg"
+coverAlt: "Documentación técnica estructurada y minimalista con MkDocs"
 ---
 
 Uno de los mayores axiomas en la ingeniería de software es que **la mejor documentación es la que realmente se escribe y se mantiene**.
@@ -18,6 +18,10 @@ Como siempre, **esta postura representa mi experiencia subjetiva y lo que a mí 
 ---
 
 ## 1. La filosofía de MkDocs: Markdown puro y nada más
+
+
+![Compilación estática en MkDocs: documentación técnica completa generada en milisegundos](/blog-posts/images/terminal-mkdocs-build.svg "Compilación estática en MkDocs: documentación técnica completa generada en milisegundos")
+
 
 A diferencia de otras soluciones que exigen entender React, Vue o sistemas de componentes avanzados, MkDocs se mantiene fiel a la esencia del desarrollador:
 

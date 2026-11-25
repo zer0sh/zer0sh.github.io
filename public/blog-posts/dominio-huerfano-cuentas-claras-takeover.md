@@ -3,8 +3,8 @@ title: "El dominio huérfano que terminó en una radio: servidores zombi, bucket
 date: "2026-10-22"
 category: "Seguridad & Decomisión"
 excerpt: "Una aplicación Django de 2019 de datos abiertos seguía encendida en una máquina virtual de $5/mes, conectada a la base de datos de otro cliente. Su dominio había expirado y fue comprado por terceros, apuntando primero a un casino y luego a una radio online. La guía definitiva para apagar infraestructura olvidada."
-coverImage: "/blog-posts/images/cve-2026-9860.png"
-coverAlt: "Auditoría de dominios expirados, servidores olvidados y fuga de datos en la nube"
+coverImage: "/blog-posts/images/cover-dominio-huerfano-cuentas-claras-takeover.jpg"
+coverAlt: "Cables de telecomunicaciones y enrutamiento DNS de dominios"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -27,6 +27,10 @@ Al entrar a investigar qué corría en la máquina, descubrimos un escenario dig
 ---
 
 ## 1. El estado del servidor: un fósil en ejecución
+
+
+![Inspección DNS: registro CNAME apuntando a bucket S3 inexistente permitiendo secuestro](/blog-posts/images/terminal-dns-takeover.svg "Inspección DNS: registro CNAME apuntando a bucket S3 inexistente permitiendo secuestro")
+
 
 Al conectarnos por SSH encontramos:
 - Kernel sin parches desde 2021: `Linux 4.15.0-142-generic`.

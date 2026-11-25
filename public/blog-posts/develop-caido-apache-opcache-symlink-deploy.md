@@ -3,8 +3,8 @@ title: "El entorno de desarrollo que no estaba caído: saturación de Apache, OP
 date: "2026-10-08"
 category: "Servidores Web & Performance"
 excerpt: "Un reporte lacónico aseguraba que 'el servidor develop está caído'. Al entrar respondía HTTP 200, pero la investigación destapó cuatro problemas encadenados: workers de Apache retenidos 300 segundos por TLS incompleto, renderizado que se pedía imágenes a sí mismo y symlinks de deploy que rompían OPcache."
-coverImage: "/blog-posts/images/btop.png"
-coverAlt: "Análisis de rendimiento en Apache, OPcache y concurrencia de servidores web Linux"
+coverImage: "/blog-posts/images/cover-develop-caido-apache-opcache-symlink-deploy.jpg"
+coverAlt: "Monitoreo de servidores Apache y concurrencia de memoria en Linux"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -26,6 +26,10 @@ Al revisar los gráficos históricos de telemetría en Netdata, descubrimos que 
 ---
 
 ## 1. La autopsia de la saturación en Netdata
+
+
+![Error de OPcache en Apache: desincronización entre symlinks de release y caché de bytecode](/blog-posts/images/terminal-opcache-symlink-desync.svg "Error de OPcache en Apache: desincronización entre symlinks de release y caché de bytecode")
+
 
 El servidor corría en una máquina virtual con 4 GB de RAM bajo la arquitectura clásica de Apache:
 - `mpm_prefork` + `mod_php` 8.2.

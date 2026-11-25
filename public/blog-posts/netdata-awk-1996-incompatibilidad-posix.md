@@ -3,8 +3,8 @@ title: "Netdata y el awk de 1996: cuando mawk rompe scripts de automatización e
 date: "2026-10-01"
 category: "Linux & Automatización"
 excerpt: "Una tarea simple para configurar Netdata en localhost en 7 servidores falló de forma insólita: en dos hosts con Ubuntu legacy corría mawk 1.3.3 de 1996, el cual no reconoce clases POSIX ni anclas en gsub(), duplicando la configuración en lugar de reemplazarla. Crónica de compatibilidad profunda en Linux."
-coverImage: "/blog-posts/images/shell-builtins.png"
-coverAlt: "Compatibilidad de utilidades POSIX, scripts de shell y versiones de awk en Linux"
+coverImage: "/blog-posts/images/cover-netdata-awk-1996-incompatibilidad-posix.jpg"
+coverAlt: "Monitoreo de métricas del sistema, Netdata y análisis de procesos en Linux"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -26,6 +26,10 @@ El motivo era fascinante y desconcertante: esos dos servidores corrían **mawk 1
 ---
 
 ## 1. La lógica del script: reemplazar la directiva de bind
+
+
+![Fallo de compatibilidad en awk: mawk en Debian rompiendo extensiones privativas de gawk](/blog-posts/images/terminal-posix-awk-fail.svg "Fallo de compatibilidad en awk: mawk en Debian rompiendo extensiones privativas de gawk")
+
 
 El archivo de configuración de Netdata (`netdata.conf`) contiene cientos de líneas comentadas y directivas con sangría variable:
 
