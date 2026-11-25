@@ -631,21 +631,24 @@ export const Blog = () => {
                 components={{
                   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
                   blockquote: AlertBlockquote,
-                  img: ({ src, alt, title }) => (
-                    <figure className="my-8">
-                      <img
-                        src={src}
-                        alt={alt}
-                        title={title}
-                        className="w-full h-auto border border-[#131722]"
-                      />
-                      {title && (
-                        <figcaption className="text-center font-mono text-xs text-[#64748b] mt-2">
-                          {title}
-                        </figcaption>
-                      )}
-                    </figure>
-                  ),
+                  img: ({ src, alt, title }) => {
+                    const isSvg = src && typeof src === 'string' && src.toLowerCase().endsWith('.svg');
+                    return (
+                      <figure className="my-8">
+                        <img
+                          src={src}
+                          alt={alt}
+                          title={title}
+                          className={isSvg ? "w-full h-auto" : "w-full h-auto border border-[#131722]"}
+                        />
+                        {title && (
+                          <figcaption className="text-center font-mono text-xs text-[#64748b] mt-2">
+                            {title}
+                          </figcaption>
+                        )}
+                      </figure>
+                    );
+                  },
                   h2: ({ children, ...props }) => {
                     const text = children?.toString() || '';
                     return <h2 id={slugify(text)} {...props}>{children}</h2>;
