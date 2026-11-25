@@ -3,8 +3,8 @@ title: "La llave vieja que alguien seguía usando: rotación de llaves SOPS/KMS 
 date: "2026-10-10"
 category: "Criptografía & Cloud"
 excerpt: "Rotar la llave maestra que descifra los secretos de todos los clústeres de Kubernetes parecía completo y validado en CI y ArgoCD. Pero justo antes de destruirla, CloudTrail reveló que un ingeniero la seguía utilizando desde su laptop. Guía para rotar secretos de infraestructura sin romper nada."
-coverImage: "/blog-posts/images/oxker.png"
-coverAlt: "Cifrado de datos en la nube, rotación de llaves criptográficas KMS y seguridad en Kubernetes"
+coverImage: "/blog-posts/images/cover-rotacion-llaves-sops-kms-secretos-huerfanos.jpg"
+coverAlt: "Seguridad criptográfica, llaves KMS y cifrado con Mozilla SOPS"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -24,6 +24,10 @@ Sin embargo, al ejecutar una última consulta de auditoría en **AWS CloudTrail*
 ---
 
 ## 1. El mapa de consumidores: la telaraña de SOPS
+
+
+![Descifrado y rotación con SOPS: transición sin caída de llave KMS comprometida](/blog-posts/images/terminal-sops-kms-rotation.svg "Descifrado y rotación con SOPS: transición sin caída de llave KMS comprometida")
+
 
 Antes de rotar una llave que cifra secretos de infraestructura es obligatorio construir un mapa exhaustivo de dependencias. En nuestra arquitectura, la llave KMS era consumida por:
 

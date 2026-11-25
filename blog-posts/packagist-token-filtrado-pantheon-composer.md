@@ -3,8 +3,8 @@ title: "El token de Packagist que vivió tres años en producción: por qué bor
 date: "2026-09-12"
 category: "Seguridad & Secretos"
 excerpt: "Un token de nuestro repositorio privado de paquetes estuvo expuesto en texto plano en tres repositorios desde 2023. Lo verdaderamente revelador no fue encontrarlo, sino descubrir que la plataforma cloud lo regeneraba en cada build y lo servía por HTTP en el borde ignorando .htaccess."
-coverImage: "/blog-posts/images/opencode.png"
-coverAlt: "Auditoría de seguridad y gestión de secretos en integración continua"
+coverImage: "/blog-posts/images/cover-packagist-token-filtrado-pantheon-composer.jpg"
+coverAlt: "Desarrollo backend en PHP, gestión de dependencias con Composer y seguridad de tokens"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -24,6 +24,10 @@ Esta es la historia de cómo contuvimos la brecha, por qué eliminar el archivo 
 ---
 
 ## 1. El hallazgo y el radio de impacto
+
+
+![Hallazgo con TruffleHog: token de Composer expuesto en commit antiguo del historial Git](/blog-posts/images/terminal-packagist-leak.svg "Hallazgo con TruffleHog: token de Composer expuesto en commit antiguo del historial Git")
+
 
 El archivo `auth.json` es la convención que utiliza Composer para autenticarse contra repositorios protegidos. En los tres proyectos afectados, el archivo residía en la raíz del repositorio:
 

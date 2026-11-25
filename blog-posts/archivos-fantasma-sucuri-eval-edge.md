@@ -3,8 +3,8 @@ title: "Los archivos fantasma de Sucuri: endpoints de eval() remoto y la trampa 
 date: "2026-10-04"
 category: "Seguridad & Plataforma"
 excerpt: "Dos archivos PHP de un servicio de seguridad descontratado respondían HTTP 200 en producción; uno contenía un eval() remoto. Al eliminarlos de Git seguían ahí; al borrarlos por SFTP reaparecían solos. Anatomía de un ciclo de artefactos zombi."
-coverImage: "/blog-posts/images/cve-2026-9860.png"
-coverAlt: "Análisis de vulnerabilidades web y eliminación de backdoors en producción"
+coverImage: "/blog-posts/images/cover-archivos-fantasma-sucuri-eval-edge.jpg"
+coverAlt: "Firewall de aplicaciones web WAF y ciberseguridad perimetral"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -26,6 +26,10 @@ Lo inquietante no fue el hallazgo, sino el laberinto operativo para borrarlos: *
 ---
 
 ## 1. La anatomía del archivo fantasma
+
+
+![Detección forense: backdoor remoto camuflado en carpeta de medios no inspeccionada por el WAF](/blog-posts/images/terminal-sucuri-eval-edge.svg "Detección forense: backdoor remoto camuflado en carpeta de medios no inspeccionada por el WAF")
+
 
 El archivo formaba parte de una vieja integración de firewall WAF en la nube. Permitía al proveedor comprobar la conectividad del servidor ejecutando pruebas de diagnóstico en PHP:
 

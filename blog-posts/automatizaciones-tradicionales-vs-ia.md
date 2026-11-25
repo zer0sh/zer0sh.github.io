@@ -3,8 +3,8 @@ title: "Automatización Tradicional vs IA: Cuándo usar cada una (y el superpode
 date: "2026-10-14"
 category: "Automatización"
 excerpt: "El choque entre el determinismo de scripts y la flexibilidad de los modelos de IA. Cómo decidir qué herramienta usar y cómo la IA desbloqueó a los ingenieros de backend para crear interfaces y paneles completos."
-coverImage: "/blog-posts/images/opencode.png"
-coverAlt: "Código y modelos de automatización en desarrollo"
+coverImage: "/blog-posts/images/cover-automatizaciones-tradicionales-vs-ia.jpg"
+coverAlt: "Modelos de inteligencia artificial interactuando con automatizaciones deterministas"
 ---
 
 Vivimos en un momento donde la palabra *automatización* tiene dos significados muy distintos. Para quienes venimos del mundo de sistemas, Linux y DevOps, automatizar siempre ha significado **determinismo absoluto**: scripts de Bash, playbooks de Ansible, crons y flujos de CI/CD que, ante una entrada idéntica, producen exactamente el mismo resultado predecible en cada milisegundo.
@@ -16,6 +16,10 @@ En esta reflexión quiero contrastar ambos mundos y explorar cómo esta combinac
 ---
 
 ## 1. Automatización Tradicional: El reino del determinismo
+
+
+![Orquestación híbrida: validación determinista de reglas enriquecida con análisis de patrones por IA](/blog-posts/images/terminal-ai-vs-scripts.svg "Orquestación híbrida: validación determinista de reglas enriquecida con análisis de patrones por IA")
+
 
 Hay zonas de la infraestructura donde la variabilidad es el enemigo número uno. Si estás ejecutando una migración de base de datos en producción, aplicando parches de kernel o sincronizando réplicas mediante GitOps con ArgoCD, **no quieres creatividad; quieres certeza**.
 

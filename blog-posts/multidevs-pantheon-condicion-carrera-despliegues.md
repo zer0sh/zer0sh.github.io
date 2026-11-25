@@ -3,8 +3,8 @@ title: "Los entornos de prueba que parecían vivos: condiciones de carrera en de
 date: "2026-10-20"
 category: "CI/CD & Plataforma"
 excerpt: "Los entornos efímeros multidev creados por GitHub Actions a veces aparecían listados pero no tenían base de datos o devolvían '404 Unknown Site'. Tras cuatro semanas de fallos intermitentes encontramos al culpable: una condición de carrera asíncrona entre dos pushes sucesivos."
-coverImage: "/blog-posts/images/tui-banner.png"
-coverAlt: "Automatización de entornos efímeros multidev y condiciones de carrera en CI/CD"
+coverImage: "/blog-posts/images/cover-multidevs-pantheon-condicion-carrera-despliegues.jpg"
+coverAlt: "Pipeline de despliegue continuo y orquestación de entornos efímeros"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -25,6 +25,10 @@ Tardamos casi un mes y cuatro incidentes en aislar la causa raíz: una sutil **c
 ---
 
 ## 1. La anatomía del workflow de creación
+
+
+![Traza de concurrencia: colisión de entornos efímeros en PaaS y bloqueo de base de datos](/blog-posts/images/terminal-pantheon-multidev-race.svg "Traza de concurrencia: colisión de entornos efímeros en PaaS y bloqueo de base de datos")
+
 
 El flujo en GitHub Actions (`setup_environment.yaml`) constaba de tres pasos secuenciales:
 

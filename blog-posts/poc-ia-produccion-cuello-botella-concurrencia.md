@@ -3,8 +3,8 @@ title: "El 'POC' de Inteligencia Artificial que salía a producción en tres dí
 date: "2026-09-23"
 category: "Arquitectura & Rendimiento"
 excerpt: "Se llamaba 'POC' en todas las ramas de Git y tickets, pero descubrimos que saldría a miles de usuarios reales en 72 horas. Una prueba de carga con 20 peticiones concurrentes arrojó 9 timeouts y colapsó la API en FastAPI. Crónica de cómo evitar un desastre de rendimiento a contrarreloj."
-coverImage: "/blog-posts/images/opencode.png"
-coverAlt: "Pruebas de carga, concurrencia en FastAPI/Uvicorn y despliegues de modelos de IA"
+coverImage: "/blog-posts/images/cover-poc-ia-produccion-cuello-botella-concurrencia.jpg"
+coverAlt: "Servidor de modelos de inteligencia artificial y pruebas de carga con Locust"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -27,6 +27,10 @@ Teníamos 72 horas para auditar la resistencia técnica de un prototipo antes de
 ---
 
 ## 1. La prueba de fuego: 20 peticiones concurrentes
+
+
+![Resultados de Locust: colapso de latencia por llamadas bloqueantes en el event loop de Uvicorn](/blog-posts/images/terminal-uvicorn-deadlock.svg "Resultados de Locust: colapso de latencia por llamadas bloqueantes en el event loop de Uvicorn")
+
 
 Para evaluar la capacidad real del backend de IA, ejecutamos una prueba de carga sintética simulando un escenario mínimo de uso real: **20 usuarios concurrentes enviando una consulta sencilla simultáneamente.**
 

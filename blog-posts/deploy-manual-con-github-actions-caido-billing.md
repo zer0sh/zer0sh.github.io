@@ -3,8 +3,8 @@ title: "El despliegue a mano con GitHub Actions suspendido: cuando el billing co
 date: "2026-09-28"
 category: "CI/CD & Operaciones"
 excerpt: "Un arreglo urgente de contraste visual WCAG AA en un portal gremial quedó atrapado: GitHub Actions se negó a arrancar por un bloqueo administrativo de facturación. Sin pipelines automáticos, ejecutamos el despliegue a producción a mano cruzando tres capas de permisos."
-coverImage: "/blog-posts/images/tui-banner.png"
-coverAlt: "Despliegues manuales de contingencia, gestión de releases y resolución de incidentes CI/CD"
+coverImage: "/blog-posts/images/cover-deploy-manual-con-github-actions-caido-billing.jpg"
+coverAlt: "Servidores cloud globales, contingencia operativa y redes de infraestructura"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -35,6 +35,10 @@ El lanzamiento legal no podía esperar a que el departamento financiero resolvie
 ---
 
 ## 1. El mapa del release: dos repositorios cruzados
+
+
+![Ejecución de contingencia: despliegue manual por Bash tras bloqueo de GitHub Actions por facturación](/blog-posts/images/terminal-billing-freeze-deploy.svg "Ejecución de contingencia: despliegue manual por Bash tras bloqueo de GitHub Actions por facturación")
+
 
 El despliegue no era un simple push de un archivo:
 1. El cambio de código residía en un paquete privado de Composer (`arquia-core`), actualizado a la versión `0.1.1`.

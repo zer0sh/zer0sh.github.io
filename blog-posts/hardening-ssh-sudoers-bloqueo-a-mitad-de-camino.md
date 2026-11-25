@@ -3,8 +3,8 @@ title: "El sudo que se cortó a mitad de camino: cómo no bloquear tu propio scr
 date: "2026-09-18"
 category: "Linux & Hardening"
 excerpt: "Durante el endurecimiento de accesos SSH y autenticación 2FA en un servidor de producción, el script retiró los privilegios de sudo al usuario que lo estaba ejecutando... antes de terminar la configuración. Crónica de una sesión al borde del abismo y cómo diseñar scripts de seguridad transaccionales."
-coverImage: "/blog-posts/images/shell-builtins.png"
-coverAlt: "Consola Linux, configuración de sudoers y hardening de servidores SSH"
+coverImage: "/blog-posts/images/cover-hardening-ssh-sudoers-bloqueo-a-mitad-de-camino.jpg"
+coverAlt: "Seguridad en servidores Linux, configuración de SSH y privilegios en sudoers"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -30,6 +30,10 @@ En el camino descubrimos cuatro trampas operativas que estuvieron a punto de dej
 ---
 
 ## 1. El diseño del acceso: humanos con 2FA, CI con sudo acotado
+
+
+![Error de sintaxis en sudoers: la sesión cerrada antes de verificar validez con visudo](/blog-posts/images/terminal-sudoers-lockout.svg "Error de sintaxis en sudoers: la sesión cerrada antes de verificar validez con visudo")
+
 
 El plan de seguridad acordado contemplaba tres pilares:
 
