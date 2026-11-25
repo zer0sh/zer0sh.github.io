@@ -1,0 +1,2380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATS Resume Builder & CV Optimizer</title>
+  <style>
+    :root {
+      --bg: #f7f4ed;
+      --pink: #ff6eb4;
+      --yellow: #ffe600;
+      --cyan: #00f5d4;
+      --black: #111111;
+      --white: #ffffff;
+      --border: 3px solid var(--black);
+      --shadow: 4px 4px 0px var(--black);
+      --shadow-lg: 6px 6px 0px var(--black);
+      --shadow-sm: 2px 2px 0px var(--black);
+      --font-mono: "JetBrains Mono", "Courier New", Courier, monospace;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--black);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      padding: 16px;
+    }
+
+    /* NEOBRUTALISM COMPONENTS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--white);
+      color: var(--black);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 6px 11px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.05s ease, box-shadow 0.05s ease;
+      user-select: none;
+    }
+
+    .btn:hover { background: var(--yellow); }
+    .btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px var(--black);
+    }
+
+    .btn-pink { background: var(--pink); color: var(--black); }
+    .btn-pink:hover { background: #ff489e; }
+    .btn-cyan { background: var(--cyan); color: var(--black); }
+    .btn-cyan:hover { background: #00c7ac; }
+    .btn-yellow { background: var(--yellow); color: var(--black); }
+    .btn-yellow:hover { background: #ffd000; }
+    .btn-black { background: var(--black); color: var(--white); }
+    .btn-black:hover { background: #333333; }
+    .btn-sm { padding: 4px 8px; font-size: 11px; }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 2px solid var(--black);
+      box-shadow: 2px 2px 0px var(--black);
+      background: var(--white);
+    }
+
+    .neo-box-yellow { background: var(--yellow) !important; }
+    .neo-box-pink { background: var(--pink) !important; }
+    .neo-box-cyan { background: var(--cyan) !important; }
+    .neo-box-white { background: var(--white) !important; }
+
+    /* HEADER */
+    header {
+      margin-bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: var(--border);
+      background: var(--yellow);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .header-title {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .header-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* TOOLBAR */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      background: var(--cyan);
+      border: var(--border);
+      padding: 9px 13px;
+      box-shadow: var(--shadow);
+    }
+
+    .toolbar-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* METRICS / ATS AUDIT BAR */
+    .audit-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .metric-card {
+      border: var(--border);
+      box-shadow: var(--shadow);
+      padding: 9px 12px;
+      background: var(--white);
+    }
+
+    .metric-value {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 3px;
+      color: #444;
+    }
+
+    /* RECRUITER NOTICE BAR */
+    .recruiter-notice-bar {
+      display: none;
+      background: #111111;
+      color: #ffffff;
+      padding: 10px 16px;
+      border: var(--border);
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* ATS KEYWORD MATCHER DRAWER */
+    .matcher-drawer {
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      padding: 14px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .matcher-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--black);
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .matcher-title {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .matcher-sub {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: #555;
+      font-weight: 600;
+    }
+
+    .matcher-body {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .matcher-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .matcher-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .matcher-textarea {
+      width: 100%;
+      height: 160px;
+      background: #fafaf8;
+      border: 2px solid var(--black);
+      box-shadow: 2px 2px 0px var(--black);
+      padding: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+    }
+
+    .matcher-textarea:focus {
+      background: #ffffff;
+      box-shadow: 3px 3px 0px var(--black);
+    }
+
+    .matcher-results {
+      background: #fbfaf6;
+      border: 2px solid var(--black);
+      padding: 11px;
+      box-shadow: 2px 2px 0px var(--black);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .matcher-score-box {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      border-bottom: 2px dashed #333;
+      padding-bottom: 6px;
+    }
+
+    .matcher-score-val {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 900;
+      color: #000;
+    }
+
+    .matcher-score-lbl {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #444;
+    }
+
+    .matcher-tags-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .matcher-tags-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .matcher-tags-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      max-height: 100px;
+      overflow-y: auto;
+      padding: 2px 0;
+    }
+
+    .matcher-advice {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      background: var(--yellow);
+      border: 2px solid var(--black);
+      padding: 6px 8px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    /* MAIN WORKSPACE */
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      height: 740px;
+      transition: all 0.2s ease;
+    }
+
+    @media (max-width: 980px) {
+      .workspace {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+    }
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      background: var(--white);
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 12px;
+      border-bottom: var(--border);
+      background: var(--pink);
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .panel-header.cyan {
+      background: var(--cyan);
+    }
+
+    /* VIEW MODE TABS */
+    .view-tabs {
+      display: flex;
+      border-bottom: var(--border);
+      background: #eeeeee;
+      flex-shrink: 0;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 9px 10px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      border: none;
+      border-right: var(--border);
+      background: #e4e0d7;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+    }
+
+    .tab-btn:last-child {
+      border-right: none;
+    }
+
+    .tab-btn.active {
+      background: var(--white);
+      color: var(--black);
+      border-bottom: 3px solid var(--white);
+      margin-bottom: -3px;
+    }
+
+    /* STEP WIZARD CONTAINER */
+    .wizard-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 12px;
+      background: var(--white);
+      overflow: hidden;
+    }
+
+    .steps-indicator {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+    }
+
+    .step-pill {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+      padding: 6px 3px;
+      border: 2px solid var(--black);
+      background: #eee;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .step-pill.active {
+      background: var(--yellow);
+      box-shadow: 2px 2px 0px var(--black);
+    }
+
+    .step-pill.completed {
+      background: var(--cyan);
+    }
+
+    .wizard-scroll-body {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      padding-right: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      color: var(--black);
+    }
+
+    .form-label .required {
+      color: #d90429;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      background: #ffffff;
+      border: 2px solid var(--black);
+      box-shadow: 2px 2px 0px var(--black);
+      padding: 7px 9px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      outline: none;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      background: #fffef2;
+      box-shadow: 3px 3px 0px var(--black);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .link-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 30px;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .wizard-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 2px dashed var(--black);
+      flex-shrink: 0;
+      background: var(--white);
+    }
+
+    /* MARKDOWN EDITOR */
+    .editor-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    textarea#markdownInput {
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 14px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.55;
+      resize: none;
+      background: #fafaf8;
+      color: var(--black);
+      outline: none;
+    }
+
+    /* ATS PREVIEW PANEL */
+    .preview-container {
+      flex: 1;
+      padding: 18px;
+      overflow-y: auto;
+      background: #e8e4dc;
+      height: 100%;
+    }
+
+    .ats-sheet {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #ffffff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12), 4px 4px 0px #000000;
+      border: 1px solid #d0ccc0;
+      padding: 24px 38px;
+      min-height: 1120px;
+      transition: all 0.2s ease;
+    }
+
+    /* RECRUITER CLEAN VIEW STYLES */
+    body.recruiter-mode {
+      padding: 12px 18px;
+    }
+
+    body.recruiter-mode .recruiter-notice-bar {
+      display: flex !important;
+    }
+
+    body.recruiter-mode #leftPanel {
+      display: none !important;
+    }
+
+    body.recruiter-mode .workspace {
+      display: flex !important;
+      justify-content: center !important;
+      height: auto !important;
+      min-height: calc(100vh - 190px);
+      grid-template-columns: none !important;
+    }
+
+    body.recruiter-mode #rightPanel {
+      width: 100% !important;
+      max-width: 820px !important;
+      height: auto !important;
+      overflow: visible !important;
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    body.recruiter-mode .preview-container {
+      height: auto !important;
+      overflow: visible !important;
+      padding: 10px 0 40px 0 !important;
+      background: transparent !important;
+    }
+
+    body.recruiter-mode .panel-header {
+      display: none !important;
+    }
+
+    /* ATS RESUME TYPOGRAPHY */
+    .ats-resume {
+      color: #111111;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 12px;
+      line-height: 1.38;
+    }
+
+    .ats-resume h1 {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      text-align: center;
+      color: #000000;
+    }
+
+    .ats-resume .candidate-headline {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #111111;
+      margin-bottom: 4px;
+    }
+
+    .ats-resume .contact-line {
+      text-align: center;
+      font-size: 11px;
+      margin-bottom: 3px;
+      color: #333333;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ats-resume .contact-line a {
+      color: #111111;
+      text-decoration: underline;
+      text-decoration-color: #777777;
+    }
+
+    .ats-resume .contact-line.links-line,
+    .ats-resume .contact-line:last-of-type {
+      margin-bottom: 12px;
+    }
+
+    .ats-resume h2 {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-bottom: 1.5px solid #111111;
+      padding-bottom: 2px;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      color: #000000;
+    }
+
+    .ats-resume h3 {
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 7px;
+      margin-bottom: 1px;
+      color: #000000;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .ats-resume h3 .meta-right {
+      font-weight: 600;
+      font-size: 11.5px;
+      color: #333333;
+    }
+
+    .ats-resume .job-meta {
+      font-size: 11.5px;
+      color: #333333;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .ats-resume .job-meta .meta-right {
+      font-style: italic;
+      color: #444444;
+      font-size: 11px;
+    }
+
+    .ats-resume a {
+      color: #333333;
+      text-decoration: underline;
+      text-decoration-color: #888888;
+      text-underline-offset: 2.5px;
+    }
+
+    .ats-resume .meta-right a,
+    .ats-resume h3 .meta-right a,
+    .ats-resume .job-meta .meta-right a {
+      color: #444444;
+      font-style: italic;
+      font-size: 11px;
+      font-weight: 500;
+      text-decoration: underline;
+      text-decoration-color: #999999;
+      text-underline-offset: 2.5px;
+      letter-spacing: 0.15px;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+
+    .ats-resume .meta-right a:hover,
+    .ats-resume h3 .meta-right a:hover,
+    .ats-resume .job-meta .meta-right a:hover {
+      color: #000000;
+      text-decoration-color: #000000;
+    }
+
+    .ats-resume ul {
+      margin-left: 18px;
+      margin-bottom: 7px;
+    }
+
+    .ats-resume li {
+      margin-bottom: 4px;
+      line-height: 1.38;
+      color: #222222;
+      text-align: left !important;
+      display: list-item !important;
+    }
+
+    .ats-resume p {
+      margin-bottom: 5px;
+      color: #222222;
+      line-height: 1.38;
+    }
+
+    .ats-resume strong {
+      font-weight: 700;
+      color: #000000;
+    }
+
+    /* FOOTER BAR */
+    footer {
+      margin-top: 14px;
+      border: var(--border);
+      background: var(--white);
+      padding: 10px 14px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    /* STRICT PRINT STYLES */
+    @page {
+      size: A4 portrait;
+      margin: 0.65cm 1.15cm;
+    }
+
+    @media print {
+      html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        display: block !important;
+        font-size: 9.8pt !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      header, .toolbar, .audit-bar, .panel-header, .view-tabs, .wizard-container, textarea#markdownInput, footer, .no-print, #leftPanel, .recruiter-notice-bar, .matcher-drawer {
+        display: none !important;
+      }
+      .workspace {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .panel, #rightPanel {
+        display: block !important;
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        background: #ffffff !important;
+      }
+      .preview-container {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #ffffff !important;
+        max-height: none !important;
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .ats-sheet {
+        display: block !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .ats-resume {
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: 9.8pt !important;
+        line-height: 1.36 !important;
+        display: block !important;
+        overflow: visible !important;
+      }
+      .cv-entry {
+        display: block !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+        margin-bottom: 7pt !important;
+      }
+      .cv-entry h3 {
+        font-size: 10pt !important;
+        margin-top: 5pt !important;
+        margin-bottom: 1pt !important;
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: baseline !important;
+      }
+      .cv-entry .job-meta {
+        font-size: 9.5pt !important;
+        margin-top: 1pt !important;
+        margin-bottom: 3pt !important;
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: baseline !important;
+      }
+      .meta-right {
+        white-space: nowrap !important;
+      }
+      .ats-resume a,
+      .ats-resume .meta-right a,
+      .ats-resume h3 .meta-right a,
+      .ats-resume .job-meta .meta-right a {
+        color: #333333 !important;
+        text-decoration: underline !important;
+      }
+      .ats-resume h2 {
+        font-size: 10.8pt !important;
+        border-bottom: 1.2pt solid #000000 !important;
+        padding-bottom: 1.5pt !important;
+        margin-top: 8pt !important;
+        margin-bottom: 4pt !important;
+        break-after: avoid !important;
+        page-break-after: avoid !important;
+      }
+      .ats-resume h1 {
+        font-size: 17pt !important;
+        margin-bottom: 2pt !important;
+      }
+      .ats-resume .candidate-headline {
+        font-size: 10.2pt !important;
+        margin-bottom: 2pt !important;
+      }
+      .ats-resume .contact-line {
+        font-size: 8.8pt !important;
+        margin-bottom: 2pt !important;
+      }
+      .ats-resume .contact-line.links-line,
+      .ats-resume .contact-line:last-of-type {
+        margin-bottom: 6pt !important;
+      }
+      .ats-resume ul {
+        margin-left: 14pt !important;
+        margin-bottom: 4pt !important;
+      }
+      .ats-resume li {
+        font-size: 9.6pt !important;
+        line-height: 1.34 !important;
+        margin-bottom: 2.2pt !important;
+        orphans: 3 !important;
+        widows: 3 !important;
+      }
+      .ats-resume p {
+        font-size: 9.6pt !important;
+        line-height: 1.34 !important;
+        orphans: 3 !important;
+        widows: 3 !important;
+        margin-bottom: 3pt !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="saveToast" style="display:none; position:fixed; top:18px; right:18px; z-index:99999; font-family:var(--font-mono); font-size:12px; font-weight:800; border:2px solid #000; box-shadow:4px 4px 0px #000; padding:10px 16px; background:#00f5d4;"></div>
+
+  <!-- RECRUITER NOTICE BAR -->
+  <div class="recruiter-notice-bar" id="recruiterBar">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="badge neo-box-cyan">[VISTA RECLUTADOR]</span>
+      <span id="recruiterStatusText">Formato A4 Harvard ATS limpio. Documento optimizado para lectura y seleccion.</span>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button class="btn btn-sm btn-yellow" onclick="toggleRecruiterView()">[MODO EDITOR STUDIO]</button>
+      <button class="btn btn-sm btn-white" onclick="copyShareLink()">[COPIAR LINK]</button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <div class="header-title" id="appHeaderTitle">ATS RESUME BUILDER // CV OPTIMIZER</div>
+      <div style="font-family: var(--font-mono); font-size: 11px; font-weight: bold; margin-top: 2px;" id="appHeaderSubtitle">
+        FORMATO HARVARD ATS // PERSISTENCIA LOCAL EN NAVEGADOR // 100% PRIVADO
+      </div>
+    </div>
+    <div class="header-tags">
+      <button class="btn btn-sm btn-white" id="btnToggleRecruiterHeader" onclick="toggleRecruiterView()">[VISTA RECLUTADOR]</button>
+      <button class="btn btn-sm btn-pink" id="btnToggleMatcherHeader" onclick="toggleAtsMatcher()">[ATS MATCHER]</button>
+      <button class="btn btn-sm btn-yellow" onclick="loadSampleGuide()">[CARGAR GUIA]</button>
+      <button class="btn btn-sm btn-white" onclick="resetBlankCV()">[LIMPIAR TODO]</button>
+      <span class="badge neo-box-white">100% CLIENT STORAGE</span>
+    </div>
+  </header>
+
+  <!-- AUDIT STATS -->
+  <div class="audit-bar">
+    <div class="metric-card neo-box-yellow">
+      <div class="metric-value" id="atsScore">0/100</div>
+      <div class="metric-label" id="lblAtsScore">Compatibilidad ATS</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="wordCount">0</div>
+      <div class="metric-label" id="lblWordCount">Palabras Totales</div>
+    </div>
+    <div class="metric-card neo-box-cyan">
+      <div class="metric-value" id="estPages">0.0 Pag</div>
+      <div class="metric-label" id="lblEstPages">Extension Estimada</div>
+    </div>
+    <div class="metric-card neo-box-pink">
+      <div class="metric-value" id="metricsCount">0</div>
+      <div class="metric-label" id="lblMetricsCount">Metricas Cuantificadas</div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="toolbar-group">
+      <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; margin-right: 2px;">IDIOMA:</span>
+      <button class="btn btn-sm btn-white" id="btnLangEN" onclick="setAppLanguage('en')">EN</button>
+      <button class="btn btn-sm btn-cyan" id="btnLangES" onclick="setAppLanguage('es')">ES</button>
+    </div>
+    <div class="toolbar-group">
+      <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; margin-right: 2px;" id="lblHeightBar">ALTURA:</span>
+      <button class="btn btn-sm btn-cyan" id="btnPageA4Tall" onclick="setPageHeightMode('tall')">A4 Alta (0.65cm)</button>
+      <button class="btn btn-sm btn-white" id="btnPageLegal" onclick="setPageHeightMode('legal')">Oficio/Legal (35.6cm)</button>
+      <button class="btn btn-sm btn-white" id="btnPageNormal" onclick="setPageHeightMode('normal')">Estandar (1.2cm)</button>
+    </div>
+    <div class="toolbar-group">
+      <button class="btn btn-cyan" id="btnSaveLocal" onclick="saveToLocalMemory()">[S] Guardar en Navegador</button>
+      <button class="btn btn-white" onclick="exportJsonBackup()">[EXPORTAR .JSON]</button>
+      <label class="btn btn-white" style="margin-bottom:0; cursor:pointer;">
+        [IMPORTAR .JSON]
+        <input type="file" id="importJsonInput" accept=".json" style="display:none;" onchange="importJsonBackup(event)">
+      </label>
+      <button class="btn btn-pink" id="btnDownloadMd" onclick="downloadMarkdown()">[D] Descargar .MD</button>
+      <button class="btn btn-black" id="btnPrintPdf" onclick="printCleanPDF()">[P] Imprimir / Guardar PDF</button>
+      <button class="btn btn-yellow" id="btnToggleViewToolbar" onclick="toggleRecruiterView()">[VISTA RECLUTADOR]</button>
+    </div>
+  </div>
+
+  <!-- COLLAPSIBLE ATS KEYWORD MATCHER DRAWER -->
+  <div id="atsMatcherDrawer" class="matcher-drawer no-print">
+    <div class="matcher-header">
+      <div>
+        <span class="matcher-title" id="matcherTitle">ATS KEYWORD MATCHER // ANALIZADOR DE COINCIDENCIAS</span>
+        <span class="matcher-sub" id="matcherSub">Pega cualquier descripcion de puesto para auditar las palabras clave contra tu CV actual</span>
+      </div>
+      <button class="btn btn-sm btn-white" onclick="toggleAtsMatcher()">[X CERRAR]</button>
+    </div>
+    <div class="matcher-body">
+      <div class="matcher-col">
+        <div style="margin-bottom:6px;">
+          <label class="form-label" style="margin-bottom:0;" id="lblJdSelect">Pega la Descripcion de la Vacante (Job Description):</label>
+        </div>
+        <textarea id="jdInput" class="matcher-textarea" placeholder="Pega aqui los requisitos y descripcion de la oferta de trabajo..."></textarea>
+        <button class="btn btn-cyan" style="width:100%; margin-top:8px;" onclick="runAtsKeywordMatch()" id="btnRunMatcher">[ANALIZAR COINCIDENCIAS]</button>
+      </div>
+      <div class="matcher-col matcher-results" id="matcherResults">
+        <div class="matcher-score-box">
+          <div class="matcher-score-val" id="matchScoreVal">--%</div>
+          <div class="matcher-score-lbl" id="matchScoreLabel">Afinidad de Palabras Clave ATS</div>
+        </div>
+        <div class="matcher-tags-section">
+          <div class="matcher-tags-title" id="lblMatchedTags">Palabras Clave Detectadas en tu CV:</div>
+          <div class="matcher-tags-grid" id="matchedKeywordsGrid">
+            <span class="badge neo-box-cyan">Pega una vacante y haz clic en Analizar</span>
+          </div>
+        </div>
+        <div class="matcher-tags-section">
+          <div class="matcher-tags-title" id="lblMissingTags">Palabras Clave Faltantes en tu CV:</div>
+          <div class="matcher-tags-grid" id="missingKeywordsGrid">
+            <span class="badge neo-box-white">--</span>
+          </div>
+        </div>
+        <div class="matcher-advice" id="matcherAdvice">
+          Pega los requisitos de la vacante para verificar que tu CV cubra los filtros tecnicos ATS.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN WORKSPACE -->
+  <div class="workspace">
+    <!-- LEFT PANEL: TABS BETWEEN WIZARD FORM & DIRECT MARKDOWN -->
+    <div class="panel no-print" id="leftPanel">
+      <div class="view-tabs">
+        <button class="tab-btn active" id="tabWizard" onclick="switchView('wizard')">Formulario Wizard (5 Pasos)</button>
+        <button class="tab-btn" id="tabMarkdown" onclick="switchView('markdown')">Editor Markdown Directo</button>
+      </div>
+
+      <!-- WIZARD VIEW -->
+      <div id="wizardView" class="wizard-container">
+        <!-- FIXED STEP INDICATOR PILLS AT TOP -->
+        <div class="steps-indicator">
+          <div class="step-pill active" id="stepPill1" onclick="goToStep(1)">1. Contacto</div>
+          <div class="step-pill" id="stepPill2" onclick="goToStep(2)">2. Resumen</div>
+          <div class="step-pill" id="stepPill3" onclick="goToStep(3)">3. Skills</div>
+          <div class="step-pill" id="stepPill4" onclick="goToStep(4)">4. Empleo</div>
+          <div class="step-pill" id="stepPill5" onclick="goToStep(5)">5. Educacion</div>
+        </div>
+
+        <!-- SCROLLABLE STEP BODY -->
+        <div class="wizard-scroll-body">
+          <!-- STEP 1: CONTACTO Y DATOS BASICOS -->
+          <div id="stepContent1" class="step-section">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" id="lblFirstName">Nombre <span class="required">*</span></label>
+                <input type="text" id="inputFirstName" class="form-input" placeholder="Tu nombre" oninput="handleInputUpdate()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" id="lblLastName">Apellidos <span class="required">*</span></label>
+                <input type="text" id="inputLastName" class="form-input" placeholder="Tus apellidos" oninput="handleInputUpdate()">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" id="lblRoleTitle">Subtitulo Profesional / Cargo Objetivo <span class="required">*</span></label>
+              <input type="text" id="inputRoleTitle" class="form-input" placeholder="ej. DevOps Engineer | Cloud & Security" oninput="handleInputUpdate()">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" id="lblEmail">Correo Electronico <span class="required">*</span></label>
+                <input type="email" id="inputEmail" class="form-input" placeholder="tu.correo@ejemplo.com" oninput="handleInputUpdate()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" id="lblPhone">Telefono <span class="required">*</span></label>
+                <input type="text" id="inputPhone" class="form-input" placeholder="+00 000 000 0000" oninput="handleInputUpdate()">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" id="lblLocation">Ubicacion <span class="required">*</span></label>
+              <input type="text" id="inputLocation" class="form-input" placeholder="Ciudad, Pais" oninput="handleInputUpdate()">
+            </div>
+
+            <div class="form-group">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <label class="form-label" id="lblLinks" style="margin-bottom:0;">Enlaces de Contacto Limpios (Opcionales)</label>
+                <button class="btn btn-sm btn-cyan" onclick="addLinkRow()" id="btnAddLink">[+] Agregar Enlace</button>
+              </div>
+              <div id="linksContainer" class="links-list"></div>
+            </div>
+          </div>
+
+          <!-- STEP 2: RESUMEN PROFESIONAL -->
+          <div id="stepContent2" class="step-section" style="display:none;">
+            <div class="form-group">
+              <label class="form-label" id="lblSummary">Resumen Profesional (Maximo 4–5 lineas)</label>
+              <textarea id="inputSummary" class="form-textarea" rows="8" placeholder="Describe tu perfil profesional, anos de experiencia, fortalezas clave y valor entregado a organizaciones..." oninput="handleInputUpdate()"></textarea>
+            </div>
+          </div>
+
+          <!-- STEP 3: HABILIDADES TECNICAS -->
+          <div id="stepContent3" class="step-section" style="display:none;">
+            <div class="form-group">
+              <label class="form-label" id="lblSkill1">Categoria de Habilidades 1 (ej. Cloud & Infraestructura)</label>
+              <input type="text" id="inputSkill1" class="form-input" placeholder="ej. AWS, GCP, Docker, Kubernetes..." oninput="handleInputUpdate()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lblSkill2">Categoria de Habilidades 2 (ej. Automatizacion & CI/CD)</label>
+              <input type="text" id="inputSkill2" class="form-input" placeholder="ej. GitHub Actions, Terraform, Bash, Python..." oninput="handleInputUpdate()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lblSkill3">Categoria de Habilidades 3 (ej. Seguridad & Redes)</label>
+              <input type="text" id="inputSkill3" class="form-input" placeholder="ej. IAM, WAF, SSL/TLS, Zero-Trust, VPN..." oninput="handleInputUpdate()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lblSkill4">Categoria de Habilidades 4 (ej. Datos & Observabilidad)</label>
+              <input type="text" id="inputSkill4" class="form-input" placeholder="ej. Prometheus, Grafana, PostgreSQL, SQL..." oninput="handleInputUpdate()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lblSkill5">Categoria de Habilidades 5 (ej. Metodologias & Buenas Practicas)</label>
+              <input type="text" id="inputSkill5" class="form-input" placeholder="ej. ITIL, Scrum, RCA, Secure SDLC..." oninput="handleInputUpdate()">
+            </div>
+          </div>
+
+          <!-- STEP 4: EXPERIENCIAS LABORALES -->
+          <div id="stepContent4" class="step-section" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <label class="form-label" id="lblExperiences" style="margin-bottom:0;">Experiencias Laborales</label>
+              <button class="btn btn-sm btn-cyan" onclick="addExperienceCard()" id="btnAddExp">[+] Agregar Experiencia</button>
+            </div>
+            <div id="experiencesContainer" style="display:flex; flex-direction:column; gap:12px;"></div>
+          </div>
+
+          <!-- STEP 5: EDUCACION Y EXTRAS -->
+          <div id="stepContent5" class="step-section" style="display:none;">
+            <div class="form-group">
+              <label class="form-label" id="lblProjects">Proyectos Destacados (Formato Markdown)</label>
+              <textarea id="inputProjects" class="form-textarea" rows="4" placeholder="### Nombre del Proyecto&#10;**Tecnologias** | *[Enlace](https://github.com/)*&#10;- Descripcion del proyecto y resultado obtenido..." oninput="handleInputUpdate()"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lblEducation">Educacion Formal</label>
+              <textarea id="inputEducation" class="form-textarea" rows="4" placeholder="### Universidad o Institucion | Ciudad, Pais&#10;**Titulo Profesional o Grado** | *Periodo*" oninput="handleInputUpdate()"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lblCerts">Certificaciones Profesionales y Licencias</label>
+              <textarea id="inputCertifications" class="form-textarea" rows="4" placeholder="- **Nombre de Certificacion** - Entidad Emisora" oninput="handleInputUpdate()"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lblLangs">Idiomas</label>
+              <input type="text" id="inputLanguages" class="form-input" placeholder="- **Espanol:** Nativo  - **Ingles:** B2 / Profesional" oninput="handleInputUpdate()">
+            </div>
+          </div>
+        </div>
+
+        <!-- FIXED WIZARD FOOTER NAVIGATION -->
+        <div class="wizard-footer">
+          <button class="btn btn-white" id="btnPrevStep" onclick="prevStep()" disabled>&lt; Anterior</button>
+          <span style="font-family: var(--font-mono); font-size: 11px; font-weight: bold;" id="stepCounterBadge">Paso 1 de 5</span>
+          <button class="btn btn-yellow" id="btnNextStep" onclick="nextStep()">Siguiente &gt;</button>
+        </div>
+      </div>
+
+      <!-- DIRECT MARKDOWN EDITOR -->
+      <div id="markdownView" class="editor-wrapper" style="display:none;">
+        <textarea id="markdownInput" spellcheck="false" placeholder="Escribe o pega aqui tu CV en formato Markdown..."></textarea>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL: LIVE BEAUTIFIED ATS PREVIEW -->
+    <div class="panel" id="rightPanel">
+      <div class="panel-header cyan">
+        <span>VISTA PREVIA ATS (ESTILO JAKE'S RESUME)</span>
+        <span class="badge neo-box-white">100% ATS COMPATIBLE</span>
+      </div>
+      <div class="preview-container">
+        <!-- SIMULATED A4 PAPER SHEET -->
+        <div class="ats-sheet">
+          <div id="resumeOutput" class="ats-resume">
+            <!-- Rendered HTML will appear here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <strong>SISTEMA ATS:</strong> Formato de 1 sola columna, margenes de 1.2 cm, tipografia legible por OCR y almacenamiento 100% local en tu navegador.
+    </div>
+    <div>
+      Privacidad garantizada: Ningun dato sale de tu equipo. Tus datos se guardan exclusivamente en el almacenamiento local de tu navegador.
+    </div>
+  </footer>
+
+  <script>
+    // LOCALSTORAGE PERSISTENCE KEYS
+    const STORAGE_KEY_FORM = "ats_cv_local_form_v1";
+    const STORAGE_KEY_MD = "ats_cv_local_md_v1";
+
+    let currentStep = 1;
+    let isRecruiterView = false;
+    let currentLang = "es";
+    let linksData = [];
+    let experiencesData = [];
+
+    const I18N = {
+      es: {
+        appTitle: "ATS RESUME BUILDER // CV OPTIMIZER",
+        appSubtitle: "FORMATO HARVARD ATS // PERSISTENCIA LOCAL EN NAVEGADOR // 100% PRIVADO",
+        atsScoreLabel: "Compatibilidad ATS",
+        wordCountLabel: "Palabras Totales",
+        estPagesLabel: "Extension Estimada",
+        metricsCountLabel: "Metricas Cuantificadas",
+        heightLabel: "ALTURA:",
+        heightTall: "A4 Alta (0.65cm)",
+        heightLegal: "Oficio/Legal (35.6cm)",
+        heightNormal: "Estandar (1.2cm)",
+        btnSave: "[S] Guardar en Navegador",
+        btnDownload: "[D] Descargar .MD",
+        btnPrint: "[P] Imprimir / Guardar PDF",
+        tabWizard: "Formulario Wizard (5 Pasos)",
+        tabMarkdown: "Editor Markdown Directo",
+        step1: "1. Contacto",
+        step2: "2. Resumen",
+        step3: "3. Skills",
+        step4: "4. Empleo",
+        step5: "5. Educacion",
+        lblFirstName: "Nombre",
+        lblLastName: "Apellidos",
+        lblRoleTitle: "Subtitulo Profesional / Cargo Objetivo",
+        lblEmail: "Correo Electronico",
+        lblPhone: "Telefono",
+        lblLocation: "Ubicacion",
+        lblLinks: "Enlaces de Contacto Limpios (Opcionales)",
+        btnAddLink: "[+] Agregar Enlace",
+        lblSummary: "Resumen Profesional (Maximo 4–5 lineas)",
+        lblSkill1: "Categoria de Habilidades 1",
+        lblSkill2: "Categoria de Habilidades 2",
+        lblSkill3: "Categoria de Habilidades 3",
+        lblSkill4: "Categoria de Habilidades 4",
+        lblSkill5: "Categoria de Habilidades 5",
+        lblExperiences: "Experiencias Laborales",
+        btnAddExp: "[+] Agregar Experiencia",
+        lblProjects: "Proyectos Destacados (Formato Markdown)",
+        lblEducation: "Educacion Formal (Universidad, Grado)",
+        lblCerts: "Certificaciones Profesionales y Licencias",
+        lblLangs: "Idiomas",
+        recruiterStatus: "Formato A4 Harvard ATS limpio. Documento optimizado para lectura y seleccion.",
+        btnRecruiterToggle: "[VISTA RECLUTADOR]",
+        btnEditorToggle: "[MODO EDITOR STUDIO]",
+        matcherTitle: "ATS KEYWORD MATCHER // ANALIZADOR DE COINCIDENCIAS",
+        matcherSub: "Pega cualquier descripcion de puesto para auditar las palabras clave contra tu CV actual",
+        lblJdSelect: "Pega la Descripcion de la Vacante (Job Description):",
+        btnRunMatcher: "[ANALIZAR COINCIDENCIAS]",
+        matchScoreLabel: "Afinidad de Palabras Clave ATS",
+        lblMatchedTags: "Palabras Clave Detectadas en tu CV:",
+        lblMissingTags: "Palabras Clave Faltantes en tu CV:"
+      },
+      en: {
+        appTitle: "ATS RESUME BUILDER // CV OPTIMIZER",
+        appSubtitle: "HARVARD ATS FORMAT // LOCAL BROWSER PERSISTENCE // 100% PRIVATE",
+        atsScoreLabel: "ATS Compatibility",
+        wordCountLabel: "Total Words",
+        estPagesLabel: "Estimated Length",
+        metricsCountLabel: "Quantified Metrics",
+        heightLabel: "HEIGHT:",
+        heightTall: "A4 Tall (0.65cm)",
+        heightLegal: "Legal / Oficio (35.6cm)",
+        heightNormal: "Standard (1.2cm)",
+        btnSave: "[S] Save to Browser",
+        btnDownload: "[D] Download .MD",
+        btnPrint: "[P] Print / Save PDF",
+        tabWizard: "Wizard Form (5 Steps)",
+        tabMarkdown: "Direct Markdown Editor",
+        step1: "1. Contact",
+        step2: "2. Summary",
+        step3: "3. Skills",
+        step4: "4. Experience",
+        step5: "5. Education",
+        lblFirstName: "First Name",
+        lblLastName: "Last Name",
+        lblRoleTitle: "Target Professional Role / Title",
+        lblEmail: "Email Address",
+        lblPhone: "Phone",
+        lblLocation: "Location",
+        lblLinks: "Clean Contact Links (Optional)",
+        btnAddLink: "[+] Add Link",
+        lblSummary: "Professional Summary (Max 4–5 lines)",
+        lblSkill1: "Skill Category 1",
+        lblSkill2: "Skill Category 2",
+        lblSkill3: "Skill Category 3",
+        lblSkill4: "Skill Category 4",
+        lblSkill5: "Skill Category 5",
+        lblExperiences: "Work Experience",
+        btnAddExp: "[+] Add Experience",
+        lblProjects: "Featured Projects (ATS Markdown)",
+        lblEducation: "Formal Education & Academics (Markdown)",
+        lblCerts: "Professional Certifications & Licenses",
+        lblLangs: "Languages",
+        recruiterStatus: "Clean Harvard ATS A4 Format. Optimized for recruiting and ATS screening.",
+        btnRecruiterToggle: "[RECRUITER VIEW]",
+        btnEditorToggle: "[EDITOR STUDIO MODE]",
+        matcherTitle: "ATS KEYWORD MATCHER // RECRUITER COMPARISON ENGINE",
+        matcherSub: "Paste any target job description to audit matching keywords against your current resume",
+        lblJdSelect: "Paste Target Job Description (Requirements):",
+        btnRunMatcher: "[RUN KEYWORD ANALYSIS]",
+        matchScoreLabel: "ATS Keyword Compatibility",
+        lblMatchedTags: "Keywords Detected in your Resume:",
+        lblMissingTags: "Missing / Recommended Keywords:"
+      }
+    };
+
+    // HANDLE REAL-TIME INPUT & AUTO-PERSISTENCE
+    function handleInputUpdate() {
+      syncFormToPreview();
+      autoSaveToStorage();
+    }
+
+    function autoSaveToStorage() {
+      const formData = {
+        firstName: document.getElementById("inputFirstName").value,
+        lastName: document.getElementById("inputLastName").value,
+        roleTitle: document.getElementById("inputRoleTitle").value,
+        email: document.getElementById("inputEmail").value,
+        phone: document.getElementById("inputPhone").value,
+        location: document.getElementById("inputLocation").value,
+        links: linksData,
+        summary: document.getElementById("inputSummary").value,
+        skill1: document.getElementById("inputSkill1").value,
+        skill2: document.getElementById("inputSkill2").value,
+        skill3: document.getElementById("inputSkill3").value,
+        skill4: document.getElementById("inputSkill4").value,
+        skill5: document.getElementById("inputSkill5").value,
+        experiences: experiencesData,
+        projects: document.getElementById("inputProjects").value,
+        education: document.getElementById("inputEducation").value,
+        certs: document.getElementById("inputCertifications").value,
+        langs: document.getElementById("inputLanguages").value,
+        lang: currentLang
+      };
+      localStorage.setItem(STORAGE_KEY_FORM, JSON.stringify(formData));
+      localStorage.setItem(STORAGE_KEY_MD, document.getElementById("markdownInput").value);
+    }
+
+    function saveToLocalMemory() {
+      autoSaveToStorage();
+      showToast('[GUARDADO] Guardado en la memoria local de tu navegador', '#00f5d4');
+    }
+
+    // EXPORT & IMPORT LOCAL BACKUP
+    function exportJsonBackup() {
+      autoSaveToStorage();
+      const rawForm = localStorage.getItem(STORAGE_KEY_FORM) || "{}";
+      const rawMd = localStorage.getItem(STORAGE_KEY_MD) || "";
+      const backup = {
+        exportedAt: new Date().toISOString(),
+        version: "1.0",
+        form: JSON.parse(rawForm),
+        markdown: rawMd
+      };
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      const name = (document.getElementById("inputFirstName").value || "mi").trim().replace(/\s+/g, '_');
+      a.download = `${name}_cv_backup.json`;
+      a.click();
+      showToast('[BACKUP] Archivo JSON de respaldo descargado', '#ffe600');
+    }
+
+    function importJsonBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.form) {
+            applyFormData(data.form);
+            if (data.markdown) {
+              document.getElementById("markdownInput").value = data.markdown;
+              renderATS(data.markdown);
+            }
+            autoSaveToStorage();
+            showToast('[RESTAURADO] Datos importados correctamente', '#00f5d4');
+          } else {
+            showToast('[ERROR] Formato de archivo JSON no valido', '#ff6eb4');
+          }
+        } catch (err) {
+          showToast('[ERROR] No se pudo leer el archivo JSON', '#ff6eb4');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
+    }
+
+    function applyFormData(data) {
+      document.getElementById("inputFirstName").value = data.firstName || "";
+      document.getElementById("inputLastName").value = data.lastName || "";
+      document.getElementById("inputRoleTitle").value = data.roleTitle || "";
+      document.getElementById("inputEmail").value = data.email || "";
+      document.getElementById("inputPhone").value = data.phone || "";
+      document.getElementById("inputLocation").value = data.location || "";
+      linksData = Array.isArray(data.links) ? data.links : [];
+      renderLinksList();
+
+      document.getElementById("inputSummary").value = data.summary || "";
+      document.getElementById("inputSkill1").value = data.skill1 || "";
+      document.getElementById("inputSkill2").value = data.skill2 || "";
+      document.getElementById("inputSkill3").value = data.skill3 || "";
+      document.getElementById("inputSkill4").value = data.skill4 || "";
+      document.getElementById("inputSkill5").value = data.skill5 || "";
+
+      experiencesData = Array.isArray(data.experiences) ? data.experiences : [];
+      renderExperiencesList();
+
+      document.getElementById("inputProjects").value = data.projects || "";
+      document.getElementById("inputEducation").value = data.education || "";
+      document.getElementById("inputCertifications").value = data.certs || "";
+      document.getElementById("inputLanguages").value = data.langs || "";
+
+      if (data.lang) {
+        setAppLanguage(data.lang, false);
+      }
+      syncFormToPreview();
+    }
+
+    // RESET TO CLEAN BLANK SLATE
+    function resetBlankCV() {
+      if (!confirm("Estas seguro de limpiar todo? Esto borrara los datos actuales.")) return;
+      localStorage.removeItem(STORAGE_KEY_FORM);
+      localStorage.removeItem(STORAGE_KEY_MD);
+
+      document.getElementById("inputFirstName").value = "";
+      document.getElementById("inputLastName").value = "";
+      document.getElementById("inputRoleTitle").value = "";
+      document.getElementById("inputEmail").value = "";
+      document.getElementById("inputPhone").value = "";
+      document.getElementById("inputLocation").value = "";
+      linksData = [];
+      renderLinksList();
+
+      document.getElementById("inputSummary").value = "";
+      document.getElementById("inputSkill1").value = "";
+      document.getElementById("inputSkill2").value = "";
+      document.getElementById("inputSkill3").value = "";
+      document.getElementById("inputSkill4").value = "";
+      document.getElementById("inputSkill5").value = "";
+
+      experiencesData = [];
+      renderExperiencesList();
+
+      document.getElementById("inputProjects").value = "";
+      document.getElementById("inputEducation").value = "";
+      document.getElementById("inputCertifications").value = "";
+      document.getElementById("inputLanguages").value = "";
+
+      document.getElementById("markdownInput").value = "";
+      renderATS("");
+      goToStep(1);
+      showToast('[EN BLANCO] Documento reiniciado en blanco', '#ffe600');
+    }
+
+    // LOAD GENERIC SAMPLE GUIDE
+    function loadSampleGuide() {
+      const isEn = (currentLang === 'en');
+      const sample = {
+        firstName: isEn ? "Alex" : "Alejandro",
+        lastName: isEn ? "Morgan" : "Morales",
+        roleTitle: isEn ? "Senior Systems & Cloud Engineer" : "Ingeniero de Sistemas y Cloud",
+        email: "profesional@ejemplo.com",
+        phone: "+00 123 456 7890",
+        location: isEn ? "Remote / Global" : "Bogota, Colombia (Remoto)",
+        links: [
+          { label: "LinkedIn", url: "https://linkedin.com" },
+          { label: "GitHub", url: "https://github.com" },
+          { label: "Portfolio", url: "https://ejemplo.com" }
+        ],
+        summary: isEn ? 
+          "Results-driven engineer with 4+ years of hands-on experience designing, automating, and maintaining high-availability cloud infrastructure and CI/CD pipelines. Expert in Linux system administration, container orchestration, and incident resolution." :
+          "Ingeniero de Sistemas con mas de 4 anos de experiencia disenando, automatizando y manteniendo infraestructura cloud de alta disponibilidad y pipelines CI/CD. Especialista en administracion de servidores Linux, orquestacion de contenedores y resolucion proactiva de incidentes.",
+        skill1: isEn ? "AWS, Google Cloud, Docker, Kubernetes, Linux (Debian/Ubuntu/RHEL)" : "AWS, Google Cloud, Docker, Kubernetes, Linux (Debian/Ubuntu/RHEL)",
+        skill2: isEn ? "GitHub Actions, CI/CD Pipelines, Python, Bash Scripting, Terraform" : "GitHub Actions, Pipelines CI/CD, Python, Bash Scripting, Terraform",
+        skill3: isEn ? "IAM, Least Privilege, Cloudflare WAF, NGINX, SSL/TLS, Zero-Trust" : "IAM, Menor Privilegio, Cloudflare WAF, NGINX, SSL/TLS, Zero-Trust",
+        skill4: isEn ? "Prometheus, Grafana, Loki, PostgreSQL, MySQL, REST APIs" : "Prometheus, Grafana, Loki, PostgreSQL, MySQL, APIs REST",
+        skill5: isEn ? "Root Cause Analysis (RCA), ITIL Framework, Agile, GitOps" : "Analisis de Causa Raiz (RCA), Marco ITIL, Metodologias Agiles, GitOps",
+        experiences: [
+          {
+            company: isEn ? "Tech Solutions Corp | Remote" : "Soluciones Tecnologicas Globales | Remoto",
+            role: isEn ? "Cloud Infrastructure Engineer" : "Ingeniero de Infraestructura Cloud",
+            period: isEn ? "2023 – Present" : "2023 – Presente",
+            bullets: isEn ? 
+              "- Managed 20+ production services on Linux and AWS, achieving 99.9% uptime across critical systems.\n- Automated CI/CD workflows using GitHub Actions, reducing deployment time from 25 min to 4 min.\n- Deployed real-time monitoring with Prometheus and Grafana, expediting root-cause diagnosis by 40%." :
+              "- Administre mas de 20 servicios criticos en produccion sobre Linux y AWS, logrando 99.9% de disponibilidad.\n- Automatice flujos de despliegue con GitHub Actions, reduciendo los tiempos de entrega de 25 min a 4 min.\n- Desplegue observabilidad en tiempo real con Prometheus y Grafana, acelerando la resolucion de incidentes en un 40%."
+          }
+        ],
+        projects: isEn ?
+          "### Automated Cloud Lab\n**Docker, Kubernetes, Prometheus** | *[github.com/ejemplo](https://github.com)*\n- Declarative deployment of containerized workloads with automated health checks and metrics dashboards." :
+          "### Laboratorio Cloud Automatizado\n**Docker, Kubernetes, Prometheus** | *[github.com/ejemplo](https://github.com)*\n- Despliegue declarativo de servicios contenerizados con revisiones automaticas de estado y telemetria en tiempo real.",
+        education: isEn ?
+          "### State University\n**B.S. in Computer Systems Engineering** | *2019 – 2024*" :
+          "### Universidad Nacional\n**Ingenieria de Sistemas** | *2019 – 2024*",
+        certs: isEn ?
+          "- **AWS Certified Solutions Architect** — Amazon Web Services\n- **Linux System Administration** — Linux Foundation" :
+          "- **AWS Certified Solutions Architect** — Amazon Web Services\n- **Administracion de Sistemas Linux** — Linux Foundation",
+        langs: isEn ?
+          "- **English:** Full Professional  - **Spanish:** Native" :
+          "- **Espanol:** Nativo  - **Ingles:** B2 / Profesional"
+      };
+      applyFormData(sample);
+      showToast('[GUIA] Plantilla de ejemplo cargada', '#00f5d4');
+    }
+
+    // RECRUITER CLEAN VIEW TOGGLE
+    function toggleRecruiterView() {
+      setRecruiterView(!isRecruiterView);
+    }
+
+    function setRecruiterView(enable) {
+      isRecruiterView = enable;
+      const body = document.body;
+      const btnHeader = document.getElementById("btnToggleRecruiterHeader");
+      const btnToolbar = document.getElementById("btnToggleViewToolbar");
+      const dict = I18N[currentLang] || I18N.es;
+
+      if (enable) {
+        body.classList.add("recruiter-mode");
+        if (btnHeader) btnHeader.innerText = dict.btnEditorToggle;
+        if (btnToolbar) btnToolbar.innerText = dict.btnEditorToggle;
+        showToast('[VISTA RECLUTADOR] Modo limpio activado', '#00f5d4');
+      } else {
+        body.classList.remove("recruiter-mode");
+        if (btnHeader) btnHeader.innerText = dict.btnRecruiterToggle;
+        if (btnToolbar) btnToolbar.innerText = dict.btnRecruiterToggle;
+        showToast('[MODO EDITOR] Panel de edicion restaurado', '#ffe600');
+      }
+      updateURL();
+    }
+
+    function toggleAtsMatcher() {
+      const drawer = document.getElementById("atsMatcherDrawer");
+      if (!drawer) return;
+      if (drawer.style.display === "none" || !drawer.style.display) {
+        drawer.style.display = "block";
+        drawer.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        drawer.style.display = "none";
+      }
+    }
+
+    function runAtsKeywordMatch() {
+      const jdText = document.getElementById("jdInput").value.toLowerCase();
+      const cvText = (document.getElementById("markdownInput").value || "").toLowerCase();
+      
+      const TECH_KEYWORDS = [
+        "linux", "debian", "ubuntu", "rhel", "aws", "ec2", "s3", "rds", "vpc", "iam",
+        "cloudwatch", "gcp", "google cloud", "azure", "docker", "docker compose",
+        "kubernetes", "k3s", "argocd", "helm", "ci/cd", "github actions", "runners",
+        "self-hosted", "bash", "python", "zsh", "terraform", "ansible", "makefiles",
+        "prometheus", "grafana", "loki", "nginx", "cloudflare", "waf", "ssl/tls",
+        "dns", "tcp/ip", "vlans", "vpn", "postgresql", "mysql", "sql", "rest apis",
+        "webhooks", "json", "n8n", "itil", "rca", "root cause analysis", "zero-trust",
+        "shift-left", "sast", "sca", "trivy", "sonarqube", "owasp", "workload identity",
+        "pci dss", "soc 2", "macos", "google workspace", "git", "gitops"
+      ];
+
+      let targetTerms = [];
+      TECH_KEYWORDS.forEach(kw => {
+        if (jdText.includes(kw)) {
+          targetTerms.push(kw);
+        }
+      });
+
+      if (targetTerms.length === 0) {
+        targetTerms = ["linux", "aws", "docker", "ci/cd", "python", "bash", "prometheus", "grafana", "iam", "sql"];
+      }
+
+      let matched = [];
+      let missing = [];
+
+      targetTerms.forEach(kw => {
+        if (cvText.includes(kw)) {
+          matched.push(kw);
+        } else {
+          missing.push(kw);
+        }
+      });
+
+      const score = Math.round((matched.length / targetTerms.length) * 100);
+      const scoreVal = document.getElementById("matchScoreVal");
+      scoreVal.innerText = score + "%";
+      if (score >= 80) scoreVal.style.color = "#00a896";
+      else if (score >= 60) scoreVal.style.color = "#d97706";
+      else scoreVal.style.color = "#d90429";
+
+      const matchedGrid = document.getElementById("matchedKeywordsGrid");
+      matchedGrid.innerHTML = "";
+      if (matched.length > 0) {
+        matched.forEach(kw => {
+          const b = document.createElement("span");
+          b.className = "badge neo-box-cyan";
+          b.innerText = "[OK: " + kw.toUpperCase() + "]";
+          matchedGrid.appendChild(b);
+        });
+      } else {
+        matchedGrid.innerHTML = "<span style='font-size:11px; font-family:var(--font-mono); color:#777;'>Ninguna coincidencia detectada.</span>";
+      }
+
+      const missingGrid = document.getElementById("missingKeywordsGrid");
+      missingGrid.innerHTML = "";
+      if (missing.length > 0) {
+        missing.forEach(kw => {
+          const b = document.createElement("span");
+          b.className = "badge neo-box-yellow";
+          b.innerText = "[FALTA: " + kw.toUpperCase() + "]";
+          missingGrid.appendChild(b);
+        });
+      } else {
+        missingGrid.innerHTML = "<span class='badge neo-box-cyan'>[100% Cobertura de Palabras Clave Detectadas]</span>";
+      }
+
+      const advice = document.getElementById("matcherAdvice");
+      if (missing.length > 0) {
+        advice.innerText = "Sugerencia ATS: Para elevar tu ranking al 100%, incorpora las palabras clave faltantes en tus vinetas de experiencia o habilidades tecnicas.";
+      } else {
+        advice.innerText = "Calce Optimo: Tu CV incluye todos los terminos tecnicos analizados de la vacante.";
+      }
+    }
+
+    function updateURL() {
+      const params = new URLSearchParams();
+      if (currentLang) params.set("lang", currentLang);
+      if (isRecruiterView) params.set("mode", "view");
+
+      const q = params.toString();
+      const newUrl = q ? (window.location.pathname + "?" + q) : window.location.pathname;
+      window.history.replaceState({}, "", newUrl);
+    }
+
+    function copyShareLink() {
+      updateURL();
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showToast('[ENLACE COPIADO] Link directo copiado al portapapeles', '#00f5d4');
+      }).catch(() => {
+        showToast('[INFO] ' + window.location.href, '#ffe600');
+      });
+    }
+
+    function setAppLanguage(lang, syncPreview = true) {
+      currentLang = lang;
+      const btnEN = document.getElementById("btnLangEN");
+      const btnES = document.getElementById("btnLangES");
+      if (btnEN && btnES) {
+        if (lang === 'en') {
+          btnEN.classList.remove("btn-white"); btnEN.classList.add("btn-cyan");
+          btnES.classList.remove("btn-cyan"); btnES.classList.add("btn-white");
+        } else {
+          btnES.classList.remove("btn-white"); btnES.classList.add("btn-cyan");
+          btnEN.classList.remove("btn-cyan"); btnEN.classList.add("btn-white");
+        }
+      }
+
+      const dict = I18N[lang] || I18N.es;
+
+      const atsLabel = document.getElementById("lblAtsScore");
+      if (atsLabel) atsLabel.innerText = dict.atsScoreLabel;
+      const wordLabel = document.getElementById("lblWordCount");
+      if (wordLabel) wordLabel.innerText = dict.wordCountLabel;
+      const estLabel = document.getElementById("lblEstPages");
+      if (estLabel) estLabel.innerText = dict.estPagesLabel;
+      const metLabel = document.getElementById("lblMetricsCount");
+      if (metLabel) metLabel.innerText = dict.metricsCountLabel;
+
+      const lblH = document.getElementById("lblHeightBar");
+      if (lblH) lblH.innerText = dict.heightLabel;
+      const btnA4T = document.getElementById("btnPageA4Tall");
+      if (btnA4T) btnA4T.innerText = dict.heightTall;
+      const btnLeg = document.getElementById("btnPageLegal");
+      if (btnLeg) btnLeg.innerText = dict.heightLegal;
+      const btnNorm = document.getElementById("btnPageNormal");
+      if (btnNorm) btnNorm.innerText = dict.heightNormal;
+
+      const btnSave = document.getElementById("btnSaveLocal");
+      if (btnSave) btnSave.innerText = dict.btnSave;
+      const btnDl = document.getElementById("btnDownloadMd");
+      if (btnDl) btnDl.innerText = dict.btnDownload;
+      const btnPrint = document.getElementById("btnPrintPdf");
+      if (btnPrint) btnPrint.innerText = dict.btnPrint;
+
+      const tabW = document.getElementById("tabWizard");
+      if (tabW) tabW.innerText = dict.tabWizard;
+      const tabM = document.getElementById("tabMarkdown");
+      if (tabM) tabM.innerText = dict.tabMarkdown;
+
+      for (let i = 1; i <= 5; i++) {
+        const pill = document.getElementById(`stepPill${i}`);
+        if (pill) pill.innerText = dict[`step${i}`];
+      }
+
+      const lblF = document.getElementById("lblFirstName");
+      if (lblF) lblF.innerHTML = `${dict.lblFirstName} <span class="required">*</span>`;
+      const lblL = document.getElementById("lblLastName");
+      if (lblL) lblL.innerHTML = `${dict.lblLastName} <span class="required">*</span>`;
+      const lblR = document.getElementById("lblRoleTitle");
+      if (lblR) lblR.innerHTML = `${dict.lblRoleTitle} <span class="required">*</span>`;
+      const lblE = document.getElementById("lblEmail");
+      if (lblE) lblE.innerHTML = `${dict.lblEmail} <span class="required">*</span>`;
+      const lblP = document.getElementById("lblPhone");
+      if (lblP) lblP.innerHTML = `${dict.lblPhone} <span class="required">*</span>`;
+      const lblLoc = document.getElementById("lblLocation");
+      if (lblLoc) lblLoc.innerHTML = `${dict.lblLocation} <span class="required">*</span>`;
+      const lblLinks = document.getElementById("lblLinks");
+      if (lblLinks) lblLinks.innerText = dict.lblLinks;
+      const btnAddL = document.getElementById("btnAddLink");
+      if (btnAddL) btnAddL.innerText = dict.btnAddLink;
+
+      const lblSum = document.getElementById("lblSummary");
+      if (lblSum) lblSum.innerText = dict.lblSummary;
+
+      const s1 = document.getElementById("lblSkill1");
+      if (s1) s1.innerText = dict.lblSkill1;
+      const s2 = document.getElementById("lblSkill2");
+      if (s2) s2.innerText = dict.lblSkill2;
+      const s3 = document.getElementById("lblSkill3");
+      if (s3) s3.innerText = dict.lblSkill3;
+      const s4 = document.getElementById("lblSkill4");
+      if (s4) s4.innerText = dict.lblSkill4;
+      const s5 = document.getElementById("lblSkill5");
+      if (s5) s5.innerText = dict.lblSkill5;
+
+      const lblExps = document.getElementById("lblExperiences");
+      if (lblExps) lblExps.innerText = dict.lblExperiences;
+      const btnAddExp = document.getElementById("btnAddExp");
+      if (btnAddExp) btnAddExp.innerText = dict.btnAddExp;
+
+      const lblProj = document.getElementById("lblProjects");
+      if (lblProj) lblProj.innerText = dict.lblProjects;
+      const lblEdu = document.getElementById("lblEducation");
+      if (lblEdu) lblEdu.innerText = dict.lblEducation;
+      const lblCerts = document.getElementById("lblCerts");
+      if (lblCerts) lblCerts.innerText = dict.lblCerts;
+      const lblLangs = document.getElementById("lblLangs");
+      if (lblLangs) lblLangs.innerText = dict.lblLangs;
+
+      const recStatus = document.getElementById("recruiterStatusText");
+      if (recStatus) recStatus.innerText = dict.recruiterStatus;
+
+      const matchT = document.getElementById("matcherTitle");
+      if (matchT) matchT.innerText = dict.matcherTitle;
+      const matchS = document.getElementById("matcherSub");
+      if (matchS) matchS.innerText = dict.matcherSub;
+      const lblJd = document.getElementById("lblJdSelect");
+      if (lblJd) lblJd.innerText = dict.lblJdSelect;
+      const btnRun = document.getElementById("btnRunMatcher");
+      if (btnRun) btnRun.innerText = dict.btnRunMatcher;
+      const lblScore = document.getElementById("matchScoreLabel");
+      if (lblScore) lblScore.innerText = dict.matchScoreLabel;
+      const lblMt = document.getElementById("lblMatchedTags");
+      if (lblMt) lblMt.innerText = dict.lblMatchedTags;
+      const lblMs = document.getElementById("lblMissingTags");
+      if (lblMs) lblMs.innerText = dict.lblMissingTags;
+
+      if (syncPreview) {
+        syncFormToPreview();
+      }
+      updateURL();
+    }
+
+    function printCleanPDF() {
+      const originalTitle = document.title;
+      const fName = (document.getElementById("inputFirstName").value || "").trim().replace(/\s+/g, '_');
+      const lName = (document.getElementById("inputLastName").value || "").trim().replace(/\s+/g, '_');
+      const baseName = (fName || lName) ? `${fName}_${lName}` : "Mi_CV";
+      let exportName = (currentLang === 'en') ? `${baseName}_Resume_ATS` : `${baseName}_CV_ATS`;
+      document.title = exportName;
+      window.print();
+      setTimeout(() => {
+        document.title = originalTitle;
+      }, 1400);
+    }
+
+    function downloadMarkdown() {
+      const content = document.getElementById("markdownInput").value;
+      const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      const fName = (document.getElementById("inputFirstName").value || "").trim().replace(/\s+/g, '_');
+      const lName = (document.getElementById("inputLastName").value || "").trim().replace(/\s+/g, '_');
+      const baseName = (fName || lName) ? `${fName}_${lName}` : "Mi_CV";
+      let filename = (currentLang === 'en') ? `${baseName}_Resume_ATS.md` : `${baseName}_CV_ATS.md`;
+      a.download = filename;
+      a.click();
+      showToast('[DESCARGA] ' + filename + ' generado', '#ffe600');
+    }
+
+    function setPageHeightMode(mode) {
+      let dynStyle = document.getElementById("dynamicPrintStyle");
+      if (!dynStyle) {
+        dynStyle = document.createElement("style");
+        dynStyle.id = "dynamicPrintStyle";
+        document.head.appendChild(dynStyle);
+      }
+      
+      const sheet = document.querySelector(".ats-sheet");
+      const btnTall = document.getElementById("btnPageA4Tall");
+      const btnLegal = document.getElementById("btnPageLegal");
+      const btnNormal = document.getElementById("btnPageNormal");
+
+      [btnTall, btnLegal, btnNormal].forEach(b => {
+        if (b) { b.classList.remove("btn-cyan"); b.classList.add("btn-white"); }
+      });
+      
+      if (mode === 'tall') {
+        dynStyle.innerHTML = "@page { size: A4 portrait; margin: 0.65cm 1.15cm !important; }";
+        if (sheet) { sheet.style.padding = "24px 38px"; sheet.style.minHeight = "1120px"; }
+        if (btnTall) { btnTall.classList.remove("btn-white"); btnTall.classList.add("btn-cyan"); }
+        showToast('[PAGINA] Altura ampliada (A4 con margenes de 0.65cm)', '#00f5d4');
+      } else if (mode === 'legal') {
+        dynStyle.innerHTML = "@page { size: legal portrait; margin: 0.8cm 1.2cm !important; }";
+        if (sheet) { sheet.style.padding = "28px 40px"; sheet.style.minHeight = "1350px"; }
+        if (btnLegal) { btnLegal.classList.remove("btn-white"); btnLegal.classList.add("btn-cyan"); }
+        showToast('[PAGINA] Formato Oficio / Legal activado (35.6cm de alto)', '#ffe600');
+      } else {
+        dynStyle.innerHTML = "@page { size: A4 portrait; margin: 1.2cm !important; }";
+        if (sheet) { sheet.style.padding = "36px 44px"; sheet.style.minHeight = "960px"; }
+        if (btnNormal) { btnNormal.classList.remove("btn-white"); btnNormal.classList.add("btn-cyan"); }
+        showToast('[PAGINA] Formato Estandar restaurado (1.2cm de margen)', '#ffffff');
+      }
+    }
+
+    function goToStep(step) {
+      currentStep = step;
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById(`stepContent${i}`).style.display = (i === step) ? "block" : "none";
+        const pill = document.getElementById(`stepPill${i}`);
+        pill.classList.remove("active");
+        if (i === step) pill.classList.add("active");
+        if (i < step) pill.classList.add("completed");
+        else pill.classList.remove("completed");
+      }
+      document.getElementById("stepCounterBadge").innerText = `Paso ${step} de 5`;
+      document.getElementById("btnPrevStep").disabled = (step === 1);
+      document.getElementById("btnNextStep").innerText = (step === 5) ? "[Finalizar]" : "[Siguiente >]";
+    }
+
+    function nextStep() {
+      if (currentStep < 5) goToStep(currentStep + 1);
+      else switchView('markdown');
+    }
+
+    function prevStep() {
+      if (currentStep > 1) goToStep(currentStep - 1);
+    }
+
+    function switchView(mode) {
+      if (mode === 'wizard') {
+        const md = document.getElementById("markdownInput").value;
+        if (md) parseMarkdownToForm(md);
+        document.getElementById("tabWizard").classList.add("active");
+        document.getElementById("tabMarkdown").classList.remove("active");
+        document.getElementById("wizardView").style.display = "flex";
+        document.getElementById("markdownView").style.display = "none";
+      } else {
+        syncFormToPreview();
+        document.getElementById("tabWizard").classList.remove("active");
+        document.getElementById("tabMarkdown").classList.add("active");
+        document.getElementById("wizardView").style.display = "none";
+        document.getElementById("markdownView").style.display = "flex";
+      }
+    }
+
+    function parseMarkdownToATS(md) {
+      if (!md) return "";
+      const lines = md.split("\n");
+      let html = "";
+      let inList = false;
+      let inEntry = false;
+
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+
+        if (!line) {
+          if (inList) { html += "</ul>\n"; inList = false; }
+          continue;
+        }
+
+        if (line.startsWith("# ")) {
+          if (inList) { html += "</ul>\n"; inList = false; }
+          if (inEntry) { html += "</div>\n"; inEntry = false; }
+          html += `<h1>${line.substring(2)}</h1>\n`;
+          continue;
+        }
+
+        if (line.startsWith("## ")) {
+          if (inList) { html += "</ul>\n"; inList = false; }
+          if (inEntry) { html += "</div>\n"; inEntry = false; }
+          html += `<h2>${line.substring(3)}</h2>\n`;
+          continue;
+        }
+
+        if (line.startsWith("### ")) {
+          if (inList) { html += "</ul>\n"; inList = false; }
+          if (inEntry) { html += "</div>\n"; inEntry = false; }
+          html += `<div class="cv-entry">\n`;
+          inEntry = true;
+          
+          let content = line.substring(4);
+          if (content.includes("|")) {
+            let parts = content.split("|");
+            let left = formatInline(parts[0].trim());
+            let right = formatInline(parts.slice(1).join("|").trim());
+            html += `<h3><span>${left}</span><span class="meta-right">${right}</span></h3>\n`;
+          } else {
+            html += `<h3><span>${formatInline(content)}</span></h3>\n`;
+          }
+          continue;
+        }
+
+        if (line.startsWith("- ") || line.startsWith("* ")) {
+          if (!inList) { html += "<ul>\n"; inList = true; }
+          let content = line.substring(2);
+          html += `<li>${formatInline(content)}</li>\n`;
+          continue;
+        }
+
+        if (inList) { html += "</ul>\n"; inList = false; }
+
+        if (inEntry && line.includes("|") && (line.includes("**") || line.includes("*"))) {
+          let parts = line.split("|");
+          let left = formatInline(parts[0].trim());
+          let right = formatInline(parts.slice(1).join("|").trim().replace(/^\*|\*$/g, ''));
+          html += `<div class="job-meta"><span>${left}</span><span class="meta-right">${right}</span></div>\n`;
+          continue;
+        }
+
+        if (!inEntry && line.startsWith("**") && line.endsWith("**") && !line.startsWith("- ")) {
+          let inner = line.substring(2, line.length - 2).trim();
+          html += `<div class="candidate-headline">${inner}</div>\n`;
+          continue;
+        }
+
+        if (!inEntry && !line.startsWith("#") && (line.includes("|") || line.includes("@") || line.includes("http") || line.includes("+") || line.includes("github") || line.includes("linkedin") || line.includes(".io"))) {
+          let formatted = formatInline(line);
+          let isLinks = !line.includes("@") && (line.includes("http") || line.includes("github") || line.includes("linkedin") || line.includes(".io"));
+          html += `<div class="contact-line ${isLinks ? 'links-line' : ''}">${formatted}</div>\n`;
+          continue;
+        }
+
+        html += `<p>${formatInline(line)}</p>\n`;
+      }
+
+      if (inList) { html += "</ul>\n"; }
+      if (inEntry) { html += "</div>\n"; }
+      return html;
+    }
+
+    function formatInline(text) {
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+      text = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+      return text;
+    }
+
+    function updateAudit(text) {
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      document.getElementById("wordCount").innerText = words;
+
+      const pages = (words / 450).toFixed(1);
+      document.getElementById("estPages").innerText = pages + " Pag";
+
+      const metricMatches = text.match(/\b\d+(\.\d+)?(%|x|k|\+|–|-|\s?min|\s?horas|\s?tasks|\s?servidores|\s?contenedores)\b/gi) || [];
+      document.getElementById("metricsCount").innerText = metricMatches.length;
+
+      let score = 0;
+      if (words > 50) score += 30;
+      if (text.includes("## PERFIL") || text.includes("## RESUMEN") || text.includes("## PROFESSIONAL SUMMARY")) score += 15;
+      if (text.includes("## EXPERIENCIA") || text.includes("## PROFESSIONAL EXPERIENCE")) score += 20;
+      if (text.includes("## HABILIDADES") || text.includes("## COMPETENCIAS") || text.includes("## TECHNICAL SKILLS")) score += 15;
+      if (text.includes("## EDUCACIÓN") || text.includes("## EDUCACION") || text.includes("## EDUCATION")) score += 10;
+      if (metricMatches.length >= 3) score += 10;
+      if (words >= 300 && words <= 650) score += 8;
+      if (score > 100) score = 100;
+      document.getElementById("atsScore").innerText = score + "/100";
+    }
+
+    function renderATS(md) {
+      const output = document.getElementById("resumeOutput");
+      output.innerHTML = parseMarkdownToATS(md);
+      updateAudit(md);
+    }
+
+    function showToast(msg, bg = '#00f5d4') {
+      const toast = document.getElementById("saveToast");
+      if (!toast) return;
+      toast.style.background = bg;
+      toast.innerText = msg;
+      toast.style.display = "block";
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3500);
+    }
+
+    document.getElementById("markdownInput").addEventListener("input", function() {
+      renderATS(this.value);
+      autoSaveToStorage();
+    });
+
+    function syncFormToPreview() {
+      const fName = document.getElementById("inputFirstName").value.trim();
+      const lName = document.getElementById("inputLastName").value.trim();
+      const fullName = (fName + " " + lName).trim().toUpperCase();
+      const roleTitle = document.getElementById("inputRoleTitle").value.trim();
+      
+      const email = document.getElementById("inputEmail").value.trim();
+      const phone = document.getElementById("inputPhone").value.trim();
+      const loc = document.getElementById("inputLocation").value.trim();
+      
+      let contactParts = [];
+      if (loc) contactParts.push(loc);
+      if (email) contactParts.push(`[${email}](mailto:${email})`);
+      if (phone) contactParts.push(phone);
+      const contactLine1 = contactParts.join(" | ");
+
+      let linkParts = [];
+      linksData.forEach(l => {
+        if (l.label && l.url) {
+          linkParts.push(`[${l.label}](${l.url})`);
+        }
+      });
+      const contactLine2 = linkParts.join(" | ");
+
+      const summary = document.getElementById("inputSummary").value.trim();
+      const isEn = (currentLang === 'en');
+
+      // Skills
+      let skillsMd = "";
+      const s1 = document.getElementById("inputSkill1").value.trim();
+      const s2 = document.getElementById("inputSkill2").value.trim();
+      const s3 = document.getElementById("inputSkill3").value.trim();
+      const s4 = document.getElementById("inputSkill4").value.trim();
+      const s5 = document.getElementById("inputSkill5").value.trim();
+
+      if (s1 || s2 || s3 || s4 || s5) {
+        skillsMd = isEn ? "## TECHNICAL SKILLS\n" : "## HABILIDADES TECNICAS Y COMPETENCIAS\n";
+        if (s1) skillsMd += `- **${isEn ? 'Core Skills' : 'Habilidades Principales'}:** ${s1}\n`;
+        if (s2) skillsMd += `- **${isEn ? 'Automation & Tools' : 'Automatizacion y Herramientas'}:** ${s2}\n`;
+        if (s3) skillsMd += `- **${isEn ? 'Security & Infrastructure' : 'Seguridad e Infraestructura'}:** ${s3}\n`;
+        if (s4) skillsMd += `- **${isEn ? 'Data & Systems' : 'Datos y Sistemas'}:** ${s4}\n`;
+        if (s5) skillsMd += `- **${isEn ? 'Practices & Standards' : 'Metodologias y Estandares'}:** ${s5}\n`;
+      }
+
+      // Experiences
+      let expMd = "";
+      if (experiencesData.length > 0 && experiencesData.some(e => e.company)) {
+        expMd = isEn ? "## PROFESSIONAL EXPERIENCE\n\n" : "## EXPERIENCIA LABORAL\n\n";
+        experiencesData.forEach(exp => {
+          if (exp.company) {
+            expMd += `### ${exp.company}\n`;
+            expMd += `**${exp.role || (isEn ? 'Role Title' : 'Cargo')}** | *${exp.period || (isEn ? 'Period' : 'Periodo')}*\n`;
+            const lines = (exp.bullets || "").split("\n");
+            lines.forEach(b => {
+              const trimmed = b.trim();
+              if (trimmed) {
+                expMd += `- ${trimmed.startsWith('- ') ? trimmed.substring(2) : trimmed}\n`;
+              }
+            });
+            expMd += "\n";
+          }
+        });
+      }
+
+      const projects = document.getElementById("inputProjects").value.trim();
+      let projMd = projects ? (isEn ? `## FEATURED PROJECTS\n\n${projects}\n\n` : `## PROYECTOS DESTACADOS\n\n${projects}\n\n`) : "";
+
+      const edu = document.getElementById("inputEducation").value.trim();
+      let eduMd = edu ? (isEn ? `## EDUCATION\n\n${edu}\n\n` : `## EDUCACION Y FORMACION\n\n${edu}\n\n`) : "";
+
+      const certs = document.getElementById("inputCertifications").value.trim();
+      let certsMd = certs ? (isEn ? `## CERTIFICATIONS\n\n${certs}\n\n` : `## CERTIFICACIONES Y FORMACION CONTINUA\n\n${certs}\n\n`) : "";
+
+      const langs = document.getElementById("inputLanguages").value.trim();
+      let langsMd = langs ? (isEn ? `## LANGUAGES\n\n${langs}\n\n` : `## IDIOMAS\n\n${langs}\n\n`) : "";
+
+      let headerMd = "";
+      if (fullName) headerMd += `# ${fullName}\n`;
+      if (roleTitle) headerMd += `**${roleTitle}**\n`;
+      if (contactLine1) headerMd += `${contactLine1}\n`;
+      if (contactLine2) headerMd += `${contactLine2}\n`;
+
+      let summaryBlock = "";
+      if (summary) {
+        const summaryHeader = isEn ? "## PROFESSIONAL SUMMARY" : "## PERFIL PROFESIONAL";
+        summaryBlock = `${summaryHeader}\n${summary}\n\n`;
+      }
+
+      const fullMarkdown = `${headerMd}\n${summaryBlock}${skillsMd}\n${expMd}${projMd}${eduMd}${certsMd}${langsMd}`.trim();
+
+      document.getElementById("markdownInput").value = fullMarkdown;
+      renderATS(fullMarkdown);
+    }
+
+    function renderLinksList() {
+      const container = document.getElementById("linksContainer");
+      container.innerHTML = "";
+      linksData.forEach((l, idx) => {
+        const row = document.createElement("div");
+        row.className = "link-row";
+        row.innerHTML = `
+          <input type="text" class="form-input" value="${l.label || ''}" placeholder="Etiqueta" oninput="updateLink(${idx}, 'label', this.value)">
+          <input type="text" class="form-input" value="${l.url || ''}" placeholder="https://..." oninput="updateLink(${idx}, 'url', this.value)">
+          <button class="btn btn-sm btn-pink" onclick="removeLink(${idx})" style="padding:4px;">X</button>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function addLinkRow() {
+      linksData.push({ label: "Sitio", url: "https://" });
+      renderLinksList();
+      handleInputUpdate();
+    }
+
+    function updateLink(idx, field, val) {
+      linksData[idx][field] = val;
+      handleInputUpdate();
+    }
+
+    function removeLink(idx) {
+      linksData.splice(idx, 1);
+      renderLinksList();
+      handleInputUpdate();
+    }
+
+    function renderExperiencesList() {
+      const container = document.getElementById("experiencesContainer");
+      container.innerHTML = "";
+      experiencesData.forEach((exp, idx) => {
+        const card = document.createElement("div");
+        card.style.background = "#fbfaf8";
+        card.style.border = "2px solid #000";
+        card.style.padding = "10px";
+        card.style.boxShadow = "2px 2px 0px #000";
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="font-family:var(--font-mono); font-size:11px;">#${idx+1} ${exp.company ? exp.company.split('|')[0] : 'Nueva Empresa'}</strong>
+            <button class="btn btn-sm btn-pink" onclick="removeExperience(${idx})">Eliminar</button>
+          </div>
+          <div class="form-row" style="margin-bottom:6px;">
+            <input type="text" class="form-input" value="${exp.company || ''}" placeholder="Empresa | Ubicacion *" oninput="updateExperience(${idx}, 'company', this.value)">
+            <input type="text" class="form-input" value="${exp.role || ''}" placeholder="Cargo *" oninput="updateExperience(${idx}, 'role', this.value)">
+          </div>
+          <div class="form-group" style="margin-bottom:6px;">
+            <input type="text" class="form-input" value="${exp.period || ''}" placeholder="Periodo (ej. 2024 – Presente) *" oninput="updateExperience(${idx}, 'period', this.value)">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" style="font-size:10px;">Logros y Tareas (Vinetas con metricas en negrita):</label>
+            <textarea class="form-textarea" rows="4" placeholder="- Logro de impacto con **metrica medible**..." oninput="updateExperience(${idx}, 'bullets', this.value)">${exp.bullets || ''}</textarea>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function addExperienceCard() {
+      experiencesData.push({
+        company: "",
+        role: "",
+        period: "",
+        bullets: ""
+      });
+      renderExperiencesList();
+      handleInputUpdate();
+    }
+
+    function updateExperience(idx, field, val) {
+      experiencesData[idx][field] = val;
+      handleInputUpdate();
+    }
+
+    function removeExperience(idx) {
+      experiencesData.splice(idx, 1);
+      renderExperiencesList();
+      handleInputUpdate();
+    }
+
+    function parseMarkdownToForm(md) {
+      if (!md) return;
+      if (md.includes("## PROFESSIONAL SUMMARY") || md.includes("## TECHNICAL SKILLS")) {
+        setAppLanguage('en', false);
+      } else if (md.includes("## PERFIL PROFESIONAL") || md.includes("## HABILIDADES")) {
+        setAppLanguage('es', false);
+      }
+      const lines = md.split("\n");
+      let currentSection = "";
+      let summaryLines = [];
+      let projectsLines = [];
+      let eduLines = [];
+      let certsLines = [];
+      let langsLines = [];
+      let exps = [];
+      let currentExp = null;
+      let skillsCount = 1;
+
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+        if (!line) continue;
+
+        if (line.startsWith("# ")) {
+          const name = line.substring(2).trim();
+          const parts = name.split(" ");
+          if (parts.length > 1) {
+            document.getElementById("inputFirstName").value = parts[0];
+            document.getElementById("inputLastName").value = parts.slice(1).join(" ");
+          } else {
+            document.getElementById("inputFirstName").value = parts[0] || "";
+            document.getElementById("inputLastName").value = "";
+          }
+          continue;
+        }
+
+        if (line.startsWith("## ")) {
+          const sec = line.substring(3).trim().toUpperCase();
+          if (currentExp) { exps.push(currentExp); currentExp = null; }
+          if (sec.includes("PERFIL") || sec.includes("RESUMEN") || sec.includes("SUMMARY") || sec.includes("PROFILE")) currentSection = "SUMMARY";
+          else if (sec.includes("HABILIDADES") || sec.includes("COMPETENCIAS") || sec.includes("SKILLS")) currentSection = "SKILLS";
+          else if (sec.includes("EXPERIENCIA") || sec.includes("EXPERIENCE")) currentSection = "EXPERIENCE";
+          else if (sec.includes("PROYECTO") || sec.includes("PROJECT")) currentSection = "PROJECTS";
+          else if (sec.includes("EDUCACION") || sec.includes("EDUCACIÓN") || sec.includes("EDUCATION")) currentSection = "EDUCATION";
+          else if (sec.includes("CERTIFICACION") || sec.includes("CERTIFICACIÓN") || sec.includes("CERTIFICATION")) currentSection = "CERTS";
+          else if (sec.includes("IDIOMA") || sec.includes("LANGUAGE")) currentSection = "LANGS";
+          else currentSection = "";
+          continue;
+        }
+
+        if (!currentSection) {
+          if (line.startsWith("**") && line.endsWith("**") && !line.startsWith("- ")) {
+            document.getElementById("inputRoleTitle").value = line.substring(2, line.length - 2).trim();
+            continue;
+          }
+          if (line.includes("|") && (line.includes("@") || line.includes("+") || line.includes("Remoto") || line.includes("Remote"))) {
+            const parts = line.split("|").map(p => p.trim());
+            parts.forEach(p => {
+              if (p.includes("@")) {
+                const match = p.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
+                if (match) document.getElementById("inputEmail").value = match[1];
+              } else if (p.includes("+") || /\d{7,}/.test(p)) {
+                document.getElementById("inputPhone").value = p;
+              } else {
+                document.getElementById("inputLocation").value = p;
+              }
+            });
+            continue;
+          }
+          if (line.includes("http") || line.includes("github") || line.includes("linkedin") || line.includes("[") || line.includes(".io")) {
+            const links = [];
+            const matches = line.matchAll(/\[(.*?)\]\((.*?)\)/g);
+            for (const m of matches) {
+              links.push({ label: m[1], url: m[2] });
+            }
+            if (links.length > 0) {
+              linksData = links;
+              renderLinksList();
+            }
+            continue;
+          }
+        }
+
+        if (currentSection === "SUMMARY") {
+          summaryLines.push(line);
+        } else if (currentSection === "SKILLS") {
+          const colonIdx = line.indexOf(":");
+          const val = colonIdx !== -1 ? line.substring(colonIdx + 1).replace(/^[\s\*:]+/, '').trim() : line.replace(/^[-*\s]+/, '');
+          if (skillsCount <= 5) {
+            const el = document.getElementById(`inputSkill${skillsCount}`);
+            if (el) el.value = val;
+            skillsCount++;
+          }
+        } else if (currentSection === "EXPERIENCE") {
+          if (line.startsWith("### ")) {
+            if (currentExp) exps.push(currentExp);
+            currentExp = { company: line.substring(4).trim(), role: "", period: "", bullets: "" };
+          } else if (currentExp && line.includes("|") && (line.includes("**") || line.includes("*"))) {
+            const p = line.split("|");
+            currentExp.role = p[0].trim().replace(/\*\*/g, '').replace(/\*/g, '');
+            currentExp.period = p[1].trim().replace(/\*\*/g, '').replace(/\*/g, '');
+          } else if (currentExp && (line.startsWith("- ") || line.startsWith("* "))) {
+            const b = line.substring(2).trim();
+            currentExp.bullets += (currentExp.bullets ? "\n" : "") + b;
+          }
+        } else if (currentSection === "PROJECTS") {
+          projectsLines.push(line);
+        } else if (currentSection === "EDUCATION") {
+          eduLines.push(line);
+        } else if (currentSection === "CERTS") {
+          certsLines.push(line);
+        } else if (currentSection === "LANGS") {
+          langsLines.push(line);
+        }
+      }
+
+      if (currentExp) exps.push(currentExp);
+      if (exps.length > 0) {
+        experiencesData = exps;
+        renderExperiencesList();
+      }
+
+      if (summaryLines.length > 0) document.getElementById("inputSummary").value = summaryLines.join("\n");
+      if (projectsLines.length > 0) document.getElementById("inputProjects").value = projectsLines.join("\n");
+      if (eduLines.length > 0) document.getElementById("inputEducation").value = eduLines.join("\n");
+      if (certsLines.length > 0) document.getElementById("inputCertifications").value = certsLines.join("\n");
+      if (langsLines.length > 0) document.getElementById("inputLanguages").value = langsLines.join("\n");
+    }
+
+    // INITIALIZATION: LOAD FROM LOCALSTORAGE IF EXISTS, ELSE CLEAN BLANK
+    function initApp() {
+      renderLinksList();
+      renderExperiencesList();
+      goToStep(1);
+
+      const savedForm = localStorage.getItem(STORAGE_KEY_FORM);
+      const savedMd = localStorage.getItem(STORAGE_KEY_MD);
+
+      if (savedForm) {
+        try {
+          const parsed = JSON.parse(savedForm);
+          applyFormData(parsed);
+          if (savedMd) {
+            document.getElementById("markdownInput").value = savedMd;
+            renderATS(savedMd);
+          }
+          showToast('[RESTORE] Datos restaurados de tu navegador', '#00f5d4');
+        } catch (_) {
+          renderATS("");
+        }
+      } else if (savedMd) {
+        document.getElementById("markdownInput").value = savedMd;
+        parseMarkdownToForm(savedMd);
+        renderATS(savedMd);
+      } else {
+        // CLEAN BLANK STATE
+        renderATS("");
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const langParam = params.get("lang");
+      const modeParam = params.get("mode");
+
+      if (langParam === "en" || langParam === "es") {
+        setAppLanguage(langParam);
+      }
+
+      if (modeParam === "view") {
+        setRecruiterView(true);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+</html>
