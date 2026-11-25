@@ -3,8 +3,8 @@ title: "Los runners de CI que podían leer todos los secretos: RBAC engañoso y 
 date: "2026-09-29"
 category: "Kubernetes & CI/CD"
 excerpt: "Durante una auditoría de credenciales descubrimos que la ServiceAccount de los runners autohospedados de GitHub Actions tenía permisos para listar todos los secretos del clúster de desarrollo, pese a llamarse 'no-permission'. Crónica de cómo evaluar la exposición marginal real sin caer en alarmismos."
-coverImage: "/blog-posts/images/k9s.png"
-coverAlt: "Auditoría de seguridad en Kubernetes, RBAC y control de acceso en clústeres"
+coverImage: "/blog-posts/images/cover-runners-github-actions-rbac-cluster-dev.jpg"
+coverAlt: "Clúster de Kubernetes, orquestación de contenedores y políticas RBAC"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -24,6 +24,10 @@ La primera reacción instintiva fue calificar el hallazgo como un riesgo crític
 ---
 
 ## 1. La anatomía del hallazgo en Kubernetes
+
+
+![Auditoría en Kubernetes: permisos cluster-admin excesivos en runners de integración continua](/blog-posts/images/terminal-k8s-rbac-leak.svg "Auditoría en Kubernetes: permisos cluster-admin excesivos en runners de integración continua")
+
 
 Al inspeccionar los enlaces de roles a nivel de clúster con `kubectl`:
 

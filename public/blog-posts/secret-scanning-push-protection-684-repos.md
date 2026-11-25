@@ -3,8 +3,8 @@ title: "161 de 684 repositorios: el comando CLI que truncó la auditoría de seg
 date: "2026-09-14"
 category: "DevSecOps & Gobernanza"
 excerpt: "Tras la filtración de un token de API, la directiva era activar Secret Scanning y Push Protection en toda la organización. La primera pasada reportó 'completado'... en solo 161 repos. Un límite por defecto en gh repo list silenció más de 500 repositorios. Crónica de automatización y verificación estricta."
-coverImage: "/blog-posts/images/opencode.png"
-coverAlt: "Gestión de seguridad en GitHub Enterprise, escaneo de secretos y protección de código"
+coverImage: "/blog-posts/images/cover-secret-scanning-push-protection-684-repos.jpg"
+coverAlt: "Detección de secretos filtrados en código y auditoría de repositorios GitHub"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -26,6 +26,10 @@ Apenas doce horas después, un bot automatizado de auditoría interna de QA reab
 ---
 
 ## 1. La trampa silenciosa de `gh repo list`
+
+
+![Truncamiento silencioso: bucle GraphQL deteniéndose prematuramente por error en cursor de paginación](/blog-posts/images/terminal-secret-scanning-trunc.svg "Truncamiento silencioso: bucle GraphQL deteniéndose prematuramente por error en cursor de paginación")
+
 
 Al examinar el script original que ejecutó la primera pasada:
 

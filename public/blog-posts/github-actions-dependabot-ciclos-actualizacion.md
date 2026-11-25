@@ -3,8 +3,8 @@ title: "GitHub Actions y Actualización de Dependencias: ¿Dependabot automátic
 date: "2026-10-13"
 category: "CI/CD & DevOps"
 excerpt: "Consejos prácticos para optimizar GitHub Actions y el debate de fondo: la conveniencia de la auto-entrega de Dependabot frente a la disciplina de runbooks planificados con supervisión humana."
-coverImage: "/blog-posts/images/tui-banner.png"
-coverAlt: "Pipelines de GitHub Actions y flujos de dependencias"
+coverImage: "/blog-posts/images/cover-github-actions-dependabot-ciclos-actualizacion.jpg"
+coverAlt: "Integración continua y revisión de código en GitHub Actions"
 ---
 
 Mantener un ecosistema de software actualizado y seguro es una de las tareas más críticas y a la vez más propensas al desgaste operativo en cualquier equipo de infraestructura. El dilema recurrente es simple: **¿hasta qué punto debemos automatizar la actualización de nuestras dependencias y en qué momento es indispensable la intervención humana?**
@@ -16,6 +16,10 @@ Como siempre, **estas conclusiones parten de mi experiencia personal en producci
 ---
 
 ## 1. Consejos esenciales para exprimir GitHub Actions
+
+
+![Auditoría en GitHub CLI: saturación de runners provocada por decenas de micro-PRs de Dependabot](/blog-posts/images/terminal-dependabot-churn.svg "Auditoría en GitHub CLI: saturación de runners provocada por decenas de micro-PRs de Dependabot")
+
 
 Antes de debatir sobre dependencias, es fundamental que el motor de CI/CD sea rápido, predecible y seguro. Estos son algunos principios que aplico en mis repositorios:
 

@@ -59,6 +59,10 @@ function generateTerminalSvg({
     return `    <text x="-15" y="${y}" class="text-line-num">${lineNum}</text>\n    ${lineContent}`;
   }).join('\n');
 
+  const badgeWidth = Math.max(badge.length * 8.5 + 24, 120);
+  const badgeX = width - badgeWidth - 40;
+  const badgeTextX = badgeX + badgeWidth / 2;
+
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${contentHeight}" width="${width}" height="${contentHeight}">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -110,8 +114,8 @@ function generateTerminalSvg({
   <text x="${width / 2}" y="45" text-anchor="middle" class="font-mono text-title">${escapeXml(title)}</text>
 
   <!-- Badge en la Derecha -->
-  <rect x="${width - 160}" y="32" width="120" height="20" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="${width - 100}" y="46" text-anchor="middle" class="font-mono" font-size="10" fill="#38bdf8" font-weight="bold" letter-spacing="0.1em">${escapeXml(badge)}</text>
+  <rect x="${badgeX}" y="32" width="${badgeWidth}" height="20" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="${badgeTextX}" y="46" text-anchor="middle" class="font-mono" font-size="10" fill="#38bdf8" font-weight="bold" letter-spacing="0.1em">${escapeXml(badge)}</text>
 
   <!-- Contenido de Terminal -->
   <g class="font-mono" transform="translate(45, 95)">

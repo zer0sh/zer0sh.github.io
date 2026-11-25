@@ -3,8 +3,8 @@ title: "La llave de CI que nunca estuvo ahí: cómo un bastión SSH y un script 
 date: "2026-08-22"
 category: "CI/CD & DevOps"
 excerpt: "El pipeline de despliegue a producción en GitHub Actions comenzó a fallar sistemáticamente con 'Permission denied (publickey)' al conectar al bastión. La investigación reveló una verdad incómoda: la llave privada nunca había existido en los secretos del repositorio."
-coverImage: "/blog-posts/images/tui-banner.png"
-coverAlt: "Configuración de llaves SSH y pipelines de integración continua en GitHub Actions"
+coverImage: "/blog-posts/images/cover-llave-ci-ssh-bastion-permisos-despliegue.jpg"
+coverAlt: "Llaves criptográficas SSH, servidores bastion y autenticación segura"
 ---
 
 > [!WARNING] **Nota de confidencialidad y contexto:**  
@@ -31,6 +31,10 @@ La investigación forense del pipeline reveló que el despliegue automático des
 ---
 
 ## 1. La arquitectura de acceso: el bastión obligatorio
+
+
+![Rechazo de cliente SSH: clave privada con permisos 0644 abortando la conexión en el runner](/blog-posts/images/terminal-ssh-permissions-bad.svg "Rechazo de cliente SSH: clave privada con permisos 0644 abortando la conexión en el runner")
+
 
 Para proteger los servidores de producción de Proyecto Horizonte, las máquinas no tienen puertos de administración expuestos a internet. Todo comando de despliegue debe atravesar un **nodo bastión** intermediario:
 
