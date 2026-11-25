@@ -76,31 +76,31 @@ const ArchitectureDiagram = () => {
         {/* Down Arrow / Connector */}
         <div className="flex items-center justify-center gap-2 py-1 text-[#ef4444] font-bold text-xs">
           <span>&darr;</span>
-          <span className="bg-[#ef4444]/10 border border-[#ef4444]/30 px-3 py-1 uppercase tracking-wider text-[0.72rem]">
+          <span className="bg-[#ef4444]/10 border border-[#ef4444]/30 px-3 py-1 uppercase tracking-wider text-[0.68rem] sm:text-[0.72rem] text-center">
             proxy_pass :8080 (Tráfico real activo a /campanas-especiales/*)
           </span>
           <span>&darr;</span>
         </div>
 
         {/* The Compromised Node (Highlighted in Danger Red) */}
-        <div className="border-2 border-[#ef4444] bg-[#ef4444]/10 p-5 relative overflow-hidden">
-          <div className="absolute top-0 right-0 px-3 py-1 bg-[#ef4444] text-[#07080b] font-black text-[0.7rem] tracking-wider uppercase">
-            EPICENTRO DEL INCIDENTE
-          </div>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+        <div className="border-2 border-[#ef4444] bg-[#ef4444]/10 p-4 sm:p-5 relative overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between gap-2.5 mb-3">
             <div>
-              <div className="text-white font-black text-base sm:text-lg tracking-wide flex items-center gap-2">
+              <div className="text-white font-black text-base sm:text-lg tracking-wide flex flex-wrap items-center gap-2">
                 <span className="text-[#ef4444] font-black">[!]</span>
                 <span>srv-legacy-2023</span>
                 <span className="text-xs font-normal text-[#94a3b8]">(10.10.10.50 · Apache 2.4 + PHP 7.4)</span>
               </div>
               <div className="text-[#ef4444] font-bold text-xs uppercase tracking-wider mt-1">
-                Estado documental: "CONGELADO" &rarr; Realidad: EN PRODUCCIÓN ACTIVA
+                Estado documental: "CONGELADO" → Realidad: EN PRODUCCIÓN ACTIVA
               </div>
             </div>
+            <span className="px-2.5 py-1 bg-[#ef4444] text-[#07080b] font-black text-[0.7rem] tracking-wider uppercase shrink-0">
+              EPICENTRO DEL INCIDENTE
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-4 pt-3 border-t border-[#ef4444]/30 text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 pt-3 border-t border-[#ef4444]/30 text-xs">
             <div className="flex items-center gap-2 text-[#fca5a5]">
               <span className="text-[#ef4444] font-bold">&bull;</span>
               <span><strong>Backdoor activo:</strong> /usr/local/bin/uptime_check en puerto 5000</span>
@@ -220,15 +220,15 @@ const Wp2shellTimeline = () => {
       <div className="relative pl-6 sm:pl-8 space-y-5 before:absolute before:left-[11px] sm:before:left-[15px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gradient-to-b before:from-amber-500 before:via-red-500 before:to-emerald-500">
         {events.map((ev, idx) => (
           <div key={idx} className="relative group">
-            <div className={`absolute -left-[29px] sm:-left-[33px] top-1.5 w-3 h-3 rounded-full ${ev.dotColor} border-2 border-[#080a0f]`}></div>
-            <div className="border border-[#1e293b] bg-[#0c0e14] p-4 group-hover:border-[#38bdf8]/40 transition-colors">
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+            <div className={`absolute -left-[19px] sm:-left-[23px] top-2 w-3 h-3 rounded-full ${ev.dotColor} border-2 border-[#080a0f]`}></div>
+            <div className="border border-[#1e293b] bg-[#0c0e14] p-4 sm:p-5 group-hover:border-[#38bdf8]/40 transition-colors">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                 <span className="text-[#38bdf8] font-bold text-xs tracking-wider">{ev.date}</span>
                 <span className={`px-2 py-0.5 border text-[0.68rem] font-bold tracking-wider uppercase ${ev.statusColor}`}>
                   {ev.status}
                 </span>
               </div>
-              <h4 className="text-white font-bold text-sm sm:text-base tracking-tight mb-1">
+              <h4 className="text-white font-bold text-sm sm:text-base tracking-tight mb-1.5">
                 {ev.title}
               </h4>
               <p className="text-[#94a3b8] text-xs leading-relaxed font-sans font-normal">
@@ -290,19 +290,19 @@ const DefenseLayersDiagram = () => {
 
       <div className="grid grid-cols-1 gap-3.5">
         {layers.map((l, i) => (
-          <div key={i} className="border border-[#1e293b] bg-[#0c0e14] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className={`px-2 py-0.5 border text-[0.68rem] font-bold ${l.color}`}>
+          <div key={i} className="border border-[#1e293b] bg-[#0c0e14] p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 sm:gap-4 group hover:border-[#10b981]/40 transition-colors">
+            <div className="space-y-1.5 flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className={`px-2 py-0.5 border text-[0.68rem] font-bold tracking-wider ${l.color}`}>
                   {l.num}
                 </span>
-                <span className="text-white font-bold text-sm">{l.title}</span>
+                <span className="text-white font-bold text-sm sm:text-base">{l.title}</span>
               </div>
-              <p className="text-[#94a3b8] text-xs font-sans leading-relaxed pt-1">
+              <p className="text-[#94a3b8] text-xs font-sans leading-relaxed">
                 {l.desc}
               </p>
             </div>
-            <div className="font-mono text-[0.72rem] text-[#10b981] bg-[#07080b] border border-[#1e293b] px-3 py-2 shrink-0">
+            <div className="font-mono text-[0.72rem] text-[#10b981] bg-[#07080b] border border-[#1e293b] px-3 py-1.5 self-start lg:self-center shrink-0 tracking-wide">
               {l.metric}
             </div>
           </div>

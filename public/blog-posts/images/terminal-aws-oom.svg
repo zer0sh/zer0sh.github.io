@@ -46,8 +46,8 @@
   <text x="550" y="45" text-anchor="middle" class="font-mono text-title">aws-cloudshell — ec2:t2.micro diagnosis &amp; console logs</text>
 
   <!-- Badge -->
-  <rect x="910" y="32" width="150" height="20" rx="3" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1"/>
-  <text x="985" y="46" text-anchor="middle" class="font-mono" font-size="10" fill="#f59e0b" font-weight="bold" letter-spacing="0.1em">OOM-KILLER DETECTED</text>
+  <rect x="890" y="32" width="170" height="20" rx="3" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="975" y="46" text-anchor="middle" class="font-mono" font-size="10" fill="#f59e0b" font-weight="bold" letter-spacing="0.1em">OOM-KILLER DETECTED</text>
 
   <!-- Contenido de Terminal -->
   <g class="font-mono" transform="translate(45, 95)">
