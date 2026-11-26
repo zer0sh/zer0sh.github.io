@@ -349,9 +349,12 @@ const CodeBlock = ({ children }) => {
           {copied ? '[COPIED!]' : '[COPY]'}
         </button>
       </div>
-      <div ref={codeRef} className="p-4 overflow-x-auto font-mono text-sm text-[#e2e8f0] leading-relaxed">
+      <pre
+        ref={codeRef}
+        className="p-4 overflow-x-auto font-mono text-sm text-[#10b981] leading-relaxed whitespace-pre m-0 bg-transparent border-0 [&>code]:bg-transparent [&>code]:p-0 [&>code]:text-[#10b981] [&>code]:whitespace-pre [&>code]:block"
+      >
         {children}
-      </div>
+      </pre>
     </div>
   );
 };
