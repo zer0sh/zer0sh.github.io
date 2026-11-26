@@ -33,8 +33,11 @@ function generateTerminalSvg({
   const lineHeight = 26;
   const promptY = 96;
   const firstLineY = 132;
-  const bottomPadding = 40;
-  const contentHeight = Math.max(firstLineY + lines.length * lineHeight + bottomPadding, 260);
+  const lastLineY = lines.length > 0
+    ? firstLineY + (lines.length - 1) * lineHeight
+    : promptY;
+  const rectBottom = lastLineY + 28;
+  const contentHeight = rectBottom + 20;
   const width = 1100;
 
   const badgeWidth = Math.max(badge.length * 8.5 + 24, 120);
