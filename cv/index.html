@@ -186,6 +186,125 @@
       gap: 10px;
     }
 
+    /* HELP TOUR MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(17, 17, 17, 0.78);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      backdrop-filter: blur(2px);
+    }
+
+    .modal-box {
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      flex-direction: column;
+      animation: modalPop 0.15s ease-out;
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      background: var(--yellow);
+      border-bottom: var(--border);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-title {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      font-weight: 900;
+      letter-spacing: -0.3px;
+      margin-left: 8px;
+    }
+
+    .modal-body {
+      padding: 18px 20px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #222;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .modal-body h4 {
+      font-family: var(--font-mono);
+      font-size: 14.5px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      color: #000;
+      text-transform: uppercase;
+    }
+
+    .modal-body ul {
+      margin-left: 20px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    .modal-body li {
+      margin-bottom: 5px;
+    }
+
+    .modal-tip-box {
+      background: #fbfaf6;
+      border: 2px dashed #000;
+      padding: 8px 12px;
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .modal-footer {
+      border-top: var(--border);
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f4f1ea;
+    }
+
+    .tour-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .tour-dot {
+      width: 12px;
+      height: 12px;
+      border: 2px solid #000;
+      background: #ffffff;
+      cursor: pointer;
+    }
+
+    .tour-dot.active {
+      background: var(--cyan);
+      box-shadow: 1px 1px 0px #000;
+    }
+
     /* ATS KEYWORD MATCHER DRAWER */
     .matcher-drawer {
       background: var(--white);
@@ -785,7 +904,7 @@
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      header, .toolbar, .audit-bar, .panel-header, .view-tabs, .wizard-container, textarea#markdownInput, footer, .no-print, #leftPanel, .recruiter-notice-bar, .matcher-drawer {
+      header, .toolbar, .audit-bar, .panel-header, .view-tabs, .wizard-container, textarea#markdownInput, footer, .no-print, #leftPanel, .recruiter-notice-bar, .matcher-drawer, .modal-overlay {
         display: none !important;
       }
       .workspace {
@@ -929,6 +1048,37 @@
 <body>
   <div id="saveToast" style="display:none; position:fixed; top:18px; right:18px; z-index:99999; font-family:var(--font-mono); font-size:12px; font-weight:800; border:2px solid #000; box-shadow:4px 4px 0px #000; padding:10px 16px; background:#00f5d4;"></div>
 
+  <!-- HELP TOUR MODAL -->
+  <div id="helpTourModal" class="modal-overlay no-print" style="display:none;" onclick="handleModalBackdropClick(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center;">
+          <span class="badge neo-box-white" id="tourStepBadge">PASO 1 DE 5</span>
+          <span class="modal-title" id="tourHeaderTitle">GUIA RAPIDA</span>
+        </div>
+        <button class="btn btn-sm btn-white" onclick="closeHelpTour()">[X CERRAR]</button>
+      </div>
+
+      <div class="modal-body" id="tourBody">
+        <!-- Content will be injected by JavaScript -->
+      </div>
+
+      <div class="modal-footer">
+        <div class="tour-dots" id="tourDots">
+          <div class="tour-dot active" onclick="goToTourStep(1)"></div>
+          <div class="tour-dot" onclick="goToTourStep(2)"></div>
+          <div class="tour-dot" onclick="goToTourStep(3)"></div>
+          <div class="tour-dot" onclick="goToTourStep(4)"></div>
+          <div class="tour-dot" onclick="goToTourStep(5)"></div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-white" id="btnTourPrev" onclick="prevTourStep()" disabled>&lt; Anterior</button>
+          <button class="btn btn-yellow" id="btnTourNext" onclick="nextTourStep()">Siguiente &gt;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- RECRUITER NOTICE BAR -->
   <div class="recruiter-notice-bar" id="recruiterBar">
     <div style="display:flex; align-items:center; gap:8px;">
@@ -950,6 +1100,7 @@
       </div>
     </div>
     <div class="header-tags">
+      <button class="btn btn-sm btn-cyan" id="btnHelpHeader" onclick="openHelpTour()">[AYUDA / GUIA]</button>
       <button class="btn btn-sm btn-white" id="btnToggleRecruiterHeader" onclick="toggleRecruiterView()">[VISTA RECLUTADOR]</button>
       <button class="btn btn-sm btn-pink" id="btnToggleMatcherHeader" onclick="toggleAtsMatcher()">[ATS MATCHER]</button>
       <button class="btn btn-sm btn-yellow" onclick="loadSampleGuide()">[CARGAR GUIA]</button>
@@ -1217,12 +1368,71 @@
     // LOCALSTORAGE PERSISTENCE KEYS
     const STORAGE_KEY_FORM = "ats_cv_local_form_v1";
     const STORAGE_KEY_MD = "ats_cv_local_md_v1";
+    const STORAGE_KEY_TOUR = "ats_cv_tour_viewed_v1";
 
     let currentStep = 1;
+    let currentTourStep = 1;
     let isRecruiterView = false;
     let currentLang = "es";
     let linksData = [];
     let experiencesData = [];
+
+    const TOUR_DATA = {
+      es: [
+        {
+          title: "¿QUE ES ESTE OPTIMIZADOR Y QUE HACE?",
+          heading: "Formato Harvard ATS Diseñado para Superar Filtros OCR",
+          html: "<p>La mayoria de empresas y reclutadores usan sistemas ATS (como Workday, Taleo, Greenhouse o Lever) que descartan automaticamente currículums con dos columnas, graficos, tablas o iconos que confunden a sus lectores OCR.</p><p>Esta herramienta genera un CV bajo el formato estándar de una sola columna (estilo Harvard / Jake's Resume) con jerarquia tipografica clara, fechas alineadas con Flexbox y compatibilidad del 100% con escáneres de contratacion.</p><div class='modal-tip-box'>[REGLA DE ORO] Los ATS leen texto continuo de arriba hacia abajo sin columnas laterales.</div>"
+        },
+        {
+          title: "¿COMO USARLO Y EDITAR TU INFORMACION?",
+          heading: "Edicion Dual: Formulario Wizard o Markdown Directo",
+          html: "<p>Puedes construir tu CV de dos formas sincronizadas en tiempo real:</p><ul><li><strong>Formulario Wizard (5 Pasos):</strong> Ideal si prefieres llenar campos guiados para tus datos de Contacto, Resumen, Habilidades tecnicas, Empleos y Educacion.</li><li><strong>Editor Markdown Directo:</strong> Si eres desarrollador o te gusta escribir codigo, usa la pestaña 'Editor Markdown Directo' para editar el texto plano a tu gusto.</li></ul><p>Todo lo que modifiques en un lado actualiza inmediatamente la vista previa del otro.</p>"
+        },
+        {
+          title: "¿COMO SE ALMACENAN TUS DATOS? (100% PRIVADO)",
+          heading: "Privacidad Total: Tus Datos Nunca Salen de tu Navegador",
+          html: "<p>A diferencia de otras plataformas web, <strong>esta aplicacion no tiene bases de datos ni servidores recopilando tu información personal</strong>.</p><ul><li><strong>Memoria Local (localStorage):</strong> Cada tecla que presionas se almacena en el disco local de tu propio navegador.</li><li><strong>Boton [EXPORTAR .JSON]:</strong> Guarda una copia de respaldo en tu computador para llevarla a otros dispositivos.</li><li><strong>Boton [IMPORTAR .JSON]:</strong> Restaura tu respaldo en segundos con un solo clic.</li></ul><div class='modal-tip-box'>[CERO TELEMETRIA] Puedes usar esta herramienta sin conexion a internet una vez cargada.</div>"
+        },
+        {
+          title: "¿COMO IMPRIMIR Y EXPORTAR EN PDF?",
+          heading: "Exportacion Calibrada sin Lineas Cortadas ni Hojas Extras",
+          html: "<p>Para exportar tu CV a PDF listo para enviar:</p><ol style='margin-left:20px; margin-bottom:8px;'><li>Haz clic en <strong>[P] Imprimir / Guardar PDF</strong>.</li><li>En la ventana del navegador, selecciona como Destino: <strong>Guardar como PDF</strong>.</li><li><strong>Muy Importante:</strong> Desmarca la casilla <em>'Encabezados y pies de pagina'</em> para quitar la fecha y URLs de los bordes.</li></ol><div class='modal-tip-box'>[AJUSTE DE ALTURA] Si tu texto se desborda por pocas lineas, usa el boton <strong>A4 Alta (0.65cm)</strong> en la barra superior para compactar los margenes verticalmente.</div>"
+        },
+        {
+          title: "AUDITORIA ATS Y ANALIZADOR DE VACANTES",
+          heading: "Auditor en Vivo y Comparador de Palabras Clave",
+          html: "<p>Saca el maximo provecho a tus postulaciones:</p><ul><li><strong>Barra Superior:</strong> Monitorea tu puntaje ATS, conteo de palabras (ideal entre 350 y 650) y cantidad de metricas cuantificadas (resultados numéricos con %, ahorros de tiempo o escala).</li><li><strong>Boton [ATS MATCHER]:</strong> Pega la descripcion de la vacante a la que aplicas para que el motor extraiga las tecnologias clave que busca la empresa y te muestre cuales tienes y cuales te faltan.</li></ul><div class='modal-tip-box'>[CONSEJO PRO] Incorpora las palabras clave faltantes en tus viñetas de empleo para subir al 100% de afinidad.</div>"
+        }
+      ],
+      en: [
+        {
+          title: "WHAT IS THIS OPTIMIZER & WHAT DOES IT DO?",
+          heading: "Harvard Single-Column ATS Format Engineered for OCR",
+          html: "<p>Most modern employers use Applicant Tracking Systems (ATS like Workday, Taleo, Greenhouse, or Lever) that automatically discard resumes with two columns, tables, graphics, or unusual icons that disrupt OCR parsers.</p><p>This tool produces standard single-column Harvard / Jake's format resumes with clear typographic hierarchy, flexbox-aligned dates, and 100% readability across automated talent scanners.</p><div class='modal-tip-box'>[GOLDEN RULE] ATS engines parse linear text top-to-bottom without side columns.</div>"
+        },
+        {
+          title: "HOW TO USE & EDIT YOUR RESUME?",
+          heading: "Dual-Mode Editing: 5-Step Wizard or Direct Markdown",
+          html: "<p>You can craft your resume using two bi-directionally synchronized workflows:</p><ul><li><strong>5-Step Wizard Form:</strong> Guided inputs for Contact, Summary, Technical Skills, Experience bullets, and Education.</li><li><strong>Direct Markdown Editor:</strong> Seamless raw text editing for developers who prefer keyboard-first Markdown.</li></ul><p>Edits in either mode immediately update the live ATS printable preview.</p>"
+        },
+        {
+          title: "HOW IS DATA STORED? (100% PRIVATE)",
+          heading: "Zero-Telemetry: All Data Stays in Your Browser",
+          html: "<p>Unlike SaaS resume builders, <strong>this application has no server database collecting your personal information</strong>.</p><ul><li><strong>Local Storage:</strong> Every keystroke persists securely inside your local browser storage.</li><li><strong>[EXPORT .JSON]:</strong> Download a local backup snapshot to your computer.</li><li><strong>[IMPORT .JSON]:</strong> Restore your saved snapshot on any machine with zero friction.</li></ul><div class='modal-tip-box'>[PRIVACY GUARANTEE] Fully functional offline once loaded in your browser.</div>"
+        },
+        {
+          title: "HOW TO PRINT & EXPORT PDF?",
+          heading: "Calibrated Print Output Without Orphan Headings",
+          html: "<p>To export your clean PDF deliverable:</p><ol style='margin-left:20px; margin-bottom:8px;'><li>Click <strong>[P] Print / Save PDF</strong>.</li><li>In your browser print dialog, set Destination to: <strong>Save as PDF</strong>.</li><li><strong>Critical:</strong> Uncheck <em>'Headers and footers'</em> to remove browser timestamp and URL watermarks.</li></ol><div class='modal-tip-box'>[HEIGHT PROFILES] If your content slightly spills over, click <strong>A4 Tall (0.65cm)</strong> on the top bar to calibrate page margins.</div>"
+        },
+        {
+          title: "ATS AUDIT & TARGET JOB KEYWORD MATCHER",
+          heading: "Live Scoring & Real-Time Keyword Gap Analysis",
+          html: "<p>Maximize interview callbacks with automated auditing:</p><ul><li><strong>Top Metric Bar:</strong> Monitors your ATS Score, optimal word density (350–650 words), and quantified impact metrics (%, time savings, scale).</li><li><strong>[ATS MATCHER]:</strong> Paste any target job description to automatically extract tech requirements and see which keywords you have matched vs missing.</li></ul><div class='modal-tip-box'>[PRO TIP] Insert missing keywords into your experience bullets to achieve 100% target affinity.</div>"
+        }
+      ]
+    };
 
     const I18N = {
       es: {
@@ -1330,6 +1540,90 @@
         lblMissingTags: "Missing / Recommended Keywords:"
       }
     };
+
+    // TOUR CONTROLS
+    function openHelpTour() {
+      currentTourStep = 1;
+      renderTourStep(currentTourStep);
+      const modal = document.getElementById("helpTourModal");
+      if (modal) modal.style.display = "flex";
+    }
+
+    function closeHelpTour() {
+      const modal = document.getElementById("helpTourModal");
+      if (modal) modal.style.display = "none";
+      localStorage.setItem(STORAGE_KEY_TOUR, "true");
+    }
+
+    function handleModalBackdropClick(e) {
+      if (e.target.id === "helpTourModal") {
+        closeHelpTour();
+      }
+    }
+
+    function renderTourStep(step) {
+      const list = TOUR_DATA[currentLang] || TOUR_DATA.es;
+      const data = list[step - 1] || list[0];
+
+      document.getElementById("tourStepBadge").innerText = (currentLang === 'en') ? `STEP ${step} OF 5` : `PASO ${step} DE 5`;
+      document.getElementById("tourHeaderTitle").innerText = data.title;
+      
+      const body = document.getElementById("tourBody");
+      body.innerHTML = `
+        <h4>${data.heading}</h4>
+        ${data.html}
+      `;
+
+      // Update dots
+      const dots = document.querySelectorAll(".tour-dot");
+      dots.forEach((dot, idx) => {
+        if (idx === step - 1) dot.classList.add("active");
+        else dot.classList.remove("active");
+      });
+
+      // Update buttons
+      document.getElementById("btnTourPrev").disabled = (step === 1);
+      const btnNext = document.getElementById("btnTourNext");
+      if (step === 5) {
+        btnNext.innerText = (currentLang === 'en') ? "[FINISH]" : "[ENTENDIDO]";
+        btnNext.className = "btn btn-cyan";
+      } else {
+        btnNext.innerText = (currentLang === 'en') ? "Next >" : "Siguiente >";
+        btnNext.className = "btn btn-yellow";
+      }
+    }
+
+    function nextTourStep() {
+      if (currentTourStep < 5) {
+        currentTourStep++;
+        renderTourStep(currentTourStep);
+      } else {
+        closeHelpTour();
+        showToast((currentLang === 'en') ? '[READY] Tour completed! Start editing.' : '[LISTO] Guia completada. Comienza a editar.', '#00f5d4');
+      }
+    }
+
+    function prevTourStep() {
+      if (currentTourStep > 1) {
+        currentTourStep--;
+        renderTourStep(currentTourStep);
+      }
+    }
+
+    function goToTourStep(step) {
+      currentTourStep = step;
+      renderTourStep(currentTourStep);
+    }
+
+    // Keyboard support for ESC to close tour
+    window.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        const modal = document.getElementById("helpTourModal");
+        if (modal && modal.style.display === "flex") {
+          closeHelpTour();
+        }
+      }
+    });
 
     // HANDLE REAL-TIME INPUT & AUTO-PERSISTENCE
     function handleInputUpdate() {
@@ -1779,6 +2073,12 @@
       if (lblMt) lblMt.innerText = dict.lblMatchedTags;
       const lblMs = document.getElementById("lblMissingTags");
       if (lblMs) lblMs.innerText = dict.lblMissingTags;
+
+      // Update Help Tour Modal texts if open
+      const modal = document.getElementById("helpTourModal");
+      if (modal && modal.style.display === "flex") {
+        renderTourStep(currentTourStep);
+      }
 
       if (syncPreview) {
         syncFormToPreview();
@@ -2331,7 +2631,7 @@
       if (langsLines.length > 0) document.getElementById("inputLanguages").value = langsLines.join("\n");
     }
 
-    // INITIALIZATION: LOAD FROM LOCALSTORAGE IF EXISTS, ELSE CLEAN BLANK
+    // INITIALIZATION
     function initApp() {
       renderLinksList();
       renderExperiencesList();
@@ -2357,8 +2657,14 @@
         parseMarkdownToForm(savedMd);
         renderATS(savedMd);
       } else {
-        // CLEAN BLANK STATE
         renderATS("");
+        // First time visitor: show guide tour automatically if never viewed
+        const tourViewed = localStorage.getItem(STORAGE_KEY_TOUR);
+        if (!tourViewed) {
+          setTimeout(() => {
+            openHelpTour();
+          }, 600);
+        }
       }
 
       const params = new URLSearchParams(window.location.search);
