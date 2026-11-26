@@ -260,7 +260,7 @@ export const TerminalModal = ({ isOpen, onClose }) => {
       case 'sudo': {
         newEntries.push({
           type: 'error',
-          text: "Permission denied: user 'guest' is not in sudoers file. Incident logged in /var/log/antigravity.log",
+          text: "Permission denied: user 'guest' is not in sudoers file. This incident has been logged to /var/log/auth.log",
         });
         break;
       }
