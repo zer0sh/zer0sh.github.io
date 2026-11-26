@@ -46,13 +46,13 @@ Se borraba únicamente lo que se acababa de crear, con rutas relativas específi
 
 ## 2. La relajación de disciplina: el comodín de la discordia
 
-Hacia el final de una larga sesión de depuración, tras iterar una docena de veces con ajustes de CSS, la carpeta raíz del espacio de trabajo temporal (`~/Swapps/`) tenía varias capturas de prueba dispersas.
+Hacia el final de una larga sesión de depuración, tras iterar una docena de veces con ajustes de CSS, la carpeta raíz del espacio de trabajo temporal (`~/Workspace/`) tenía varias capturas de prueba dispersas.
 
 En lugar de listar los archivos generados o borrarlos por prefijo exacto, entró en juego el atajo de la pereza mental:
 
 ```bash
 # El comando destructivo
-$ rm -f ~/Swapps/*.png
+$ rm -f ~/Workspace/*.png
 ```
 
 El cursor parpadeó medio segundo y volvió al prompt en silencio. Sin advertencias. Sin confirmaciones. Sin errores.
@@ -61,7 +61,7 @@ El cursor parpadeó medio segundo y volvió al prompt en silencio. Sin advertenc
 
 ## 3. El impacto del desastre silencioso
 
-La raíz de `~/Swapps/` no era un espacio de trabajo aislado: **era un directorio compartido donde diversas sesiones de automatización, tareas de QA y diagnósticos de incidentes depositaban archivos temporales de referencia.**
+La raíz de `~/Workspace/` no era un espacio de trabajo aislado: **era un directorio compartido donde diversas sesiones de automatización, tareas de QA y diagnósticos de incidentes depositaban archivos temporales de referencia.**
 
 Al revisar la papelera:
 ```bash
@@ -87,7 +87,7 @@ En sistemas de archivos ext4 con discos de estado sólido (SSD) y comandos de de
 ## 4. Por qué ocurrió: análisis de causa raíz
 
 1. **Divergencia de método:** Se pasó de un método riguroso y determinista (borrar por lista explícita) a un método estocástico (comodines en carpetas amplias) justo en el último paso de la tarea, cuando la fatiga cognitiva reduce la guardia.
-2. **Falta de contención de alcance:** Los scripts de prueba guardaban capturas en la raíz del directorio general en lugar de un subdirectorio efímero dedicado (`~/Swapps/tmp/session-20260909/`).
+2. **Falta de contención de alcance:** Los scripts de prueba guardaban capturas en la raíz del directorio general en lugar de un subdirectorio efímero dedicado (`~/Workspace/tmp/session-20260909/`).
 3. **Ausencia de red de seguridad en shell:** El alias clásico de supervivencia `alias rm='rm -I'` o herramientas de borrado seguro con papelera CLI (`trash-cli`) no estaban configuradas en el entorno.
 
 ---
@@ -108,8 +108,8 @@ rm -rf "$WORK_DIR"
 En nuestros runbooks quedó prohibido ejecutar `rm *.<ext>` sin haber ejecutado primero un `ls` de validación:
 ```bash
 # Regla de oro:
-ls -l ~/Swapps/*.png  # 1. Inspeccionar la lista real
-rm ~/Swapps/test-*.png # 2. Borrar solo con prefijo acotado
+ls -l ~/Workspace/*.png  # 1. Inspeccionar la lista real
+rm ~/Workspace/test-*.png # 2. Borrar solo con prefijo acotado
 ```
 
 ### 3. Reemplazo de `rm` por `trash-put`

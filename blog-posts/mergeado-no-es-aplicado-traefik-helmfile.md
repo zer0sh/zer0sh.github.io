@@ -34,7 +34,7 @@ Esa simple acción dejó una bomba de tiempo lista para explotar en el siguiente
 ![Diferencial en Helmfile: divergencia entre el repositorio Git y la configuración viva en el clúster](/blog-posts/images/terminal-helmfile-git-drift.svg "Diferencial en Helmfile: divergencia entre el repositorio Git y la configuración viva en el clúster")
 
 
-El repositorio utilizaba **Helmfile** para orquestar los releases de Kubernetes en nuestros dos clústeres: desarrollo (`swapps-dev`) y producción (`swapps-prod`).
+El repositorio utilizaba **Helmfile** para orquestar los releases de Kubernetes en nuestros dos clústeres: desarrollo (`workspace-dev`) y producción (`workspace-prod`).
 
 A diferencia de herramientas como ArgoCD o Flux que sincronizan automáticamente en bucle cerrado, en este repositorio de infraestructura los despliegues de clúster base se ejecutaban manualmente por ingenieros autorizados mediante comandos locales:
 

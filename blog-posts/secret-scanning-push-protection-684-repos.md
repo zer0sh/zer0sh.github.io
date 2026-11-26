@@ -55,7 +55,7 @@ Como la organización contaba con 684 repositorios (237 activos y 447 archivados
 
 ## 2. El bot de QA que no acepta suposiciones
 
-El héroe involuntario de este incidente fue nuestro bot interno de aseguramiento de calidad (*Swapps Agent*). 
+El héroe involuntario de este incidente fue nuestro bot interno de aseguramiento de calidad (*Workspace Agent*). 
 
 El bot corre periódicamente en GitHub Actions y compara el estado deseado de las directivas de seguridad contra la API de GitHub:
 

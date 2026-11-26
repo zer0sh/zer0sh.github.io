@@ -69,7 +69,7 @@ Nos sentamos a mapear la superficie real de ataque:
 
 1. **Los runners estaban configurados a nivel de organización privada:** Ningún repositorio público tenía acceso a este grupo de runners; solo repositorios privados controlados por el equipo interno.
 2. **Los runners ya recibían los secretos en sus variables de entorno:** El token de Cloudflare, las llaves de base de datos de desarrollo y los tokens de CI ya se inyectaban como variables de GitHub Actions en los jobs de compilación.
-3. **El clúster de producción estaba 100% aislado:** El clúster `swapps-prod` no utilizaba runners autohospedados; todos los despliegues de producción eran orquestados por ArgoCD en modo *pull*, sin comunicación bidireccional desde los runners de desarrollo.
+3. **El clúster de producción estaba 100% aislado:** El clúster `workspace-prod` no utilizaba runners autohospedados; todos los despliegues de producción eran orquestados por ArgoCD en modo *pull*, sin comunicación bidireccional desde los runners de desarrollo.
 
 La conclusión técnica fue reveladora: **la exposición marginal no era la fuga de secretos de producción (los runners no los tenían), sino la falta del principio de mínimo privilegio en el entorno de desarrollo.**
 
