@@ -26,6 +26,7 @@ export const ParallaxBlogCard = ({
     glareY: 50,
   });
   const [isHovered, setIsHovered] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const handleMouseMove = useCallback((e) => {
     if (!cardRef.current) return;
@@ -117,10 +118,24 @@ export const ParallaxBlogCard = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
             {/* Left Cover Image (7 cols) */}
             <div className="lg:col-span-7 relative aspect-[16/10] lg:aspect-auto min-h-[260px] lg:min-h-[360px] overflow-hidden bg-[#07080b]">
+              {/* Shimmer loading skeleton */}
+              {!isImageLoaded && (
+                <div className="absolute inset-0 bg-[#090b10] flex items-center justify-center font-mono z-10 overflow-hidden pointer-events-none">
+                  <div className="absolute inset-0 w-full h-full animate-cyber-shimmer bg-gradient-to-r from-transparent via-[#10b981]/10 to-transparent" />
+                  <div className="relative z-20 flex items-center gap-2 px-3 py-1.5 bg-[#07080b]/90 border border-[#1e293b] text-[#10b981] text-[0.68rem] tracking-widest uppercase">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-ping" />
+                    <span>CARGANDO ASSET...</span>
+                  </div>
+                </div>
+              )}
+
               <img
                 src={coverUrl}
                 alt={post.coverAlt || post.title}
-                className="w-full h-full object-cover transition-all duration-700 ease-out transform"
+                onLoad={() => setIsImageLoaded(true)}
+                className={`w-full h-full object-cover transition-all duration-700 ease-out transform ${
+                  isImageLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
                 style={{
                   filter: isHovered
                     ? 'grayscale(0%) contrast(108%) brightness(102%)'
@@ -238,10 +253,24 @@ export const ParallaxBlogCard = ({
 
         {/* Card Cover Image with 16:9 Aspect Ratio */}
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#07080b]">
+          {/* Shimmer loading skeleton */}
+          {!isImageLoaded && (
+            <div className="absolute inset-0 bg-[#090b10] flex items-center justify-center font-mono z-10 overflow-hidden pointer-events-none">
+              <div className="absolute inset-0 w-full h-full animate-cyber-shimmer bg-gradient-to-r from-transparent via-[#10b981]/10 to-transparent" />
+              <div className="relative z-20 flex items-center gap-2 px-2.5 py-1 bg-[#07080b]/90 border border-[#1e293b] text-[#10b981] text-[0.65rem] tracking-wider uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-ping" />
+                <span>CARGANDO ASSET...</span>
+              </div>
+            </div>
+          )}
+
           <img
             src={coverUrl}
             alt={post.coverAlt || post.title}
-            className="w-full h-full object-cover transition-all duration-600 ease-out transform"
+            onLoad={() => setIsImageLoaded(true)}
+            className={`w-full h-full object-cover transition-all duration-600 ease-out transform ${
+              isImageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
             style={{
               filter: isHovered
                 ? 'grayscale(0%) contrast(108%) brightness(102%)'

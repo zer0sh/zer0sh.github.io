@@ -433,6 +433,49 @@ const AlertBlockquote = ({ children }) => {
   );
 };
 
+const LazyArticleImage = ({ src, alt, title, isCover = false }) => {
+  const [loaded, setLoaded] = useState(false);
+  const isSvg = src && typeof src === 'string' && src.toLowerCase().endsWith('.svg');
+
+  const content = (
+    <div className="relative overflow-hidden border border-[#131722] bg-[#090b10] min-h-[140px] flex items-center justify-center">
+      {!loaded && (
+        <div className="absolute inset-0 bg-[#080a0f] flex items-center justify-center font-mono text-xs z-10 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 w-full h-full animate-cyber-shimmer bg-gradient-to-r from-transparent via-[#10b981]/10 to-transparent" />
+          <div className="relative z-20 flex items-center gap-2 px-3 py-1.5 bg-[#07080b]/90 border border-[#1e293b] text-[#10b981] text-[0.68rem] tracking-widest uppercase shadow-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-ping" />
+            <span>CARGANDO ASSET VISUAL...</span>
+          </div>
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        title={title}
+        loading={isCover ? 'eager' : 'lazy'}
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        className={`w-full h-auto object-cover transition-opacity duration-500 ${
+          loaded ? 'opacity-100' : 'opacity-0'
+        } ${isSvg ? '' : 'border border-[#131722]'}`}
+      />
+    </div>
+  );
+
+  if (isCover) return content;
+
+  return (
+    <figure className="my-8">
+      {content}
+      {title && (
+        <figcaption className="text-center font-mono text-xs text-[#64748b] mt-2">
+          {title}
+        </figcaption>
+      )}
+    </figure>
+  );
+};
+
 export const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
@@ -618,12 +661,11 @@ export const Blog = () => {
             </header>
 
             {selectedPost.coverImage && (
-              <div className="mb-12 overflow-hidden border border-[#131722]">
-                <img
+              <div className="mb-12">
+                <LazyArticleImage
                   src={selectedPost.coverImage}
                   alt={selectedPost.coverAlt || selectedPost.title}
-                  className="w-full h-auto object-cover"
-                  loading="lazy"
+                  isCover={true}
                 />
               </div>
             )}
@@ -674,24 +716,9 @@ export const Blog = () => {
                 components={{
                   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
                   blockquote: AlertBlockquote,
-                  img: ({ src, alt, title }) => {
-                    const isSvg = src && typeof src === 'string' && src.toLowerCase().endsWith('.svg');
-                    return (
-                      <figure className="my-8">
-                        <img
-                          src={src}
-                          alt={alt}
-                          title={title}
-                          className={isSvg ? "w-full h-auto" : "w-full h-auto border border-[#131722]"}
-                        />
-                        {title && (
-                          <figcaption className="text-center font-mono text-xs text-[#64748b] mt-2">
-                            {title}
-                          </figcaption>
-                        )}
-                      </figure>
-                    );
-                  },
+                  img: ({ src, alt, title }) => (
+                    <LazyArticleImage src={src} alt={alt} title={title} />
+                  ),
                   h2: ({ children, ...props }) => {
                     const text = children?.toString() || '';
                     return <h2 id={slugify(text)} {...props}>{children}</h2>;

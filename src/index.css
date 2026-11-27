@@ -272,6 +272,19 @@
   filter: drop-shadow(0 2px 14px rgba(16, 185, 129, 0.18));
 }
 
+@keyframes cyberShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-cyber-shimmer {
+  animation: cyberShimmer 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 
 
 
