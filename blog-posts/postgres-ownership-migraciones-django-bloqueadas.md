@@ -1,7 +1,7 @@
 ---
 title: "Migraciones de Django bloqueadas en PostgreSQL: el laberinto de permisos USAGE vs OWNERSHIP"
 date: "2026-08-28"
-category: "Bases de Datos & SRE"
+category: "Bases de Datos & Backend"
 excerpt: "Un despliegue rutinario de Django colapsó con 'must be owner of table'. La aplicación tenía permisos de lectura y escritura completos, pero no podía alterar esquemas. Crónica de cómo resolver la propiedad de tablas y secuencias serial en PostgreSQL sin tiempo de inactividad."
 coverImage: "/blog-posts/images/cover-postgres-ownership-migraciones-django-bloqueadas.jpg"
 coverAlt: "Bases de datos PostgreSQL, esquemas relacionales y migraciones en Django"

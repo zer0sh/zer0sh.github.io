@@ -1,7 +1,7 @@
 ---
 title: "La página en blanco que era un ataque: wp2shell, administradores fantasma y la pista falsa de PHP 8.3"
 date: "2026-09-08"
-category: "Incident Response"
+category: "Incident Response & SRE"
 excerpt: "Llegó como un reporte de bug rutinario: una página en blanco devolviendo HTTP 200 con 0 bytes. Al tirar del hilo descubrimos una campaña masiva de wp2shell, 11 administradores fantasma plantados semanas atrás, backdoors camuflados como imágenes y un error de PHP 8.3 que casi nos desvía del diagnóstico real."
 coverImage: "/blog-posts/images/wp2shell-cover.jpg"
 coverAlt: "Análisis forense de ciberseguridad y auditoría de WordPress en producción"

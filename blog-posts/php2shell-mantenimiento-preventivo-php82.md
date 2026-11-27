@@ -1,7 +1,7 @@
 ---
 title: "Caída por memoria en la semana de PHP2Shell: OOM-Killer, falsos diagnósticos en AWS y las cuatro capas de defensa"
 date: "2026-10-26"
-category: "Runtime & SRE"
+category: "Incident Response & SRE"
 excerpt: "En plena alerta global por la vulnerabilidad PHP2Shell, un backend Laravel en AWS dejó de responder súbitamente. Entre un OOM que congeló la máquina 9 horas, una mala lectura del CLI de AWS que culpó al hardware y la falta de capacidad en la zona de disponibilidad, construimos una estrategia de contención en cuatro capas."
 coverImage: "/blog-posts/images/php2shell-cover.jpg"
 coverAlt: "Monitoreo de métricas cloud, telemetría y servidores Linux en AWS"

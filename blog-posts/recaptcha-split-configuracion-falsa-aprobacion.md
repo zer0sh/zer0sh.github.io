@@ -1,7 +1,7 @@
 ---
 title: "El reporte que decía 'funciona': reCAPTCHA, configuraciones divididas y la trampa del caché en QA"
 date: "2026-09-30"
-category: "Frontend & Arquitectura"
+category: "Frontend & Web Platforms"
 excerpt: "Una tarea simple para evitar exponer secretos de reCAPTCHA en entornos de prueba desencadenó un mes de problemas en cadena: iframes rotos, scripts que cancelaban envíos y un reporte de QA que dio el fix por bueno cuando el entorno seguía mostrando contenido cacheado."
 coverImage: "/blog-posts/images/cover-recaptcha-split-configuracion-falsa-aprobacion.jpg"
 coverAlt: "Pruebas de calidad QA, validación de APIs y formularios seguros"

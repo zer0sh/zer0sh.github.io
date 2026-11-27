@@ -1,7 +1,7 @@
 ---
 title: "Automatización Tradicional vs IA: Cuándo usar cada una (y el superpoder del backend moderno)"
 date: "2026-10-14"
-category: "Automatización"
+category: "Kubernetes & Cloud"
 excerpt: "El choque entre el determinismo de scripts y la flexibilidad de los modelos de IA. Cómo decidir qué herramienta usar y cómo la IA desbloqueó a los ingenieros de backend para crear interfaces y paneles completos."
 coverImage: "/blog-posts/images/cover-automatizaciones-tradicionales-vs-ia.jpg"
 coverAlt: "Modelos de inteligencia artificial interactuando con automatizaciones deterministas"

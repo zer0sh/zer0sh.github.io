@@ -1,7 +1,7 @@
 ---
 title: "El 'rm *.png' que se llevó 70 capturas: autopsia de un descuido con comodines en directorios compartidos"
 date: "2026-09-11"
-category: "Buenas Prácticas & Shell"
+category: "Linux & Shell"
 excerpt: "Durante una sesión de pruebas visuales con Playwright, un comando de limpieza rápida con comodín en un directorio compartido eliminó más de 70 capturas de auditorías anteriores sin posibilidad de recuperación. Crónica sin filtros sobre el peligro de la pereza en la terminal."
 coverImage: "/blog-posts/images/cover-rm-comodin-carpetas-compartidas-autopsia.jpg"
 coverAlt: "Línea de comandos de Linux, sistemas de archivos ext4 y recuperación forense de datos"

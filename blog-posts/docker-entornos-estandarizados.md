@@ -1,7 +1,7 @@
 ---
 title: "La falacia del 'en mi máquina sí funciona': cuatro sistemas operativos, versiones incompatibles y el rescate mediante Docker estandarizado"
 date: "2026-10-15"
-category: "Infraestructura & Contenedores"
+category: "Kubernetes & Cloud"
 excerpt: "Cuatro ingenieros, cuatro sistemas operativos distintos y una promesa rota: 'solo clona el repo y corre pip install'. Crónica de cómo la deriva de dependencias entre Windows, Arch, Debian y Ubuntu paralizó un despliegue crítico, y por qué Docker es la única cura determinista contra la suposición técnica."
 coverImage: "/blog-posts/images/docker-entornos-estandarizados.png"
 coverAlt: "Comparativa de fragmentación de sistemas operativos frente a la estandarización determinista con Docker"

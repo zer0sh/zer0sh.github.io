@@ -1,7 +1,7 @@
 ---
 title: "El despliegue a mano con GitHub Actions suspendido: cuando el billing congela la entrega continua"
 date: "2026-09-28"
-category: "CI/CD & Operaciones"
+category: "CI/CD & GitOps"
 excerpt: "Un arreglo urgente de contraste visual WCAG AA en un portal gremial quedó atrapado: GitHub Actions se negó a arrancar por un bloqueo administrativo de facturación. Sin pipelines automáticos, ejecutamos el despliegue a producción a mano cruzando tres capas de permisos."
 coverImage: "/blog-posts/images/cover-deploy-manual-con-github-actions-caido-billing.jpg"
 coverAlt: "Servidores cloud globales, contingencia operativa y redes de infraestructura"
@@ -43,7 +43,7 @@ El lanzamiento legal no podía esperar a que el departamento financiero resolvie
 El despliegue no era un simple push de un archivo:
 1. El cambio de código residía en un paquete privado de Composer (`arquia-core`), actualizado a la versión `0.1.1`.
 2. El repositorio del portal web principal (`portal-web`) debía actualizar su archivo `composer.lock` para referenciar la nueva versión.
-3. El artefacto final debía enviarse a la plataforma PaaS (Pantheon) y promoverse a través de tres entornos: `dev` $ightarrow$ `test` $ightarrow$ `live`.
+3. El artefacto final debía enviarse a la plataforma PaaS (Pantheon) y promoverse a través de tres entornos: `dev` → `test` → `live`.
 
 En condiciones normales, un workflow llamado `deploy-pantheon.yml` realizaba todo esto automáticamente mediante llaves de máquina y tokens de API. Sin runners disponibles, cada paso debía ejecutarse manualmente desde la terminal de operaciones.
 
@@ -76,7 +76,7 @@ El código ingresó al entorno `dev` con un *fast-forward* limpio.
 
 En nuestra organización, para evitar errores humanos, las herramientas CLI tienen clasificadores de permisos estrictos:
 - La promoción de `dev` a `test` está autorizada para desarrolladores sénior y agentes de soporte.
-- **La promoción a producción (`test` $ightarrow$ `live`) está bloqueada por política interna** y exige autorización explícita de un Administrador de Infraestructura.
+- **La promoción a producción (`test` → `live`) está bloqueada por política interna** y exige autorización explícita de un Administrador de Infraestructura.
 
 Promovimos el código hacia el entorno de pruebas:
 ```bash

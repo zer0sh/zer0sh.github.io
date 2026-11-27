@@ -1,7 +1,7 @@
 ---
 title: "El botón que cambió de color solo: especificidad CSS, :where() en WordPress y la trampa del Critical CSS"
 date: "2026-10-06"
-category: "Frontend & Performance"
+category: "Frontend & Web Platforms"
 excerpt: "El botón principal de contacto de una firma legal pasó de blanco a gris oscuro sobre fondo azul sin que nadie hubiera editado la página. La causa: un cambio de una sola palabra (:where) en la actualización menor de un plugin de maquetación y una regla de Critical CSS desactualizada."
 coverImage: "/blog-posts/images/cover-beaver-builder-wp-rocket-estilos-dinamicos-corruptos.jpg"
 coverAlt: "Desarrollo web frontend, inspección de estilos CSS y maquetadores dinámicos"

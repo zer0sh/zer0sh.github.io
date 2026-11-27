@@ -1,7 +1,7 @@
 ---
 title: "Los runners de CI que podían leer todos los secretos: RBAC engañoso y evaluación de riesgo marginal"
 date: "2026-09-29"
-category: "Kubernetes & CI/CD"
+category: "Kubernetes & Cloud"
 excerpt: "Durante una auditoría de credenciales descubrimos que la ServiceAccount de los runners autohospedados de GitHub Actions tenía permisos para listar todos los secretos del clúster de desarrollo, pese a llamarse 'no-permission'. Crónica de cómo evaluar la exposición marginal real sin caer en alarmismos."
 coverImage: "/blog-posts/images/cover-runners-github-actions-rbac-cluster-dev.jpg"
 coverAlt: "Clúster de Kubernetes, orquestación de contenedores y políticas RBAC"
