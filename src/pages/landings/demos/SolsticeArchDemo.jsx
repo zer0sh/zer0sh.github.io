@@ -58,6 +58,7 @@ export const SolsticeArchDemo = () => {
   const [daylight, setDaylight] = useState('zenith');
   const [cityFilter, setCityFilter] = useState('Todas');
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [caliStandBooked, setCaliStandBooked] = useState(false);
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -231,6 +232,81 @@ export const SolsticeArchDemo = () => {
                     <span>{w.area}</span>
                     <span>{w.year}</span>
                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Feria de Cali — Large Exhibition Section */}
+          <div className="mt-20 border border-current/20 p-8 sm:p-12 space-y-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 space-y-4">
+                <span
+                  className="inline-block px-3.5 py-1 border border-current text-[11px] uppercase tracking-[0.2em] font-bold"
+                  style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                >
+                  FERIA DE CALI 2026 · ZONA DE EXPOSICIONES
+                </span>
+                <h2 className="text-4xl sm:text-5xl font-light leading-[1.05]">
+                  Estaremos en la Feria de Cali{' '}
+                  <span className="italic font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    en vivo.
+                  </span>
+                </h2>
+                <p className="text-sm sm:text-base opacity-80 leading-relaxed max-w-2xl">
+                  Visítanos en la Zona de Exposiciones (Pabellón A · Stand 14) donde estaremos presentando nuestras{' '}
+                  <strong>casas modelo a escala</strong> y <strong>modelos 3D prerenderizados</strong> en pantallas 4K y recorridos inmersivos para que los conozcas en vivo, explores cada material y converses con nuestros arquitectos.
+                </p>
+                <div className="flex flex-wrap gap-3 pt-2">
+                  <button
+                    onClick={() => setCaliStandBooked(true)}
+                    className="px-6 py-3 bg-[#1c1b18] text-[#f5f2eb] text-xs uppercase tracking-widest font-bold hover:opacity-85 transition-opacity"
+                  >
+                    {caliStandBooked ? '✓ Visita Agendada (Stand 14)' : 'Agendar Visita al Stand 14'}
+                  </button>
+                  <span
+                    className="px-4 py-3 border border-current/25 text-xs uppercase tracking-widest"
+                    style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                  >
+                    25 – 30 DIC · 10:00 AM – 8:00 PM
+                  </span>
+                </div>
+              </div>
+              <div className="lg:col-span-5">
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80"
+                  alt="Casa Modelo Feria de Cali"
+                  className="w-full h-72 object-cover border border-current/15"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-current/15">
+              {[
+                {
+                  tag: 'MAQUETA ESCALA 1:20',
+                  title: 'Casa Modelo Farallones',
+                  desc: 'Estructura bioclimática en hormigón visto y guadua laminada con ventilación cruzada natural.',
+                },
+                {
+                  tag: 'MODELO 3D PRERENDERIZADO',
+                  title: 'Recorrido Solar 4K',
+                  desc: 'Simulación horaria de luz cenital, sombras y acabados interiores en tiempo real.',
+                },
+                {
+                  tag: 'ASESORÍA EN VIVO',
+                  title: 'Mesas de Diseño',
+                  desc: 'Trae el plano o lote de tu proyecto y revisa viabilidad, materiales y presupuesto con el estudio.',
+                },
+              ].map((item) => (
+                <div key={item.title} className="border border-current/15 p-6 space-y-2">
+                  <div className="text-[10px] uppercase tracking-widest opacity-60 font-bold" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
+                    {item.tag}
+                  </div>
+                  <h3 className="text-xl italic font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    {item.title}
+                  </h3>
+                  <p className="text-xs opacity-75 leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>

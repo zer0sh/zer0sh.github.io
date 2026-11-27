@@ -48,6 +48,30 @@ export const AetherisDemo = () => {
   const [feedMode, setFeedMode] = useState('optical');
   const [countdown, setCountdown] = useState(15502);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [openWikiIdx, setOpenWikiIdx] = useState(0);
+
+  const wikiItems = [
+    {
+      tag: 'PROPULSIÓN',
+      q: '¿Qué es el Impulso Específico (Isp) en motores iónicos de xenón?',
+      a: 'El Isp mide la eficiencia de un propulsor espacial en segundos. Mientras un cohete químico alcanza ~450 s, nuestros propulsores de efecto Hall superan los 4,200 s, permitiendo misiones interplanetarias con una fracción del combustible tradicional.',
+    },
+    {
+      tag: 'MECÁNICA ORBITAL',
+      q: '¿Cómo funciona una órbita de transferencia de Hohmann?',
+      a: 'Es la maniobra orbital más eficiente en energía para trasladar una nave entre dos órbitas circulares coplanares usando dos encendidos de motor: uno para entrar en la elipse de transferencia y otro para circularizar en el planeta destino.',
+    },
+    {
+      tag: 'COMUNICACIONES',
+      q: '¿Por qué usar enlace óptico láser de 1,550 nm en lugar de banda Ka?',
+      a: 'El láser infrarrojo concentra el haz con una divergencia 40 veces menor que las ondas de radio, multiplicando por 10 el ancho de banda desde Marte o el cinturón de asteroides con antenas receptoras más compactas.',
+    },
+    {
+      tag: 'NAVEGACIÓN AUTÓNOMA',
+      q: '¿Cómo navega un rover a 120 FPS sin GPS en Europa o Marte?',
+      a: 'Mediante SLAM visual-inercial: cámaras estéreo de alto rango dinámico triangulan cráteres y rocas en tiempo real sobre hardware resistente a radiación, evitando obstáculos sin esperar comandos desde la Tierra.',
+    },
+  ];
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -284,6 +308,46 @@ export const AetherisDemo = () => {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+          {/* Aerospace Concepts Wiki & Q&A Toggle */}
+          <div className="border-t border-white/10 pt-16 mt-16">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+              <div>
+                <span className="text-xs text-sky-400 font-semibold uppercase tracking-widest">Base de Conocimiento</span>
+                <h2 className="text-3xl font-bold mt-2" style={{ fontFamily: "'Chakra Petch', sans-serif" }}>
+                  Wiki de Conceptos &amp; Preguntas Frecuentes
+                </h2>
+              </div>
+              <span className="text-xs text-slate-400" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
+                {wikiItems.length} ARTÍCULOS TÉCNICOS
+              </span>
+            </div>
+            <div className="space-y-3">
+              {wikiItems.map((item, idx) => {
+                const isOpen = openWikiIdx === idx;
+                return (
+                  <div key={item.q} className="rounded-2xl bg-[#0b1121] border border-white/10 overflow-hidden">
+                    <button
+                      onClick={() => setOpenWikiIdx(isOpen ? null : idx)}
+                      className="w-full px-6 py-5 flex items-center justify-between gap-4 text-left hover:bg-white/5 transition-colors"
+                    >
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-400 text-[10px] font-bold" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
+                          {item.tag}
+                        </span>
+                        <span className="font-bold text-sm sm:text-base text-white">{item.q}</span>
+                      </div>
+                      <span className="text-sky-400 font-mono text-lg shrink-0">{isOpen ? '−' : '+'}</span>
+                    </button>
+                    {isOpen && (
+                      <div className="px-6 pb-5 pt-1 text-sm text-slate-300 leading-relaxed border-t border-white/5">
+                        {item.a}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

@@ -69,6 +69,7 @@ export const LuminaPayDemo = () => {
                 Tesorería <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold">4.8% APY</span>
               </button>
               <button onClick={() => scrollTo('lum-auto')} className="px-3.5 py-1.5 rounded-full hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer">Automatización</button>
+              <button onClick={() => scrollTo('lum-glosario')} className="px-3.5 py-1.5 rounded-full hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer">Glosario VIP</button>
               <button onClick={() => scrollTo('lum-integraciones')} className="px-3.5 py-1.5 rounded-full hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer">Integraciones</button>
             </nav>
           </div>
@@ -248,6 +249,89 @@ export const LuminaPayDemo = () => {
                 ))}
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Rotating / Horizontal Scroll Financial Glossary & VIP Card Services */}
+        <section id="lum-glosario" className="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200/70">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+            <div>
+              <span className="text-xs font-bold uppercase text-indigo-600">Glosario &amp; Servicios Premium</span>
+              <h2 className="text-3xl font-extrabold mt-1">Tarjetas Temporales, Categorías y Salas VIP</h2>
+            </div>
+            <span className="text-xs text-slate-500">Desliza horizontalmente para explorar &rarr;</span>
+          </div>
+
+          <div className="flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory">
+            {[
+              {
+                badge: 'VISA TEMPORAL',
+                title: 'Tarjetas Virtuales Efímeras',
+                desc: 'Emite tarjetas Visa desechables con límite exacto y fecha de expiración automática para pagar software o proveedores sin exponer tu cuenta principal.',
+                gradient: 'from-indigo-600 to-blue-700',
+              },
+              {
+                badge: 'AMEX CORPORATE',
+                title: 'American Express Flexible',
+                desc: 'Tarjetas virtuales bajo red Amex con aprobación instantánea para viajes ejecutivos, publicidad digital y gastos operativos sin papeleo tradicional.',
+                gradient: 'from-slate-800 to-slate-950',
+              },
+              {
+                badge: 'GOLD & PLATINUM',
+                title: 'Estatus Gold / Platinum Directo',
+                desc: 'Accede a beneficios equivalentes a niveles Gold y Platinum —como seguros de viaje y protección de compra— sin cumplir requisitos bancarios históricos.',
+                gradient: 'from-amber-500 to-yellow-600',
+              },
+              {
+                badge: 'SALAS VIP',
+                title: 'Lounge Pass Aeropuertos',
+                desc: 'Pase digital QR para entrar a más de 1,300 salas VIP internacionales sin necesidad de tramitar una tarjeta física negra o platinum tradicional.',
+                gradient: 'from-violet-600 to-purple-800',
+              },
+              {
+                badge: 'ZERO-FX',
+                title: 'Conversión Interbancaria Real',
+                desc: 'Paga en USD, EUR, GBP o JPY con tipo de cambio real sin recargos ocultos del 3% por compras internacionales.',
+                gradient: 'from-emerald-600 to-teal-700',
+              },
+            ].map((card) => (
+              <div
+                key={card.title}
+                className="snap-start shrink-0 w-80 rounded-3xl bg-white border border-slate-200 p-6 shadow-sm hover:shadow-xl hover:-rotate-1 transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  <span className={`inline-block px-3 py-1 rounded-full bg-gradient-to-r ${card.gradient} text-white text-[10px] font-bold tracking-wider mb-4`}>
+                    {card.badge}
+                  </span>
+                  <h3 className="text-lg font-extrabold text-slate-900 mb-2">{card.title}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{card.desc}</p>
+                </div>
+                <div className="pt-4 mt-5 border-t border-slate-100 text-[11px] font-bold text-indigo-600">
+                  Disponible en cuenta Lumina &rarr;
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Multi-Currency Treasury & Integrations */}
+        <section id="lum-integraciones" className="max-w-6xl mx-auto px-6 py-16 border-t border-slate-200/70">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {[
+              { cur: 'USD', flag: '🇺🇸', bal: '$142,850.00', apy: '4.8% APY' },
+              { cur: 'EUR', flag: '🇪🇺', bal: '€64,200.00', apy: '3.6% APY' },
+              { cur: 'GBP', flag: '🇬🇧', bal: '£28,910.00', apy: '4.1% APY' },
+              { cur: 'JPY', flag: '🇯🇵', bal: '¥4,150,000', apy: 'Instant FX' },
+            ].map((c) => (
+              <div key={c.cur} className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-2xl">{c.flag}</span>
+                  <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">{c.apy}</span>
+                </div>
+                <div className="text-xs text-slate-400 font-semibold">{c.cur}</div>
+                <div className="text-xl font-extrabold text-slate-900 mt-1">{c.bal}</div>
+              </div>
+            ))}
           </div>
         </section>
 

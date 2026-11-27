@@ -40,7 +40,39 @@ export const VerveAiDemo = () => {
     },
   };
 
-  const deflectionRate = Math.min(94, Math.max(64, Math.round(108 - confidence * 0.3)));
+  const deflectionRate = Math.min(95, Math.max(52, Math.round(118 - confidence * 0.52)));
+  const dailyTickets = 1200;
+  const resolvedCount = Math.round((dailyTickets * deflectionRate) / 100);
+  const escalatedCount = dailyTickets - resolvedCount;
+  const monthlySavings = (resolvedCount * 30 * 2.4).toLocaleString('en-US');
+
+  const channelDetails = {
+    Zendesk: {
+      summary: 'Se conecta vía OAuth 2.0 y Webhooks bidireccionales para leer tickets entrantes, consultar macros y responder o escalar en menos de 1.5s.',
+      steps: ['Lee historial del cliente y etiquetas en Zendesk Support', 'Genera borrador o respuesta automática según umbral', 'Asigna grupo humano si requiere aprobación'],
+      latency: '140ms · Setup 2 min',
+    },
+    Intercom: {
+      summary: 'Integración nativa con Intercom Messenger y Fin-compatible inbox para resolver dudas en tiempo real dentro de tu app web o móvil.',
+      steps: ['Intercepta conversaciones nuevas en el Messenger', 'Consulta estado de suscripción en tu backend', 'Cierra o transfiere con resumen estructurado'],
+      latency: '115ms · Setup 2 min',
+    },
+    Slack: {
+      summary: 'Convierte canales internos de #soporte-vip o #it-helpdesk en asistentes autónomos conectados a Notion, Linear y Okta.',
+      steps: ['Responde menciones en hilos de Slack', 'Crea issues automáticos en Linear o Jira', 'Aprovisiona accesos tras aprobación con un clic'],
+      latency: '95ms · Setup 1 min',
+    },
+    WhatsApp: {
+      summary: 'Atiende pedidos, rastreos y cambios por WhatsApp Business Cloud API con soporte multimodal para audios e imágenes de recibos.',
+      steps: ['Verifica identidad por número y código OTP', 'Envía etiquetas de envío y PDFs directamente al chat', 'Soporte 24/7 en 45 idiomas'],
+      latency: '210ms · Setup 4 min',
+    },
+    Shopify: {
+      summary: 'Acceso directo a órdenes, inventario y reembolsos de Shopify Plus para resolver cambios de talla, cancelaciones y devoluciones sin humanos.',
+      steps: ['Consulta tracking en tiempo real de paquetería', 'Ejecuta reembolsos parciales o totales vía API', 'Genera guías de retorno automáticas'],
+      latency: '180ms · Setup 3 min',
+    },
+  };
 
   return (
     <DemoWrapper>
@@ -167,46 +199,62 @@ export const VerveAiDemo = () => {
               <p className="text-zinc-400 text-sm leading-relaxed mb-6">
                 Ajusta el nivel de certeza mínimo requerido antes de que Verve responda automáticamente o escale a un agente humano.
               </p>
-              <div className="p-5 rounded-2xl bg-[#15151a] border border-white/10 space-y-3">
+              <div className="p-5 rounded-2xl bg-[#15151a] border border-white/10 space-y-4">
                 <div className="flex justify-between text-xs">
-                  <span className="text-zinc-400">Umbral de Confianza</span>
+                  <span className="text-zinc-400">Umbral de Confianza Mínimo</span>
                   <span className="text-orange-400 font-bold tabular-nums">{confidence}%</span>
                 </div>
                 <input
                   type="range"
-                  min="70"
+                  min="65"
                   max="98"
                   value={confidence}
                   onChange={(e) => setConfidence(Number(e.target.value))}
-                  className="w-full accent-orange-500"
+                  style={{
+                    background: `linear-gradient(to right, #f97316 ${((confidence - 65) / 33) * 100}%, #27272a ${((confidence - 65) / 33) * 100}%)`,
+                  }}
+                  className="w-full h-2 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-orange-500 [&::-webkit-slider-thumb]:shadow-md"
                 />
-                <div className="flex justify-between text-xs pt-2 border-t border-white/10">
-                  <span className="text-zinc-400">Desvío automático estimado:</span>
-                  <span className="text-emerald-400 font-bold tabular-nums">{deflectionRate}% de tickets</span>
+                <div className="grid grid-cols-3 gap-2 pt-3 border-t border-white/10 text-center">
+                  <div className="bg-black/30 rounded-xl p-2.5">
+                    <div className="text-sm font-bold text-emerald-400 tabular-nums">{resolvedCount}</div>
+                    <div className="text-[10px] text-zinc-500">Resueltos/día</div>
+                  </div>
+                  <div className="bg-black/30 rounded-xl p-2.5">
+                    <div className="text-sm font-bold text-orange-400 tabular-nums">{escalatedCount}</div>
+                    <div className="text-[10px] text-zinc-500">Escalados</div>
+                  </div>
+                  <div className="bg-black/30 rounded-xl p-2.5">
+                    <div className="text-sm font-bold text-white tabular-nums">${monthlySavings}</div>
+                    <div className="text-[10px] text-zinc-500">Ahorro/mes</div>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="lg:col-span-7">
-              <div className="rounded-3xl border border-white/10 bg-[#15151a] p-6">
+              <div className="rounded-3xl border border-white/10 bg-[#15151a] p-6 relative">
                 <div className="flex items-center justify-between mb-6">
-                  <span className="text-xs text-zinc-400 font-medium">Tasa de resolución semanal</span>
-                  <span className="text-xs text-emerald-400 font-semibold">+14.2% vs mes anterior</span>
+                  <span className="text-xs text-zinc-400 font-medium">Simulación semanal ({deflectionRate}% desvío actual)</span>
+                  <span className="text-xs text-emerald-400 font-semibold tabular-nums">CSAT est: {(4.5 + (confidence - 65) * 0.013).toFixed(2)}/5</span>
                 </div>
                 <div className="flex items-end gap-3 h-48 pt-4 relative">
-                  {[45, 58, 62, 71, 76, 80, deflectionRate].map((val, idx) => (
-                    <div key={idx} className="flex-1 h-full flex flex-col justify-end items-center gap-2">
-                      <span className="text-[11px] text-zinc-300 font-semibold tabular-nums">{val}%</span>
-                      <div
-                        className={`w-full rounded-t-xl transition-all duration-300 ${
-                          idx === 6
-                            ? 'bg-gradient-to-t from-orange-500 to-amber-300 shadow-[0_0_20px_rgba(249,115,22,0.4)]'
-                            : 'bg-gradient-to-t from-orange-600/80 to-amber-400/80'
-                        }`}
-                        style={{ height: `${Math.round(val * 1.35)}px` }}
-                      />
-                      <span className="text-[11px] text-zinc-500">Día {idx + 1}</span>
-                    </div>
-                  ))}
+                  {[0.72, 0.78, 0.84, 0.88, 0.93, 0.97, 1].map((factor, idx) => {
+                    const val = Math.max(30, Math.min(96, Math.round(deflectionRate * factor)));
+                    return (
+                      <div key={idx} className="flex-1 h-full flex flex-col justify-end items-center gap-2">
+                        <span className="text-[11px] text-zinc-300 font-semibold tabular-nums">{val}%</span>
+                        <div
+                          className={`w-full rounded-t-xl transition-all duration-300 ${
+                            idx === 6
+                              ? 'bg-gradient-to-t from-orange-500 to-amber-300 shadow-[0_0_20px_rgba(249,115,22,0.4)]'
+                              : 'bg-gradient-to-t from-orange-600/80 to-amber-400/80'
+                          }`}
+                          style={{ height: `${Math.round(val * 1.35)}px` }}
+                        />
+                        <span className="text-[11px] text-zinc-500">Día {idx + 1}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -235,9 +283,25 @@ export const VerveAiDemo = () => {
                 </button>
               ))}
             </div>
-            <div className="rounded-2xl bg-[#15151a] border border-white/10 p-5 flex flex-wrap items-center justify-between gap-4 text-xs" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-              <span className="text-zinc-300">Webhook activo: <strong className="text-orange-400">{activeChannel} Bidirectional Sync</strong></span>
-              <span className="text-emerald-400">Latencia media: 180ms · OAuth 2.0</span>
+            <div className="rounded-3xl bg-[#15151a] border border-white/10 p-6 sm:p-8 space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/10">
+                <div>
+                  <div className="text-xs text-orange-400 font-bold uppercase tracking-wider">Integración Activa</div>
+                  <div className="text-xl font-bold text-white mt-0.5">{activeChannel} Bidirectional Sync</div>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-semibold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                  {channelDetails[activeChannel].latency}
+                </span>
+              </div>
+              <p className="text-sm text-zinc-300 leading-relaxed">{channelDetails[activeChannel].summary}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+                {channelDetails[activeChannel].steps.map((st, idx) => (
+                  <div key={st} className="rounded-2xl bg-black/30 border border-white/10 p-4 text-xs text-zinc-300">
+                    <span className="text-orange-400 font-bold block mb-1">Paso 0{idx + 1}</span>
+                    <span>{st}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
