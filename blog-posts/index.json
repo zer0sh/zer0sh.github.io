@@ -6,6 +6,7 @@
       "date": "2026-11-10",
       "category": "Linux & Shell",
       "excerpt": "Asumir que toda terminal Linux o macOS se comporta como Bash estándar es la causa raíz de errores insólitos: desde bucles que fallan en el primer archivo por noclobber hasta comandos pkill que se matan a sí mismos o filtros sed que exponen tokens en pantalla. Autopsia de tropiezos en la consola.",
+      "readingTime": 6,
       "coverImage": "/blog-posts/images/cover-terminal-zsh-gotchas-noclobber-alias-trampas.jpg",
       "coverAlt": "Consola de terminal Unix con depuración de scripts interactivos en Zsh"
     },
@@ -15,6 +16,7 @@
       "date": "2026-11-05",
       "category": "Arquitectura & Decomisión",
       "excerpt": "Cuando fuimos a dar de baja una vieja plataforma interna de despliegues descubrimos que llevaba semanas muerta: respondía HTTP 200 a los webhooks pero no procesaba nada. 32.000 tareas se acumulaban en Redis y su nombre de dominio compartía la IP del bastión crítico de la organización.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-dors-plataforma-despliegues-zombi-redis.jpg",
       "coverAlt": "Centro de datos y clúster de bases de datos Redis en producción"
     },
@@ -24,6 +26,7 @@
       "date": "2026-10-26",
       "category": "Incident Response & SRE",
       "excerpt": "En plena alerta global por la vulnerabilidad PHP2Shell, un backend Laravel en AWS dejó de responder súbitamente. Entre un OOM que congeló la máquina 9 horas, una mala lectura del CLI de AWS que culpó al hardware y la falta de capacidad en la zona de disponibilidad, construimos una estrategia de contención en cuatro capas.",
+      "readingTime": 8,
       "coverImage": "/blog-posts/images/php2shell-cover.jpg",
       "coverAlt": "Monitoreo de métricas cloud, telemetría y servidores Linux en AWS"
     },
@@ -33,6 +36,7 @@
       "date": "2026-10-22",
       "category": "Arquitectura & Decomisión",
       "excerpt": "Una aplicación Django de 2019 de datos abiertos seguía encendida en una máquina virtual de $5/mes, conectada a la base de datos de otro cliente. Su dominio había expirado y fue comprado por terceros, apuntando primero a un casino y luego a una radio online. La guía definitiva para apagar infraestructura olvidada.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-dominio-huerfano-cuentas-claras-takeover.jpg",
       "coverAlt": "Cables de telecomunicaciones y enrutamiento DNS de dominios"
     },
@@ -42,6 +46,7 @@
       "date": "2026-10-20",
       "category": "CI/CD & GitOps",
       "excerpt": "Los entornos efímeros multidev creados por GitHub Actions a veces aparecían listados pero no tenían base de datos o devolvían '404 Unknown Site'. Tras cuatro semanas de fallos intermitentes encontramos al culpable: una condición de carrera asíncrona entre dos pushes sucesivos.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-multidevs-pantheon-condicion-carrera-despliegues.jpg",
       "coverAlt": "Pipeline de despliegue continuo y orquestación de entornos efímeros"
     },
@@ -51,6 +56,7 @@
       "date": "2026-10-15",
       "category": "Kubernetes & Cloud",
       "excerpt": "Cuatro ingenieros, cuatro sistemas operativos distintos y una promesa rota: 'solo clona el repo y corre pip install'. Crónica de cómo la deriva de dependencias entre Windows, Arch, Debian y Ubuntu paralizó un despliegue crítico, y por qué Docker es la única cura determinista contra la suposición técnica.",
+      "readingTime": 14,
       "coverImage": "/blog-posts/images/docker-entornos-estandarizados.png",
       "coverAlt": "Comparativa de fragmentación de sistemas operativos frente a la estandarización determinista con Docker"
     },
@@ -60,6 +66,7 @@
       "date": "2026-10-14",
       "category": "Kubernetes & Cloud",
       "excerpt": "El choque entre el determinismo de scripts y la flexibilidad de los modelos de IA. Cómo decidir qué herramienta usar y cómo la IA desbloqueó a los ingenieros de backend para crear interfaces y paneles completos.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-automatizaciones-tradicionales-vs-ia.jpg",
       "coverAlt": "Modelos de inteligencia artificial interactuando con automatizaciones deterministas"
     },
@@ -69,6 +76,7 @@
       "date": "2026-10-13",
       "category": "CI/CD & GitOps",
       "excerpt": "Consejos prácticos para optimizar GitHub Actions y el debate de fondo: la conveniencia de la auto-entrega de Dependabot frente a la disciplina de runbooks planificados con supervisión humana.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-github-actions-dependabot-ciclos-actualizacion.jpg",
       "coverAlt": "Integración continua y revisión de código en GitHub Actions"
     },
@@ -78,6 +86,7 @@
       "date": "2026-10-12",
       "category": "Herramientas & Terminal",
       "excerpt": "Escribir documentación en Markdown puro y desplegarla como sitio estático sin lidiar con configuraciones complejas. Por qué MkDocs es mi opción predilecta y cómo lo uso para documentar mis dotfiles.",
+      "readingTime": 4,
       "coverImage": "/blog-posts/images/cover-mkdocs-documentacion-simple-y-efectiva.jpg",
       "coverAlt": "Documentación técnica estructurada y minimalista con MkDocs"
     },
@@ -87,6 +96,7 @@
       "date": "2026-10-10",
       "category": "Seguridad & Secretos",
       "excerpt": "Rotar la llave maestra que descifra los secretos de todos los clústeres de Kubernetes parecía completo y validado en CI y ArgoCD. Pero justo antes de destruirla, CloudTrail reveló que un ingeniero la seguía utilizando desde su laptop. Guía para rotar secretos de infraestructura sin romper nada.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-rotacion-llaves-sops-kms-secretos-huerfanos.jpg",
       "coverAlt": "Seguridad criptográfica, llaves KMS y cifrado con Mozilla SOPS"
     },
@@ -96,6 +106,7 @@
       "date": "2026-10-08",
       "category": "Servidores Web & Caché",
       "excerpt": "Un reporte lacónico aseguraba que 'el servidor develop está caído'. Al entrar respondía HTTP 200, pero la investigación destapó cuatro problemas encadenados: workers de Apache retenidos 300 segundos por TLS incompleto, renderizado que se pedía imágenes a sí mismo y symlinks de deploy que rompían OPcache.",
+      "readingTime": 6,
       "coverImage": "/blog-posts/images/cover-develop-caido-apache-opcache-symlink-deploy.jpg",
       "coverAlt": "Monitoreo de servidores Apache y concurrencia de memoria en Linux"
     },
@@ -105,6 +116,7 @@
       "date": "2026-10-06",
       "category": "Frontend & Web Platforms",
       "excerpt": "El botón principal de contacto de una firma legal pasó de blanco a gris oscuro sobre fondo azul sin que nadie hubiera editado la página. La causa: un cambio de una sola palabra (:where) en la actualización menor de un plugin de maquetación y una regla de Critical CSS desactualizada.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-beaver-builder-wp-rocket-estilos-dinamicos-corruptos.jpg",
       "coverAlt": "Desarrollo web frontend, inspección de estilos CSS y maquetadores dinámicos"
     },
@@ -114,6 +126,7 @@
       "date": "2026-10-04",
       "category": "Servidores Web & Caché",
       "excerpt": "Dos archivos PHP de un servicio de seguridad descontratado respondían HTTP 200 en producción; uno contenía un eval() remoto. Al eliminarlos de Git seguían ahí; al borrarlos por SFTP reaparecían solos. Anatomía de un ciclo de artefactos zombi.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-archivos-fantasma-sucuri-eval-edge.jpg",
       "coverAlt": "Firewall de aplicaciones web WAF y ciberseguridad perimetral"
     },
@@ -123,6 +136,7 @@
       "date": "2026-10-01",
       "category": "Linux & Shell",
       "excerpt": "Una tarea simple para configurar Netdata en localhost en 7 servidores falló de forma insólita: en dos hosts con Ubuntu legacy corría mawk 1.3.3 de 1996, el cual no reconoce clases POSIX ni anclas en gsub(), duplicando la configuración en lugar de reemplazarla. Crónica de compatibilidad profunda en Linux.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-netdata-awk-1996-incompatibilidad-posix.jpg",
       "coverAlt": "Monitoreo de métricas del sistema, Netdata y análisis de procesos en Linux"
     },
@@ -132,6 +146,7 @@
       "date": "2026-09-30",
       "category": "Frontend & Web Platforms",
       "excerpt": "Una tarea simple para evitar exponer secretos de reCAPTCHA en entornos de prueba desencadenó un mes de problemas en cadena: iframes rotos, scripts que cancelaban envíos y un reporte de QA que dio el fix por bueno cuando el entorno seguía mostrando contenido cacheado.",
+      "readingTime": 6,
       "coverImage": "/blog-posts/images/cover-recaptcha-split-configuracion-falsa-aprobacion.jpg",
       "coverAlt": "Pruebas de calidad QA, validación de APIs y formularios seguros"
     },
@@ -141,6 +156,7 @@
       "date": "2026-09-29",
       "category": "Kubernetes & Cloud",
       "excerpt": "Durante una auditoría de credenciales descubrimos que la ServiceAccount de los runners autohospedados de GitHub Actions tenía permisos para listar todos los secretos del clúster de desarrollo, pese a llamarse 'no-permission'. Crónica de cómo evaluar la exposición marginal real sin caer en alarmismos.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-runners-github-actions-rbac-cluster-dev.jpg",
       "coverAlt": "Clúster de Kubernetes, orquestación de contenedores y políticas RBAC"
     },
@@ -150,6 +166,7 @@
       "date": "2026-09-28",
       "category": "CI/CD & GitOps",
       "excerpt": "Un arreglo urgente de contraste visual WCAG AA en un portal gremial quedó atrapado: GitHub Actions se negó a arrancar por un bloqueo administrativo de facturación. Sin pipelines automáticos, ejecutamos el despliegue a producción a mano cruzando tres capas de permisos.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-deploy-manual-con-github-actions-caido-billing.jpg",
       "coverAlt": "Servidores cloud globales, contingencia operativa y redes de infraestructura"
     },
@@ -159,6 +176,7 @@
       "date": "2026-09-27",
       "category": "CI/CD & GitOps",
       "excerpt": "Un Pull Request de actualización de Traefik v3 y políticas RBAC se mergeó a la rama principal de infra bajo la instrucción explícita de 'no aplicarlo aún'. La trampa: al no haber pipelines automáticos de helmfile, el siguiente ingeniero en ejecutar un apply arrastraría una redirección forzada a HTTPS sin saberlo.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-mergeado-no-es-aplicado-traefik-helmfile.jpg",
       "coverAlt": "Enrutamiento de tráfico con Traefik Proxy y orquestación Helmfile en Kubernetes"
     },
@@ -168,6 +186,7 @@
       "date": "2026-09-26",
       "category": "Kubernetes & Cloud",
       "excerpt": "Una directiva de seguridad exigía que ningún merge a master publicara a producción sin un release explícito. Al auditar 24 repositorios serverless descubrimos que otra tarea había configurado exactamente lo contrario: dos políticas opuestas conviviendo en el mismo código.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-politicas-despliegue-cloudflare-actions-en-conflicto.jpg",
       "coverAlt": "Red perimetral Cloudflare, DNS y despliegues serverless"
     },
@@ -177,6 +196,7 @@
       "date": "2026-09-23",
       "category": "Incident Response & SRE",
       "excerpt": "Se llamaba 'POC' en todas las ramas de Git y tickets, pero descubrimos que saldría a miles de usuarios reales en 72 horas. Una prueba de carga con 20 peticiones concurrentes arrojó 9 timeouts y colapsó la API en FastAPI. Crónica de cómo evitar un desastre de rendimiento a contrarreloj.",
+      "readingTime": 6,
       "coverImage": "/blog-posts/images/cover-poc-ia-produccion-cuello-botella-concurrencia.jpg",
       "coverAlt": "Servidor de modelos de inteligencia artificial y pruebas de carga con Locust"
     },
@@ -186,6 +206,7 @@
       "date": "2026-09-18",
       "category": "Seguridad & Secretos",
       "excerpt": "Durante el endurecimiento de accesos SSH y autenticación 2FA en un servidor de producción, el script retiró los privilegios de sudo al usuario que lo estaba ejecutando... antes de terminar la configuración. Crónica de una sesión al borde del abismo y cómo diseñar scripts de seguridad transaccionales.",
+      "readingTime": 6,
       "coverImage": "/blog-posts/images/cover-hardening-ssh-sudoers-bloqueo-a-mitad-de-camino.jpg",
       "coverAlt": "Seguridad en servidores Linux, configuración de SSH y privilegios en sudoers"
     },
@@ -195,6 +216,7 @@
       "date": "2026-09-14",
       "category": "Seguridad & Secretos",
       "excerpt": "Tras la filtración de un token de API, la directiva era activar Secret Scanning y Push Protection en toda la organización. La primera pasada reportó 'completado'... en solo 161 repos. Un límite por defecto en gh repo list silenció más de 500 repositorios. Crónica de automatización y verificación estricta.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-secret-scanning-push-protection-684-repos.jpg",
       "coverAlt": "Detección de secretos filtrados en código y auditoría de repositorios GitHub"
     },
@@ -204,6 +226,7 @@
       "date": "2026-09-12",
       "category": "Seguridad & Secretos",
       "excerpt": "Un token de nuestro repositorio privado de paquetes estuvo expuesto en texto plano en tres repositorios desde 2023. Lo verdaderamente revelador no fue encontrarlo, sino descubrir que la plataforma cloud lo regeneraba en cada build y lo servía por HTTP en el borde ignorando .htaccess.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-packagist-token-filtrado-pantheon-composer.jpg",
       "coverAlt": "Desarrollo backend en PHP, gestión de dependencias con Composer y seguridad de tokens"
     },
@@ -213,6 +236,7 @@
       "date": "2026-09-11",
       "category": "Linux & Shell",
       "excerpt": "Durante una sesión de pruebas visuales con Playwright, un comando de limpieza rápida con comodín en un directorio compartido eliminó más de 70 capturas de auditorías anteriores sin posibilidad de recuperación. Crónica sin filtros sobre el peligro de la pereza en la terminal.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-rm-comodin-carpetas-compartidas-autopsia.jpg",
       "coverAlt": "Línea de comandos de Linux, sistemas de archivos ext4 y recuperación forense de datos"
     },
@@ -222,6 +246,7 @@
       "date": "2026-09-08",
       "category": "Incident Response & SRE",
       "excerpt": "Llegó como un reporte de bug rutinario: una página en blanco devolviendo HTTP 200 con 0 bytes. Al tirar del hilo descubrimos una campaña masiva de wp2shell, 11 administradores fantasma plantados semanas atrás, backdoors camuflados como imágenes y un error de PHP 8.3 que casi nos desvía del diagnóstico real.",
+      "readingTime": 8,
       "coverImage": "/blog-posts/images/wp2shell-cover.jpg",
       "coverAlt": "Análisis forense de ciberseguridad y auditoría de WordPress en producción"
     },
@@ -231,6 +256,7 @@
       "date": "2026-08-28",
       "category": "Bases de Datos & Backend",
       "excerpt": "Un despliegue rutinario de Django colapsó con 'must be owner of table'. La aplicación tenía permisos de lectura y escritura completos, pero no podía alterar esquemas. Crónica de cómo resolver la propiedad de tablas y secuencias serial en PostgreSQL sin tiempo de inactividad.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-postgres-ownership-migraciones-django-bloqueadas.jpg",
       "coverAlt": "Bases de datos PostgreSQL, esquemas relacionales y migraciones en Django"
     },
@@ -240,6 +266,7 @@
       "date": "2026-08-22",
       "category": "CI/CD & GitOps",
       "excerpt": "El pipeline de despliegue a producción en GitHub Actions comenzó a fallar sistemáticamente con 'Permission denied (publickey)' al conectar al bastión. La investigación reveló una verdad incómoda: la llave privada nunca había existido en los secretos del repositorio.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-llave-ci-ssh-bastion-permisos-despliegue.jpg",
       "coverAlt": "Llaves criptográficas SSH, servidores bastion y autenticación segura"
     },
@@ -249,6 +276,7 @@
       "date": "2026-08-20",
       "category": "Servidores Web & Caché",
       "excerpt": "El servicio de protección contra fuerza bruta figuraba como activo en el servidor de base de datos de producción, pero en tres años no había bloqueado una sola IP. Tras una actualización de sistema operativo descubrimos la causa: rsyslog ya no existía y fail2ban leía un archivo de logs vacío.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cover-fail2ban-ubuntu-systemd-backend-falso-positivo.jpg",
       "coverAlt": "Protección contra intrusiones con Fail2ban, journald y firewalls en Linux"
     },
@@ -258,6 +286,7 @@
       "date": "2026-08-16",
       "category": "Incident Response & SRE",
       "excerpt": "Un servidor comprometido a nivel root había sido documentado como 'congelado'. Semanas después descubrimos que seguía en el camino crítico de producción, conectado a la base de datos y con un backdoor activo que sobrevivió a la primera limpieza. Crónica de una investigación forense real.",
+      "readingTime": 9,
       "coverImage": "/blog-posts/images/servidor-congelado.jpg",
       "coverAlt": "Servidores en rack y análisis de seguridad en infraestructura de producción"
     },
@@ -267,6 +296,7 @@
       "date": "2026-08-10",
       "category": "Linux & Shell",
       "excerpt": "Los shell builtins son comandos integrados en el propio shell. Los 15 clásicos ordenados por frecuencia de uso y presencia en Bash/Unix.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/shell-builtins.png",
       "coverAlt": "Shell builtins clásicos de Linux en una terminal"
     },
@@ -276,6 +306,7 @@
       "date": "2026-08-09",
       "category": "Incident Response & SRE",
       "excerpt": "Una CVE no es solo un identificador. Te cuento qué es, cómo leerla y por qué lo primero que hay que revisar siempre es la versión afectada y si existe fix.",
+      "readingTime": 5,
       "coverImage": "/blog-posts/images/cve-2026-9860.png",
       "coverAlt": "Registro CVE-2026-9860 en cve.org"
     },
@@ -285,6 +316,7 @@
       "date": "2026-05-08",
       "category": "Herramientas & Terminal",
       "excerpt": "Un espacio sobre herramientas, Linux, infraestructura, desarrollo y las tecnologías que uso y exploro día a día.",
+      "readingTime": 2,
       "coverImage": "/blog-posts/images/Bienvenida.png",
       "coverAlt": "Bienvenida al blog — herramientas, Linux, infraestructura y desarrollo"
     },
@@ -294,6 +326,7 @@
       "date": "2026-05-08",
       "category": "Herramientas & Terminal",
       "excerpt": "Una colección de 10 herramientas TUI que uso o me parecen interesantes para trabajar desde la terminal. 6 listas, faltan 4 más.",
+      "readingTime": 3,
       "coverImage": "/blog-posts/images/tui-banner.png",
       "coverAlt": "Herramientas TUI para terminal"
     }
