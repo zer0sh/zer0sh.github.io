@@ -1,7 +1,7 @@
 ---
 title: "El 'POC' de Inteligencia Artificial que salía a producción en tres días: pruebas de carga y el cuello de botella de Uvicorn"
 date: "2026-09-23"
-category: "Arquitectura & Rendimiento"
+category: "Incident Response & SRE"
 excerpt: "Se llamaba 'POC' en todas las ramas de Git y tickets, pero descubrimos que saldría a miles de usuarios reales en 72 horas. Una prueba de carga con 20 peticiones concurrentes arrojó 9 timeouts y colapsó la API en FastAPI. Crónica de cómo evitar un desastre de rendimiento a contrarreloj."
 coverImage: "/blog-posts/images/cover-poc-ia-produccion-cuello-botella-concurrencia.jpg"
 coverAlt: "Servidor de modelos de inteligencia artificial y pruebas de carga con Locust"

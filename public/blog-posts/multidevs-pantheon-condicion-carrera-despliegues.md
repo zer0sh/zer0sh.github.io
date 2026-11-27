@@ -1,7 +1,7 @@
 ---
 title: "Los entornos de prueba que parecían vivos: condiciones de carrera en despliegues efímeros por PR"
 date: "2026-10-20"
-category: "CI/CD & Plataforma"
+category: "CI/CD & GitOps"
 excerpt: "Los entornos efímeros multidev creados por GitHub Actions a veces aparecían listados pero no tenían base de datos o devolvían '404 Unknown Site'. Tras cuatro semanas de fallos intermitentes encontramos al culpable: una condición de carrera asíncrona entre dos pushes sucesivos."
 coverImage: "/blog-posts/images/cover-multidevs-pantheon-condicion-carrera-despliegues.jpg"
 coverAlt: "Pipeline de despliegue continuo y orquestación de entornos efímeros"

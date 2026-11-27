@@ -1,7 +1,7 @@
 ---
 title: "GitHub Actions y Actualización de Dependencias: ¿Dependabot automático o ciclos con supervisión humana?"
 date: "2026-10-13"
-category: "CI/CD & DevOps"
+category: "CI/CD & GitOps"
 excerpt: "Consejos prácticos para optimizar GitHub Actions y el debate de fondo: la conveniencia de la auto-entrega de Dependabot frente a la disciplina de runbooks planificados con supervisión humana."
 coverImage: "/blog-posts/images/cover-github-actions-dependabot-ciclos-actualizacion.jpg"
 coverAlt: "Integración continua y revisión de código en GitHub Actions"

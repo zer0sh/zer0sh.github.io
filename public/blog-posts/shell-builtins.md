@@ -1,7 +1,7 @@
 ---
 title: "Top 15 de shell builtins clásicos de Linux"
 date: "2026-08-10"
-category: "Linux"
+category: "Linux & Shell"
 excerpt: "Los shell builtins son comandos integrados en el propio shell. Los 15 clásicos ordenados por frecuencia de uso y presencia en Bash/Unix."
 coverImage: "/blog-posts/images/shell-builtins.png"
 coverAlt: "Shell builtins clásicos de Linux en una terminal"

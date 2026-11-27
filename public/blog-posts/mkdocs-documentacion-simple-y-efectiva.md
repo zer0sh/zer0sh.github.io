@@ -1,7 +1,7 @@
 ---
 title: "MkDocs: Por qué la simpleza gana al documentar proyectos (y el caso real de mis dotfiles)"
 date: "2026-10-12"
-category: "Herramientas & Docs"
+category: "Herramientas & Terminal"
 excerpt: "Escribir documentación en Markdown puro y desplegarla como sitio estático sin lidiar con configuraciones complejas. Por qué MkDocs es mi opción predilecta y cómo lo uso para documentar mis dotfiles."
 coverImage: "/blog-posts/images/cover-mkdocs-documentacion-simple-y-efectiva.jpg"
 coverAlt: "Documentación técnica estructurada y minimalista con MkDocs"

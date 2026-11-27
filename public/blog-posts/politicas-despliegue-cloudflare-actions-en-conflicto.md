@@ -1,7 +1,7 @@
 ---
 title: "Los merges que publicaban a producción: políticas contradictorias entre Cloudflare y GitHub Actions"
 date: "2026-09-26"
-category: "Cloud & CI/CD"
+category: "Kubernetes & Cloud"
 excerpt: "Una directiva de seguridad exigía que ningún merge a master publicara a producción sin un release explícito. Al auditar 24 repositorios serverless descubrimos que otra tarea había configurado exactamente lo contrario: dos políticas opuestas conviviendo en el mismo código."
 coverImage: "/blog-posts/images/cover-politicas-despliegue-cloudflare-actions-en-conflicto.jpg"
 coverAlt: "Red perimetral Cloudflare, DNS y despliegues serverless"

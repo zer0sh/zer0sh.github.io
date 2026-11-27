@@ -1,7 +1,7 @@
 ---
 title: "161 de 684 repositorios: el comando CLI que truncó la auditoría de seguridad en silencio"
 date: "2026-09-14"
-category: "DevSecOps & Gobernanza"
+category: "Seguridad & Secretos"
 excerpt: "Tras la filtración de un token de API, la directiva era activar Secret Scanning y Push Protection en toda la organización. La primera pasada reportó 'completado'... en solo 161 repos. Un límite por defecto en gh repo list silenció más de 500 repositorios. Crónica de automatización y verificación estricta."
 coverImage: "/blog-posts/images/cover-secret-scanning-push-protection-684-repos.jpg"
 coverAlt: "Detección de secretos filtrados en código y auditoría de repositorios GitHub"

@@ -1,7 +1,7 @@
 ---
 title: "La terminal que no era la mía: noclobber, pkill suicida y las trampas de Zsh en scripts interactivos"
 date: "2026-11-10"
-category: "Shell & Productividad"
+category: "Linux & Shell"
 excerpt: "Asumir que toda terminal Linux o macOS se comporta como Bash estándar es la causa raíz de errores insólitos: desde bucles que fallan en el primer archivo por noclobber hasta comandos pkill que se matan a sí mismos o filtros sed que exponen tokens en pantalla. Autopsia de tropiezos en la consola."
 coverImage: "/blog-posts/images/cover-terminal-zsh-gotchas-noclobber-alias-trampas.jpg"
 coverAlt: "Consola de terminal Unix con depuración de scripts interactivos en Zsh"

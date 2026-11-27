@@ -1,7 +1,7 @@
 ---
 title: "El Fail2ban que nunca baneó a nadie: journald, rsyslog ausente y la falsa seguridad en Linux"
 date: "2026-08-20"
-category: "Linux & Ciberseguridad"
+category: "Servidores Web & Caché"
 excerpt: "El servicio de protección contra fuerza bruta figuraba como activo en el servidor de base de datos de producción, pero en tres años no había bloqueado una sola IP. Tras una actualización de sistema operativo descubrimos la causa: rsyslog ya no existía y fail2ban leía un archivo de logs vacío."
 coverImage: "/blog-posts/images/cover-fail2ban-ubuntu-systemd-backend-falso-positivo.jpg"
 coverAlt: "Protección contra intrusiones con Fail2ban, journald y firewalls en Linux"

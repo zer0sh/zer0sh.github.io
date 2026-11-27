@@ -1,7 +1,7 @@
 ---
 title: "El servidor 'congelado' que seguía en producción: rootkits silenciosos, firewalls huérfanos y el peligro de asumir"
 date: "2026-08-16"
-category: "Incident Response"
+category: "Incident Response & SRE"
 excerpt: "Un servidor comprometido a nivel root había sido documentado como 'congelado'. Semanas después descubrimos que seguía en el camino crítico de producción, conectado a la base de datos y con un backdoor activo que sobrevivió a la primera limpieza. Crónica de una investigación forense real."
 coverImage: "/blog-posts/images/servidor-congelado.jpg"
 coverAlt: "Servidores en rack y análisis de seguridad en infraestructura de producción"

@@ -1,7 +1,7 @@
 ---
 title: "Los archivos fantasma de Sucuri: endpoints de eval() remoto y la trampa del SFTP en PaaS"
 date: "2026-10-04"
-category: "Seguridad & Plataforma"
+category: "Servidores Web & Caché"
 excerpt: "Dos archivos PHP de un servicio de seguridad descontratado respondían HTTP 200 en producción; uno contenía un eval() remoto. Al eliminarlos de Git seguían ahí; al borrarlos por SFTP reaparecían solos. Anatomía de un ciclo de artefactos zombi."
 coverImage: "/blog-posts/images/cover-archivos-fantasma-sucuri-eval-edge.jpg"
 coverAlt: "Firewall de aplicaciones web WAF y ciberseguridad perimetral"
@@ -70,7 +70,7 @@ La plataforma mantenía una caché de capas de compilación en su sistema de alm
 ## 3. El callejón sin salida del SFTP
 
 Intentamos ingresar por SFTP en el entorno `dev` y borrarlos manualmente con `rm`.
-- Desde la consola SFTP: `rm sucuri-*.php` $ightarrow$ el comando respondió exitoso y `curl` arrojó `404 Not Found`.
+- Desde la consola SFTP: `rm sucuri-*.php` → el comando respondió exitoso y `curl` arrojó `404 Not Found`.
 - Sin embargo, al cambiar el entorno de modo `sftp` a modo `git`, la consola arrojaba:
   ```text
   $ terminus env:commit lexfirm.dev

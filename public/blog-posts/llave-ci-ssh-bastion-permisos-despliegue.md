@@ -1,7 +1,7 @@
 ---
 title: "La llave de CI que nunca estuvo ahí: cómo un bastión SSH y un script local engañaron al pipeline"
 date: "2026-08-22"
-category: "CI/CD & DevOps"
+category: "CI/CD & GitOps"
 excerpt: "El pipeline de despliegue a producción en GitHub Actions comenzó a fallar sistemáticamente con 'Permission denied (publickey)' al conectar al bastión. La investigación reveló una verdad incómoda: la llave privada nunca había existido en los secretos del repositorio."
 coverImage: "/blog-posts/images/cover-llave-ci-ssh-bastion-permisos-despliegue.jpg"
 coverAlt: "Llaves criptográficas SSH, servidores bastion y autenticación segura"

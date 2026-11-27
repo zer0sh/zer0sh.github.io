@@ -1,7 +1,7 @@
 ---
 title: "Primeros pasos: qué encontrarás en este blog"
 date: "2026-05-08"
-category: "General"
+category: "Herramientas & Terminal"
 excerpt: "Un espacio sobre herramientas, Linux, infraestructura, desarrollo y las tecnologías que uso y exploro día a día."
 coverImage: "/blog-posts/images/Bienvenida.png"
 coverAlt: "Bienvenida al blog — herramientas, Linux, infraestructura y desarrollo"

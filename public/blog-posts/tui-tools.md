@@ -1,7 +1,7 @@
 ---
 title: "10 herramientas TUI que hacen la terminal más interesante"
 date: "2026-05-08"
-category: "Tools"
+category: "Herramientas & Terminal"
 excerpt: "Una colección de 10 herramientas TUI que uso o me parecen interesantes para trabajar desde la terminal. 6 listas, faltan 4 más."
 coverImage: "/blog-posts/images/tui-banner.png"
 coverAlt: "Herramientas TUI para terminal"

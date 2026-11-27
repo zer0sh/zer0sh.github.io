@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Footer } from '../components/Footer';
-import { useLanguage } from '../context/LanguageContext';
+import { ParallaxBlogCard } from '../components/ParallaxBlogCard';
 
 const calculateReadingTime = (content) => {
   const wordsPerMinute = 200;
@@ -340,13 +340,13 @@ const CodeBlock = ({ children }) => {
   return (
     <div className="relative group my-6 border border-[#131722] bg-[#0c0e14]">
       <div className="flex items-center justify-between px-3.5 py-2 bg-[#07080b] border-b border-[#131722] text-xs font-mono text-[#64748b] select-none">
-        <span className="uppercase tracking-wider">SHELL // SOURCE SNIPPET</span>
+        <span className="uppercase tracking-wider">SHELL // FRAGMENTO DE CÓDIGO</span>
         <button
           onClick={handleCopy}
           className="text-[#10b981] hover:text-white transition-colors uppercase tracking-wider px-2.5 py-0.5 border border-[#131722] hover:border-[#10b981] font-mono text-xs"
-          aria-label="Copy snippet to clipboard"
+          aria-label="Copiar código al portapapeles"
         >
-          {copied ? '[COPIED!]' : '[COPY]'}
+          {copied ? '[¡COPIADO!]' : '[COPIAR]'}
         </button>
       </div>
       <pre
@@ -386,6 +386,14 @@ const AlertBlockquote = ({ children }) => {
         const textColor = isWarning ? 'text-amber-400' : 'text-[#10b981]';
         const borderHeader = isWarning ? 'border-amber-500/30' : 'border-[#10b981]/30';
 
+        const labelMap = {
+          WARNING: 'ADVERTENCIA DE SEGURIDAD // CONFIDENCIALIDAD OPERATIVA',
+          CAUTION: 'PRECAUCIÓN OPERATIVA',
+          NOTE: 'NOTA TÉCNICA',
+          TIP: 'CONSEJO DE INGENIERÍA',
+          IMPORTANT: 'IMPORTANTE // PROCEDIMIENTO CRÍTICO',
+        };
+
         return (
           <aside
             className={`my-8 border ${borderColor} bg-[#0c0e14] relative overflow-hidden not-italic font-normal`}
@@ -406,11 +414,7 @@ const AlertBlockquote = ({ children }) => {
                 <line x1="12" y1="9" x2="12" y2="13" />
                 <line x1="12" y1="17" x2="12.01" y2="17" />
               </svg>
-              <span>
-                {type === 'WARNING'
-                  ? 'ADVERTENCIA DE SEGURIDAD // CONFIDENCIALIDAD OPERATIVA'
-                  : type}
-              </span>
+              <span>{labelMap[type] || type}</span>
             </div>
             <div className="p-5 text-sm sm:text-base leading-relaxed space-y-3">
               {newFirstP}
@@ -430,11 +434,10 @@ const AlertBlockquote = ({ children }) => {
 };
 
 export const Blog = () => {
-  const { lang } = useLanguage();
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('ALL');
+  const [selectedCategory, setSelectedCategory] = useState('TODAS');
   const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
 
@@ -514,12 +517,12 @@ export const Blog = () => {
   };
 
   // Categories list
-  const categories = ['ALL', ...new Set(posts.map((p) => p.category).filter(Boolean))];
+  const categories = ['TODAS', ...new Set(posts.map((p) => p.category).filter(Boolean))];
 
   // Filtered posts
   const filteredPosts = posts.filter((post) => {
     const matchesCategory =
-      selectedCategory === 'ALL' ||
+      selectedCategory === 'TODAS' ||
       (post.category && post.category.toUpperCase() === selectedCategory.toUpperCase());
     const q = searchQuery.toLowerCase().trim();
     const matchesSearch =
@@ -551,19 +554,19 @@ export const Blog = () => {
             className="font-mono text-xs uppercase tracking-[0.2em] text-[#10b981] hover:text-white transition-colors mb-12 flex items-center gap-2"
           >
             <span>&larr;</span>
-            <span>{lang === 'es' ? 'Volver a las notas de campo' : 'Back to field notes'}</span>
+            <span>Volver a las notas de campo</span>
           </button>
 
           <article>
             <header className="mb-12">
               <div className="flex flex-wrap items-center gap-4 font-mono text-[0.75rem] uppercase tracking-[0.15em] mb-4">
-                <span className="text-[#ef4444]">{selectedPost.category || 'ANALYSIS'}</span>
+                <span className="text-[#ef4444]">{selectedPost.category || 'AUTOPSIA SRE'}</span>
                 <span className="text-[#64748b]">·</span>
                 <span className="text-[#64748b]">{selectedPost.date}</span>
                 <span className="text-[#64748b]">·</span>
-                <span className="text-[#10b981]">{readingTime} MIN READ</span>
+                <span className="text-[#10b981]">{readingTime} MIN DE LECTURA</span>
                 <span className="text-[#64748b]">·</span>
-                <span className="text-[#64748b] font-mono">{Math.round(scrollProgress)}% {lang === 'es' ? 'LEÍDO' : 'READ'}</span>
+                <span className="text-[#64748b] font-mono">{Math.round(scrollProgress)}% LEÍDO</span>
               </div>
 
               <h1 className="text-[clamp(2.4rem,5vw,4.2rem)] font-extrabold tracking-[-0.04em] leading-[1.0] text-white mb-6">
@@ -591,7 +594,7 @@ export const Blog = () => {
             {headings.length >= 2 && (
               <div className="mb-12 p-6 sm:p-7 border border-[#131722] bg-[#0c0e14]">
                 <div className="flex items-center gap-2.5 pb-4 mb-5 border-b border-[#131722]">
-                  <span className="font-mono text-xs text-[#ef4444] font-bold tracking-widest">[INDEX]</span>
+                  <span className="font-mono text-xs text-[#ef4444] font-bold tracking-widest">[ÍNDICE]</span>
                   <p className="font-mono text-sm sm:text-base uppercase tracking-[0.2em] text-white font-extrabold">
                     Tabla de Contenido
                   </p>
@@ -672,140 +675,183 @@ export const Blog = () => {
     );
   }
 
+  const isViewingAll = selectedCategory === 'TODAS' && !searchQuery.trim();
+  const featuredPost = isViewingAll && filteredPosts.length > 0 ? filteredPosts[0] : null;
+  const gridPosts = isViewingAll ? filteredPosts.slice(1) : filteredPosts;
+
   return (
-    <div className="min-h-screen bg-[#07080b] text-white pt-12 pb-24">
-      <div className="max-w-[1250px] mx-auto px-6 sm:px-8">
+    <div className="min-h-screen bg-[#07080b] text-white pt-10 pb-24 relative overflow-hidden">
+      {/* Background Cyber/SRE Grid Texture */}
+      <div
+        className="absolute top-0 inset-x-0 h-[480px] pointer-events-none opacity-20"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(30, 41, 59, 0.4) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(30, 41, 59, 0.4) 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
+          maskImage: 'radial-gradient(ellipse 70% 60% at 50% 0%, black 30%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 0%, black 30%, transparent 100%)',
+        }}
+      />
+
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 relative z-10">
         {/* Navigation back */}
         <Link
           to="/"
-          className="font-mono text-xs uppercase tracking-[0.2em] text-[#10b981] hover:text-white transition-colors mb-16 inline-flex items-center gap-2"
+          className="font-mono text-xs uppercase tracking-[0.2em] text-[#10b981] hover:text-white transition-colors mb-10 inline-flex items-center gap-2 select-none group"
         >
-          <span>&larr;</span>
-          <span>{lang === 'es' ? 'Volver al inicio' : 'Back to home'}</span>
+          <span className="group-hover:-translate-x-1 transition-transform">&larr;</span>
+          <span>Volver al portafolio</span>
         </Link>
 
         {/* Section Header */}
-        <div className="mb-14">
-          <p className="font-mono text-[0.78rem] tracking-[0.3em] uppercase text-[#ef4444] mb-3">
-            INCIDENT_ANALYSES // SRE_FIELD_NOTES
-          </p>
-          <h1 className="text-[clamp(2.4rem,5vw,4.2rem)] font-extrabold tracking-[-0.04em] leading-[0.95] text-white uppercase mb-4">
-            Field Dispatches
+        <div className="mb-12">
+          <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs mb-3.5">
+            <span className="px-2.5 py-1 bg-[#10b981]/10 border border-[#10b981]/30 text-[#10b981] font-bold uppercase tracking-widest text-[0.68rem] flex items-center gap-1.5 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse" />
+              NOTAS_DE_CAMPO // AUTOPSIAS_SRE
+            </span>
+            <span className="text-[#334155]">&bull;</span>
+            <span className="text-[#94a3b8] uppercase tracking-wider text-[0.7rem]">
+              33 CASOS Y AUTOPSIAS INDEXADAS
+            </span>
+            <span className="text-[#334155]">&bull;</span>
+            <span className="text-[#38bdf8] uppercase tracking-wider text-[0.7rem]">
+              10 DOMINIOS TÉCNICOS
+            </span>
+          </div>
+
+          <h1 className="text-[clamp(2.4rem,5.5vw,4.4rem)] font-extrabold tracking-[-0.04em] leading-[0.95] text-white uppercase mb-4">
+            Notas de Campo // Dispatches SRE
           </h1>
-          <p className="text-lg text-[#64748b] max-w-[52ch]">
-            {lang === 'es'
-              ? 'Artículos técnicos, investigación de incidentes en producción, automatizaciones y arquitectura de sistemas.'
-              : 'Technical articles, production incident investigations, automations, and systems architecture.'}
+          <p className="text-base sm:text-lg text-[#8e99a8] max-w-[65ch] leading-relaxed">
+            Autopsias forenses de incidentes reales en producción, ingeniería inversa de fallos en sistemas distribuidos, hardening y lecciones aprendidas en entornos vivos.
           </p>
         </div>
 
         {/* Search & Category Filter Bar */}
-        <div className="mb-14 space-y-6 pb-8 border-b border-[#131722]">
+        <div className="mb-12 space-y-5 pb-8 border-b border-[#1e293b]/70">
           {/* Search Box */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <div className="relative flex-1 max-w-lg">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            <div className="relative flex-1 max-w-xl">
               <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-mono text-xs text-[#10b981]">
-                [>]
+                [&gt;]
               </span>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={lang === 'es' ? 'BUSCAR EN NOTAS DE CAMPO // TÍTULO, STACK O TEXTO...' : 'SEARCH IN FIELD NOTES // TITLE, STACK OR TEXT...'}
-                className="w-full bg-[#0c0e14] border border-[#131722] focus:border-[#10b981] text-white font-mono text-xs sm:text-sm pl-10 pr-4 py-2.5 outline-none transition-colors placeholder:text-[#64748b]/60"
+                placeholder="BUSCAR POR TÍTULO, COMANDO O TECNOLOGÍA..."
+                className="w-full bg-[#0c0e14] border border-[#1e293b] focus:border-[#10b981] text-white font-mono text-xs sm:text-sm pl-10 pr-10 py-2.5 outline-none transition-all placeholder:text-[#64748b]/60 shadow-inner"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 font-mono text-xs text-[#64748b] hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 font-mono text-xs text-[#64748b] hover:text-[#ef4444] transition-colors"
+                  aria-label="Limpiar búsqueda"
                 >
-                  {lang === 'es' ? '[LIMPIAR]' : '[CLEAR]'}
+                  &times;
                 </button>
               )}
             </div>
 
-            <div className="font-mono text-xs text-[#64748b]">
-              {lang === 'es' ? 'MOSTRANDO' : 'SHOWING'} <span className="text-[#10b981] font-bold">{filteredPosts.length}</span> {lang === 'es' ? 'DE' : 'OF'} {posts.length} DISPATCHES
+            <div className="font-mono text-xs text-[#64748b] shrink-0">
+              MOSTRANDO{' '}
+              <span className="text-[#10b981] font-bold">{filteredPosts.length}</span>{' '}
+              DE {posts.length} ARTÍCULOS
             </div>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-mono text-[0.74rem] uppercase tracking-wider text-[#64748b] mr-2">
-              {lang === 'es' ? 'CATEGORÍAS:' : 'CATEGORIES:'}
+          {/* Category Filter Pills (10 condensed categories with counts) */}
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            <span className="font-mono text-[0.7rem] uppercase tracking-widest text-[#64748b] mr-1">
+              FILTRAR:
             </span>
             {categories.map((cat) => {
               const isSelected = selectedCategory.toUpperCase() === cat.toUpperCase();
+              const count = cat === 'TODAS'
+                ? posts.length
+                : posts.filter((p) => p.category && p.category.toUpperCase() === cat.toUpperCase()).length;
+
               return (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`font-mono text-xs uppercase tracking-wider px-3 py-1 border transition-all ${
+                  className={`font-mono text-[0.72rem] uppercase tracking-wider px-3 py-1.5 border transition-all duration-200 flex items-center gap-2 select-none ${
                     isSelected
-                      ? 'bg-[#10b981]/15 text-[#10b981] border-[#10b981]'
-                      : 'bg-[#0c0e14] text-[#64748b] border-[#131722] hover:text-white hover:border-[#64748b]'
+                      ? 'bg-[#10b981] text-[#07080b] font-bold border-[#10b981] shadow-[0_0_15px_rgba(16,185,129,0.35)]'
+                      : 'bg-[#0c0e14] text-[#8e99a8] border-[#1e293b] hover:text-white hover:border-[#10b981]/50'
                   }`}
                 >
-                  {cat}
+                  <span>{cat}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
+                      isSelected ? 'bg-[#07080b]/30 text-[#07080b]' : 'bg-[#1e293b]/80 text-[#64748b]'
+                    }`}
+                  >
+                    {count}
+                  </span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Posts List */}
-        <div className="grid row-gap-12 sm:row-gap-16">
-          {posts.length === 0 ? (
-            <div className="py-20 font-mono text-sm text-[#64748b]">
-              {lang === 'es' ? 'CARGANDO REGISTRO DE DISPATCHES...' : 'LOADING DISPATCHES REGISTRY...'}
-            </div>
-          ) : filteredPosts.length === 0 ? (
-            <div className="py-16 text-center border border-[#131722] bg-[#0c0e14] p-8">
-              <p className="font-mono text-sm text-[#ef4444] mb-3">
-                {lang === 'es' ? '[!] NO SE ENCONTRARON DISPATCHES QUE COINCIDAN CON LOS CRITERIOS' : '[!] NO DISPATCHES FOUND MATCHING SEARCH CRITERIA'}
-              </p>
-              <p className="text-sm text-[#64748b] mb-5">
-                {lang === 'es' ? 'Prueba buscando otros términos o resetea los filtros aplicados.' : 'Try searching different terms or reset active filters.'}
-              </p>
-              <button
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory('ALL');
-                }}
-                className="font-mono text-xs uppercase tracking-wider px-4 py-2 bg-[#131722] text-[#10b981] hover:bg-[#10b981] hover:text-[#07080b] transition-colors"
-              >
-                {lang === 'es' ? '[RESETEAR FILTROS]' : '[RESET FILTERS]'}
-              </button>
-            </div>
-          ) : (
-            filteredPosts.map((post) => {
-              const readingTime = calculateReadingTime(post.content);
+        {/* Posts Content */}
+        {posts.length === 0 ? (
+          <div className="py-24 font-mono text-sm text-[#64748b] text-center">
+            CARGANDO REGISTRO DE ARTÍCULOS...
+          </div>
+        ) : filteredPosts.length === 0 ? (
+          <div className="py-16 text-center border border-[#1e293b] bg-[#0c0e14] p-8 max-w-xl mx-auto shadow-xl">
+            <p className="font-mono text-sm text-[#ef4444] mb-3">
+              [!] NO SE ENCONTRARON ARTÍCULOS QUE COINCIDAN
+            </p>
+            <p className="text-sm text-[#64748b] mb-5">
+              Prueba con otros términos o resetea el filtro de categorías.
+            </p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory('TODAS');
+              }}
+              className="font-mono text-xs uppercase tracking-wider px-4 py-2 bg-[#131722] text-[#10b981] hover:bg-[#10b981] hover:text-[#07080b] transition-colors border border-[#10b981]/40"
+            >
+              [RESETEAR FILTROS]
+            </button>
+          </div>
+        ) : (
+          <div>
+            {/* Featured Hero Post (Shown when on TODAS view with no search query) */}
+            {featuredPost && (
+              <ParallaxBlogCard
+                post={featuredPost}
+                readingTime={calculateReadingTime(featuredPost.content || '')}
+                onClick={() => handlePostClick(featuredPost)}
+                isFeatured={true}
+                lang="es"
+              />
+            )}
 
-              return (
-                <article
-                  key={post.slug}
-                  onClick={() => handlePostClick(post)}
-                  className="group cursor-pointer grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-6 pb-8 border-b border-[#131722]/60 last:border-b-0"
-                >
-                  <div className="font-mono text-xs text-[#64748b] uppercase tracking-wider">
-                    <p className="text-[#ef4444] font-bold mb-1">{post.category || 'DISPATCH'}</p>
-                    <p>{post.date}</p>
-                    <p className="text-[#10b981] mt-1">{readingTime} MIN READ</p>
-                  </div>
-
-                  <div>
-                    <h2 className="text-2xl sm:text-[1.7rem] font-bold tracking-tight text-white group-hover:text-[#10b981] transition-colors mb-2.5">
-                      {post.title} &rarr;
-                    </h2>
-                    <p className="text-base text-[#8e99a8] leading-relaxed w-full">
-                      {post.excerpt}
-                    </p>
-                  </div>
-                </article>
-              );
-            })
-          )}
-        </div>
+            {/* 2-Column Responsive Bento Grid with Parallax 3D Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+              {gridPosts.map((post) => {
+                const readingTime = calculateReadingTime(post.content || '');
+                return (
+                  <ParallaxBlogCard
+                    key={post.slug}
+                    post={post}
+                    readingTime={readingTime}
+                    onClick={() => handlePostClick(post)}
+                    isFeatured={false}
+                    lang="es"
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
       <Footer />
     </div>

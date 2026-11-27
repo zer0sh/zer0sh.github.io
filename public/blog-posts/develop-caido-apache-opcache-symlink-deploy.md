@@ -1,7 +1,7 @@
 ---
 title: "El entorno de desarrollo que no estaba caído: saturación de Apache, OPcache ciego y symlinks zombis"
 date: "2026-10-08"
-category: "Servidores Web & Performance"
+category: "Servidores Web & Caché"
 excerpt: "Un reporte lacónico aseguraba que 'el servidor develop está caído'. Al entrar respondía HTTP 200, pero la investigación destapó cuatro problemas encadenados: workers de Apache retenidos 300 segundos por TLS incompleto, renderizado que se pedía imágenes a sí mismo y symlinks de deploy que rompían OPcache."
 coverImage: "/blog-posts/images/cover-develop-caido-apache-opcache-symlink-deploy.jpg"
 coverAlt: "Monitoreo de servidores Apache y concurrencia de memoria en Linux"

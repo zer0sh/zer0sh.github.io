@@ -1,7 +1,7 @@
 ---
 title: "Netdata y el awk de 1996: cuando mawk rompe scripts de automatización en flotas mixtas"
 date: "2026-10-01"
-category: "Linux & Automatización"
+category: "Linux & Shell"
 excerpt: "Una tarea simple para configurar Netdata en localhost en 7 servidores falló de forma insólita: en dos hosts con Ubuntu legacy corría mawk 1.3.3 de 1996, el cual no reconoce clases POSIX ni anclas en gsub(), duplicando la configuración en lugar de reemplazarla. Crónica de compatibilidad profunda en Linux."
 coverImage: "/blog-posts/images/cover-netdata-awk-1996-incompatibilidad-posix.jpg"
 coverAlt: "Monitoreo de métricas del sistema, Netdata y análisis de procesos en Linux"

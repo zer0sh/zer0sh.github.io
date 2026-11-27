@@ -1,7 +1,7 @@
 ---
 title: "La llave vieja que alguien seguía usando: rotación de llaves SOPS/KMS sin caídas operativas"
 date: "2026-10-10"
-category: "Criptografía & Cloud"
+category: "Seguridad & Secretos"
 excerpt: "Rotar la llave maestra que descifra los secretos de todos los clústeres de Kubernetes parecía completo y validado en CI y ArgoCD. Pero justo antes de destruirla, CloudTrail reveló que un ingeniero la seguía utilizando desde su laptop. Guía para rotar secretos de infraestructura sin romper nada."
 coverImage: "/blog-posts/images/cover-rotacion-llaves-sops-kms-secretos-huerfanos.jpg"
 coverAlt: "Seguridad criptográfica, llaves KMS y cifrado con Mozilla SOPS"

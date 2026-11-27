@@ -1,7 +1,7 @@
 ---
 title: "El sudo que se cortó a mitad de camino: cómo no bloquear tu propio script de hardening en Linux"
 date: "2026-09-18"
-category: "Linux & Hardening"
+category: "Seguridad & Secretos"
 excerpt: "Durante el endurecimiento de accesos SSH y autenticación 2FA en un servidor de producción, el script retiró los privilegios de sudo al usuario que lo estaba ejecutando... antes de terminar la configuración. Crónica de una sesión al borde del abismo y cómo diseñar scripts de seguridad transaccionales."
 coverImage: "/blog-posts/images/cover-hardening-ssh-sudoers-bloqueo-a-mitad-de-camino.jpg"
 coverAlt: "Seguridad en servidores Linux, configuración de SSH y privilegios en sudoers"

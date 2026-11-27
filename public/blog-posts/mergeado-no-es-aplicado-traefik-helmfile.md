@@ -1,7 +1,7 @@
 ---
 title: "Mergeado no es aplicado: la trampa de los PRs de infraestructura que viven en Git pero no en el clúster"
 date: "2026-09-27"
-category: "Kubernetes & GitOps"
+category: "CI/CD & GitOps"
 excerpt: "Un Pull Request de actualización de Traefik v3 y políticas RBAC se mergeó a la rama principal de infra bajo la instrucción explícita de 'no aplicarlo aún'. La trampa: al no haber pipelines automáticos de helmfile, el siguiente ingeniero en ejecutar un apply arrastraría una redirección forzada a HTTPS sin saberlo."
 coverImage: "/blog-posts/images/cover-mergeado-no-es-aplicado-traefik-helmfile.jpg"
 coverAlt: "Enrutamiento de tráfico con Traefik Proxy y orquestación Helmfile en Kubernetes"
