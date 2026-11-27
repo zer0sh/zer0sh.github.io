@@ -151,14 +151,14 @@ export const SolsticeArchDemo = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-16">
             <div className="lg:col-span-8">
-              <h1 className="text-5xl sm:text-7xl font-light tracking-tight leading-[0.98]">
-                {copy.heroPre} <br />
-                <span className="font-semibold italic" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-normal tracking-tight leading-[0.94]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                <span className="italic">{copy.heroPre}</span> <br />
+                <span className="font-semibold italic">
                   {copy.heroEm}
                 </span>
               </h1>
             </div>
-            <div className="lg:col-span-4 text-sm opacity-75 leading-relaxed">
+            <div className="lg:col-span-4 text-base italic opacity-80 leading-relaxed" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
               {copy.sub}
             </div>
           </div>
@@ -184,7 +184,7 @@ export const SolsticeArchDemo = () => {
                   </span>
                 </div>
                 <div className="p-5 flex justify-between items-center">
-                  <span className="font-semibold text-base">{p.name}</span>
+                  <span className="italic font-semibold text-2xl" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{p.name}</span>
                   <span className="text-xs opacity-60" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>{p.meta}</span>
                 </div>
               </button>
@@ -223,10 +223,10 @@ export const SolsticeArchDemo = () => {
                 ))}
               </div>
             </div>
-            <div className="divide-y divide-current/10 text-sm">
+            <div className="divide-y divide-current/10 text-base">
               {works.map((w) => (
                 <div key={w.name} className="py-4 flex items-center justify-between">
-                  <span className="font-semibold">{w.name}</span>
+                  <span className="italic font-semibold text-xl" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{w.name}</span>
                   <div className="flex items-center gap-8 text-xs opacity-60 tabular-nums" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
                     <span className="hidden sm:inline">{w.city}</span>
                     <span>{w.area}</span>
@@ -247,11 +247,8 @@ export const SolsticeArchDemo = () => {
                 >
                   FERIA DE CALI 2026 · ZONA DE EXPOSICIONES
                 </span>
-                <h2 className="text-4xl sm:text-5xl font-light leading-[1.05]">
-                  Estaremos en la Feria de Cali{' '}
-                  <span className="italic font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                    en vivo.
-                  </span>
+                <h2 className="text-4xl sm:text-6xl font-normal italic leading-[0.98]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  Estaremos en la Feria de Cali <span className="font-semibold">en vivo.</span>
                 </h2>
                 <p className="text-sm sm:text-base opacity-80 leading-relaxed max-w-2xl">
                   Visítanos en la Zona de Exposiciones (Pabellón A · Stand 14) donde estaremos presentando nuestras{' '}
