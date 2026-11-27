@@ -14,6 +14,7 @@ export const ParallaxBlogCard = ({
   post,
   readingTime,
   onClick,
+  onPrefetch,
   isFeatured = false,
   lang = 'es',
 }) => {
@@ -56,6 +57,7 @@ export const ParallaxBlogCard = ({
 
   const handleMouseEnter = () => {
     setIsHovered(true);
+    if (onPrefetch) onPrefetch();
   };
 
   const handleMouseLeave = () => {
@@ -69,6 +71,7 @@ export const ParallaxBlogCard = ({
   };
 
   const coverUrl = post.coverImage || '/blog-posts/images/cover-terminal-zsh-gotchas-noclobber-alias-trampas.jpg';
+  const displayReadingTime = post.readingTime || readingTime || 3;
 
   if (isFeatured) {
     return (
@@ -124,7 +127,9 @@ export const ParallaxBlogCard = ({
                     : 'grayscale(25%) contrast(100%) brightness(88%)',
                   transform: isHovered ? 'scale(1.04)' : 'scale(1)',
                 }}
-                loading="lazy"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
               />
               {/* Scanline / Grid overlay */}
               <div
@@ -157,7 +162,7 @@ export const ParallaxBlogCard = ({
                   <div className="flex items-center gap-2 text-[#64748b]">
                     <span>{post.date}</span>
                     <span>&middot;</span>
-                    <span className="text-[#38bdf8] font-bold">{readingTime} MIN DE LECTURA</span>
+                    <span className="text-[#38bdf8] font-bold">{displayReadingTime} MIN DE LECTURA</span>
                   </div>
                 </div>
 
@@ -244,6 +249,7 @@ export const ParallaxBlogCard = ({
               transform: isHovered ? 'scale(1.05)' : 'scale(1)',
             }}
             loading="lazy"
+            decoding="async"
           />
           {/* Subtle Scanline Texture */}
           <div
@@ -266,7 +272,7 @@ export const ParallaxBlogCard = ({
           {/* Reading Time Pill */}
           <div className="absolute top-3 right-3 z-20">
             <span className="px-2 py-0.5 bg-[#07080b]/85 backdrop-blur-md border border-[#1e293b] text-[#94a3b8] font-mono text-[0.65rem] tracking-wider uppercase">
-              {readingTime} MIN LECTURA
+              {displayReadingTime} MIN LECTURA
             </span>
           </div>
         </div>

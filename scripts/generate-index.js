@@ -23,12 +23,17 @@ const posts = files.map(file => {
   };
 
   const slug = file.replace(/\.md$/, '');
+  const cleanContent = content.replace(/^---[\s\S]*?---\n/, '');
+  const words = cleanContent.split(/\s+/).filter(Boolean).length;
+  const readingTime = Math.max(1, Math.ceil(words / 200));
+
   const entry = {
     slug,
     title: extract('title') || slug,
     date: extract('date') || '0000-00-00',
     category: extract('category') || 'General',
     excerpt: extract('excerpt') || '',
+    readingTime,
   };
 
   const cover = extract('coverImage');

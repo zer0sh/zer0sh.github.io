@@ -436,56 +436,84 @@ const AlertBlockquote = ({ children }) => {
 export const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [isLoadingPost, setIsLoadingPost] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('TODAS');
   const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
 
+  const postCache = useRef({});
+
+  // Helper to fetch and cache markdown content on demand
+  const fetchPostContent = async (post) => {
+    if (post.content) return post;
+    if (postCache.current[post.slug]) {
+      return { ...post, ...postCache.current[post.slug] };
+    }
+    try {
+      const res = await fetch(`/blog-posts/${post.slug}.md`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const raw = await res.text();
+      const frontmatter = raw.match(/^---\n([\s\S]*?)\n---/);
+      const cleanContent = raw.replace(/^---[\s\S]*?---\n/, '');
+      const extract = (key) => {
+        const m = frontmatter?.[1]?.match(new RegExp(`^${key}:\\s*"([^"]+)"`, 'm'));
+        return m ? m[1] : null;
+      };
+      const fullPost = {
+        ...post,
+        content: cleanContent,
+        coverImage: post.coverImage || extract('coverImage'),
+        coverAlt: post.coverAlt || extract('coverAlt'),
+      };
+      postCache.current[post.slug] = fullPost;
+      return fullPost;
+    } catch (err) {
+      console.error(`Error loading markdown for ${post.slug}:`, err);
+      return post;
+    }
+  };
+
+  // Speculative prefetch when hovering over cards
+  const handlePrefetch = (post) => {
+    if (!post || post.content || postCache.current[post.slug]) return;
+    fetchPostContent(post);
+  };
+
+  // Fast single index fetch on initial render
   useEffect(() => {
-    const loadPosts = async () => {
+    let isMounted = true;
+    const loadIndex = async () => {
       try {
-        const listResponse = await fetch('/blog-posts/index.json');
-        if (listResponse.ok) {
-          const { posts: postList } = await listResponse.json();
+        const res = await fetch('/blog-posts/index.json');
+        if (!res.ok) return;
+        const { posts: postList } = await res.json();
+        if (!isMounted) return;
+        setPosts(postList);
 
-          const postsWithContent = [];
-          for (const post of postList) {
-            const contentResponse = await fetch(`/blog-posts/${post.slug}.md`);
-            if (contentResponse.ok) {
-              const content = await contentResponse.text();
-              const frontmatter = content.match(/^---\n([\s\S]*?)\n---/);
-              const extract = (key) => {
-                const m = frontmatter?.[1]?.match(new RegExp(`^${key}:\\s*"([^"]+)"`, 'm'));
-                return m ? m[1] : null;
-              };
-              const cleanContent = content.replace(/^---[\s\S]*?---\n/, '');
-              postsWithContent.push({
-                ...post,
-                content: cleanContent,
-                coverImage: post.coverImage || extract('coverImage'),
-                coverAlt: post.coverAlt || extract('coverAlt'),
-              });
-            }
-          }
-
-          setPosts(postsWithContent);
-
-          // If query param ?post=slug exists, open it directly
-          const params = new URLSearchParams(location.search);
-          const postSlug = params.get('post');
-          if (postSlug) {
-            const matched = postsWithContent.find((p) => p.slug === postSlug);
-            if (matched) {
-              setSelectedPost(matched);
+        // Check query param ?post=slug for direct navigation
+        const params = new URLSearchParams(location.search);
+        const postSlug = params.get('post');
+        if (postSlug) {
+          const matched = postList.find((p) => p.slug === postSlug);
+          if (matched) {
+            setIsLoadingPost(true);
+            const fullPost = await fetchPostContent(matched);
+            if (isMounted) {
+              setSelectedPost(fullPost);
+              setIsLoadingPost(false);
             }
           }
         }
-      } catch (error) {
-        console.error('Error loading posts:', error);
+      } catch (err) {
+        console.error('Error loading blog index:', err);
       }
     };
 
-    loadPosts();
+    loadIndex();
+    return () => {
+      isMounted = false;
+    };
   }, [location.search]);
 
   // Reading progress tracking
@@ -506,9 +534,17 @@ export const Blog = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [selectedPost]);
 
-  const handlePostClick = (post) => {
-    setSelectedPost(post);
+  const handlePostClick = async (post) => {
     window.scrollTo(0, 0);
+    if (post.content || postCache.current[post.slug]) {
+      setSelectedPost(postCache.current[post.slug] || post);
+      return;
+    }
+
+    setIsLoadingPost(true);
+    const fullPost = await fetchPostContent(post);
+    setSelectedPost(fullPost);
+    setIsLoadingPost(false);
   };
 
   const handleBackClick = () => {
@@ -519,7 +555,7 @@ export const Blog = () => {
   // Categories list
   const categories = ['TODAS', ...new Set(posts.map((p) => p.category).filter(Boolean))];
 
-  // Filtered posts
+  // Filtered posts (Search over title, excerpt, category, slug, or content if cached)
   const filteredPosts = posts.filter((post) => {
     const matchesCategory =
       selectedCategory === 'TODAS' ||
@@ -529,14 +565,15 @@ export const Blog = () => {
       !q ||
       post.title.toLowerCase().includes(q) ||
       (post.excerpt && post.excerpt.toLowerCase().includes(q)) ||
-      (post.content && post.content.toLowerCase().includes(q)) ||
-      (post.category && post.category.toLowerCase().includes(q));
+      (post.category && post.category.toLowerCase().includes(q)) ||
+      (post.slug && post.slug.toLowerCase().includes(q)) ||
+      (post.content && post.content.toLowerCase().includes(q));
     return matchesCategory && matchesSearch;
   });
 
   if (selectedPost) {
-    const readingTime = calculateReadingTime(selectedPost.content);
-    const headings = extractHeadings(selectedPost.content);
+    const readingTime = selectedPost.readingTime || calculateReadingTime(selectedPost.content || '');
+    const headings = extractHeadings(selectedPost.content || '');
 
     return (
       <div className="min-h-screen bg-[#07080b] text-white pt-10 pb-20">
@@ -827,8 +864,9 @@ export const Blog = () => {
             {featuredPost && (
               <ParallaxBlogCard
                 post={featuredPost}
-                readingTime={calculateReadingTime(featuredPost.content || '')}
+                readingTime={featuredPost.readingTime || 4}
                 onClick={() => handlePostClick(featuredPost)}
+                onPrefetch={() => handlePrefetch(featuredPost)}
                 isFeatured={true}
                 lang="es"
               />
@@ -836,23 +874,32 @@ export const Blog = () => {
 
             {/* 2-Column Responsive Bento Grid with Parallax 3D Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-              {gridPosts.map((post) => {
-                const readingTime = calculateReadingTime(post.content || '');
-                return (
-                  <ParallaxBlogCard
-                    key={post.slug}
-                    post={post}
-                    readingTime={readingTime}
-                    onClick={() => handlePostClick(post)}
-                    isFeatured={false}
-                    lang="es"
-                  />
-                );
-              })}
+              {gridPosts.map((post) => (
+                <ParallaxBlogCard
+                  key={post.slug}
+                  post={post}
+                  readingTime={post.readingTime || 4}
+                  onClick={() => handlePostClick(post)}
+                  onPrefetch={() => handlePrefetch(post)}
+                  isFeatured={false}
+                  lang="es"
+                />
+              ))}
             </div>
           </div>
         )}
       </div>
+
+      {/* Subtle HUD Loading Indicator if a post takes more than a few ms to open */}
+      {isLoadingPost && (
+        <div className="fixed bottom-6 right-6 z-50 pointer-events-none">
+          <div className="flex items-center gap-2.5 px-4 py-2 bg-[#0c0e14]/95 border border-[#10b981]/50 text-[#10b981] font-mono text-xs shadow-2xl backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-[#10b981] animate-ping" />
+            <span>DESENCRIPTANDO AUTOPSIA SRE...</span>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );
